@@ -51,7 +51,7 @@ export default function FreelancingForGoodOffer() {
             {/* Subheadline */}
             <div className="max-w-3xl mx-auto mb-12">
               <p className="text-xl md:text-2xl text-slate-300 leading-relaxed mb-8">
-                Do you dread talking money, selling yourself and client calls? You're not alone - I used to be exactly the same.
+                Do you dread talking money, selling yourself and client calls? You&apos;re not alone - I used to be exactly the same.
               </p>
               
               <p className="text-lg text-slate-400 leading-relaxed">
@@ -90,7 +90,7 @@ export default function FreelancingForGoodOffer() {
                   <h3 className="text-xl font-bold text-white">Free 20-Minute Intro Session</h3>
                 </div>
                 <p className="text-slate-300 leading-relaxed">
-                  Experience the method and decide whether you want to try the coaching. No pressure, just a taste of what's possible.
+                  Experience the method and decide whether you want to try the coaching. No pressure, just a taste of what&apos;s possible.
                 </p>
               </div>
 
@@ -158,7 +158,7 @@ export default function FreelancingForGoodOffer() {
                   <span className="text-2xl font-bold text-blue-400">2</span>
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-4">Decide Next Steps</h3>
-                <p className="text-slate-400">If it's a good fit, book your first paid session at 50% off</p>
+                <p className="text-slate-400">If it&apos;s a good fit, book your first paid session at 50% off</p>
               </div>
               
               <div className="text-center">
@@ -181,7 +181,7 @@ export default function FreelancingForGoodOffer() {
               Ready to Transform Your Freelancing Confidence?
             </h2>
             <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-              Whether it's interviews, client calls, or presentations, these sessions give you practical tools to speak with clarity and confidence.
+              Whether it&apos;s interviews, client calls, or presentations, these sessions give you practical tools to speak with clarity and confidence.
             </p>
             <button
               onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
