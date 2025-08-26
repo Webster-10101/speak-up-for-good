@@ -18,7 +18,7 @@ const About = () => {
             </p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 leading-tight">
               <span className="bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 bg-clip-text text-transparent">
-                If I Could Learn This, So Can You
+                If I Can Learn It, So Can You!
               </span>
             </h2>
           </div>
