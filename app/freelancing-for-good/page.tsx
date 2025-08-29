@@ -89,7 +89,7 @@ export default function FreelancingForGoodOffer() {
 
             {/* CTA Button */}
             <button
-              onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
+              onClick={() => window.open('https://calendly.com/alistair-webster/ffg-offer-intro-call', '_blank')}
               className="bg-blue-500 hover:bg-blue-400 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 mb-16"
             >
               Book Your Free Intro →
@@ -252,7 +252,7 @@ export default function FreelancingForGoodOffer() {
               Take the first step today — and start speaking with clarity, confidence, and ease in every client conversation.
             </p>
             <button
-              onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
+              onClick={() => window.open('https://calendly.com/alistair-webster/ffg-offer-intro-call', '_blank')}
               className="bg-blue-500 hover:bg-blue-400 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-all duration-300 transform hover:scale-105"
             >
               Book Your Free Intro →
