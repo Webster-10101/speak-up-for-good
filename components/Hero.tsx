@@ -35,7 +35,7 @@ const Hero = () => {
             
             {/* Main Headline */}
             <div className="mb-10">
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-[0.8] tracking-tighter">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-black leading-[0.8] tracking-tighter">
                 <span className="block bg-gradient-to-r from-blue-400/80 via-blue-300/90 to-blue-400/80 bg-clip-text text-transparent backdrop-blur-sm drop-shadow-lg">SPEAK UP</span>
                 <span className="block bg-gradient-to-r from-blue-300/80 via-blue-200/90 to-blue-300/80 bg-clip-text text-transparent backdrop-blur-sm drop-shadow-lg">FOR GOOD</span>
               </h1>
