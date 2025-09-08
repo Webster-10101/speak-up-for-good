@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Hero = () => {
   const scrollToSection = (sectionId: string) => {
@@ -48,6 +49,19 @@ const Hero = () => {
               </p>
             </div>
             
+            {/* Quiz CTA */}
+            <div className="mb-8 p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
+              <p className="text-blue-300 text-sm font-medium mb-2">🎯 Not sure where to start?</p>
+              <Link
+                href="/speaker-quiz"
+                className="inline-flex items-center text-white hover:text-blue-300 transition-colors"
+              >
+                <span className="font-semibold">Take our 2-minute Speaker Quiz</span>
+                <span className="ml-2">→</span>
+              </Link>
+              <p className="text-slate-400 text-xs mt-1">Discover your speaker archetype and get a personalized growth plan</p>
+            </div>
+
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <button

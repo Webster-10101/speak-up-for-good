@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -15,6 +16,12 @@ const Navigation = () => {
   }, [])
 
   const scrollToSection = (sectionId: string) => {
+    // If we're not on the home page, navigate to home first
+    if (window.location.pathname !== '/') {
+      window.location.href = `/#${sectionId}`
+      return
+    }
+    
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
@@ -27,8 +34,8 @@ const Navigation = () => {
     }`}>
       <div className="container-max section-padding">
         <div className="flex items-center justify-between h-20">
-          <button
-            onClick={() => scrollToSection('hero')}
+          <Link
+            href="/"
             className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
           >
             <Image
@@ -43,15 +50,15 @@ const Navigation = () => {
                 ? 'bg-gradient-to-r from-blue-400/90 via-blue-300/95 to-blue-400/90 bg-clip-text text-transparent drop-shadow-lg' 
                 : 'text-white'
             }`}>Speak Up For Good</span>
-          </button>
+          </Link>
           
           <div className="hidden md:flex items-center space-x-6">
-            <button
-              onClick={() => scrollToSection('hero')}
+            <Link
+              href="/"
               className="text-white hover:text-blue-300 transition-colors font-medium text-base"
             >
               Home
-            </button>
+            </Link>
             <button
               onClick={() => scrollToSection('offers')}
               className="text-white hover:text-blue-300 transition-colors font-medium text-base"
@@ -64,6 +71,18 @@ const Navigation = () => {
             >
               Newsletter
             </button>
+            <Link
+              href="/speaker-quiz"
+              className="text-white hover:text-blue-300 transition-colors font-medium text-base"
+            >
+              Speaker Quiz
+            </Link>
+            <Link
+              href="/speaking-drills"
+              className="text-white hover:text-blue-300 transition-colors font-medium text-base"
+            >
+              Speaking Drills
+            </Link>
             <button
               onClick={() => scrollToSection('offers')}
               className="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:scale-105 ml-4"
