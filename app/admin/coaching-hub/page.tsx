@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import type { QuizResponse } from '@/lib/supabase';
 import AddContactForm from '@/components/AddContactForm';
+import SessionHistoryModal from '@/components/SessionHistoryModal';
 
 export default function CoachingHub() {
   const { data: session, status } = useSession();
@@ -17,6 +18,7 @@ export default function CoachingHub() {
   const [sortBy, setSortBy] = useState<'created_at' | 'updated_at' | 'first_name' | 'status'>('updated_at');
   const [editingCell, setEditingCell] = useState<{contactId: string, field: string} | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedContact, setSelectedContact] = useState<QuizResponse | null>(null);
   const [localValues, setLocalValues] = useState<{[key: string]: string}>({});
   const [updateTimeouts, setUpdateTimeouts] = useState<{[key: string]: NodeJS.Timeout}>({});
 
@@ -286,8 +288,7 @@ export default function CoachingHub() {
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Archetype</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Focus Area</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Session</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Next Goal</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sessions</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated</th>
                 </tr>
               </thead>
@@ -336,23 +337,13 @@ export default function CoachingHub() {
                         className="w-full text-sm p-1 border border-gray-300 rounded"
                       />
                     </td>
-                    <td className="px-4 py-4 max-w-xs">
-                      <input
-                        type="text"
-                        value={getInputValue(contact, 'last_session_focus')}
-                        onChange={(e) => handleTextInputChange(contact.id!, 'last_session_focus', e.target.value)}
-                        placeholder="What did you work on last?"
-                        className="w-full text-sm p-1 border border-gray-300 rounded"
-                      />
-                    </td>
-                    <td className="px-4 py-4 max-w-xs">
-                      <input
-                        type="text"
-                        value={getInputValue(contact, 'next_session_goal')}
-                        onChange={(e) => handleTextInputChange(contact.id!, 'next_session_goal', e.target.value)}
-                        placeholder="Next goal or homework..."
-                        className="w-full text-sm p-1 border border-gray-300 rounded"
-                      />
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <button
+                        onClick={() => setSelectedContact(contact)}
+                        className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded hover:bg-blue-200 transition-colors"
+                      >
+                        View Sessions
+                      </button>
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                       {formatDate(contact.updated_at)}
@@ -378,6 +369,14 @@ export default function CoachingHub() {
             onAdd={(newContact) => {
               setContacts(prev => [newContact, ...prev]);
             }}
+          />
+        )}
+
+        {/* Session History Modal */}
+        {selectedContact && (
+          <SessionHistoryModal
+            contact={selectedContact}
+            onClose={() => setSelectedContact(null)}
           />
         )}
       </div>

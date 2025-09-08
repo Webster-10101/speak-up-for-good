@@ -32,6 +32,19 @@ export interface QuizResponse {
   notes?: string
 }
 
+// Type for coaching sessions
+export interface CoachingSession {
+  id?: string
+  contact_id: string
+  session_date: string
+  session_focus?: string
+  session_notes?: string
+  homework_assigned?: string
+  next_session_goal?: string
+  created_at?: string
+  updated_at?: string
+}
+
 // Type for analytics view
 export interface CRMSummary {
   signup_source: string
@@ -41,6 +54,17 @@ export interface CRMSummary {
   clients: number
   lapsed_clients: number
   client_conversion_rate: number
+}
+
+// Extended contact type with session info
+export interface ContactWithSessions extends QuizResponse {
+  latest_session?: {
+    session_date: string
+    session_focus?: string
+    next_session_goal?: string
+    homework_assigned?: string
+  }
+  session_count?: number
 }
 
 
