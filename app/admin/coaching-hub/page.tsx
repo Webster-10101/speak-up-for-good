@@ -17,6 +17,8 @@ export default function CoachingHub() {
   const [sortBy, setSortBy] = useState<'created_at' | 'updated_at' | 'first_name' | 'status'>('updated_at');
   const [editingCell, setEditingCell] = useState<{contactId: string, field: string} | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [localValues, setLocalValues] = useState<{[key: string]: string}>({});
+  const [updateTimeouts, setUpdateTimeouts] = useState<{[key: string]: NodeJS.Timeout}>({});
 
   useEffect(() => {
     if (status === 'loading') return;
@@ -26,6 +28,13 @@ export default function CoachingHub() {
     }
     fetchContacts();
   }, [session, status, router, filter, statusFilter, sortBy]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(updateTimeouts).forEach(timeout => clearTimeout(timeout));
+    };
+  }, [updateTimeouts]);
 
   async function fetchContacts() {
     try {
@@ -80,6 +89,48 @@ export default function CoachingHub() {
     } catch (error) {
       console.error('Error updating contact:', error);
     }
+  }
+
+  function handleTextInputChange(contactId: string, field: string, value: string) {
+    const key = `${contactId}-${field}`;
+    
+    // Update local value immediately for responsive UI
+    setLocalValues(prev => ({
+      ...prev,
+      [key]: value
+    }));
+
+    // Clear existing timeout
+    if (updateTimeouts[key]) {
+      clearTimeout(updateTimeouts[key]);
+    }
+
+    // Set new timeout for database update
+    const newTimeout = setTimeout(() => {
+      updateContact(contactId, field, value);
+      // Clean up after update
+      setLocalValues(prev => {
+        const newState = { ...prev };
+        delete newState[key];
+        return newState;
+      });
+      setUpdateTimeouts(prev => {
+        const newState = { ...prev };
+        delete newState[key];
+        return newState;
+      });
+    }, 1000); // 1 second delay
+
+    setUpdateTimeouts(prev => ({
+      ...prev,
+      [key]: newTimeout
+    }));
+  }
+
+  function getInputValue(contact: QuizResponse, field: string): string {
+    const key = `${contact.id}-${field}`;
+    // Use local value if it exists, otherwise use contact value
+    return localValues[key] !== undefined ? localValues[key] : (contact[field as keyof QuizResponse] as string || '');
   }
 
   const archetypes = [
@@ -279,8 +330,8 @@ export default function CoachingHub() {
                     <td className="px-4 py-4 max-w-xs">
                       <input
                         type="text"
-                        value={contact.focus_area || ''}
-                        onChange={(e) => updateContact(contact.id!, 'focus_area', e.target.value)}
+                        value={getInputValue(contact, 'focus_area')}
+                        onChange={(e) => handleTextInputChange(contact.id!, 'focus_area', e.target.value)}
                         placeholder="e.g. Confidence, Storytelling..."
                         className="w-full text-sm p-1 border border-gray-300 rounded"
                       />
@@ -288,8 +339,8 @@ export default function CoachingHub() {
                     <td className="px-4 py-4 max-w-xs">
                       <input
                         type="text"
-                        value={contact.last_session_focus || ''}
-                        onChange={(e) => updateContact(contact.id!, 'last_session_focus', e.target.value)}
+                        value={getInputValue(contact, 'last_session_focus')}
+                        onChange={(e) => handleTextInputChange(contact.id!, 'last_session_focus', e.target.value)}
                         placeholder="What did you work on last?"
                         className="w-full text-sm p-1 border border-gray-300 rounded"
                       />
@@ -297,8 +348,8 @@ export default function CoachingHub() {
                     <td className="px-4 py-4 max-w-xs">
                       <input
                         type="text"
-                        value={contact.next_session_goal || ''}
-                        onChange={(e) => updateContact(contact.id!, 'next_session_goal', e.target.value)}
+                        value={getInputValue(contact, 'next_session_goal')}
+                        onChange={(e) => handleTextInputChange(contact.id!, 'next_session_goal', e.target.value)}
                         placeholder="Next goal or homework..."
                         className="w-full text-sm p-1 border border-gray-300 rounded"
                       />
