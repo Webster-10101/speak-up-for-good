@@ -222,7 +222,7 @@ export default function QuizResultsPage() {
                     onClick={() => window.open('https://calendly.com/alistair-webster/speaker-type-chat', '_blank')}
                     className="text-indigo-600 hover:text-indigo-700 font-medium text-sm underline transition-colors duration-200"
                   >
-                    Book a consultation call to discuss your results
+                    Book a free consultation call to discuss your results
                   </button>
                 </div>
               </div>
