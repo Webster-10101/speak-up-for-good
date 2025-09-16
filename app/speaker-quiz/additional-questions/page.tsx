@@ -72,7 +72,10 @@ export default function AdditionalQuestionsPage() {
   useEffect(() => {
     // Redirect if missing required data
     if (!archetype || !email || !firstName || !mainAnswers) {
+      console.log('Missing data, redirecting to quiz:', { archetype, email, firstName, mainAnswers });
       router.push('/speaker-quiz');
+    } else {
+      console.log('Additional questions page loaded with data:', { archetype, email, firstName, mainAnswers });
     }
   }, [archetype, email, firstName, mainAnswers, router]);
 

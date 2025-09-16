@@ -414,6 +414,7 @@ export default function SpeakerQuizPage() {
       answers: JSON.stringify(answers)
     });
     
+    console.log('Navigating to:', `/speaker-quiz/additional-questions?${params.toString()}`);
     window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
   }
 
