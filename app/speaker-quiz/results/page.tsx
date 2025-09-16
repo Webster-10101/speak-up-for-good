@@ -181,25 +181,23 @@ export default function QuizResultsPage() {
                   tailored to your {currentArchetype.title} speaking style.
                 </p>
 
-                <div className="max-w-md mx-auto space-y-4">
-                  <div>
+                <div className="max-w-lg mx-auto space-y-4">
+                  <div className="flex gap-3">
                     <input
                       type="text"
                       placeholder="First name"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       onKeyPress={handleEmailKeyPress}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                     />
-                  </div>
-                  <div>
                     <input
                       type="email"
                       placeholder="Email address"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       onKeyPress={handleEmailKeyPress}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                     />
                   </div>
                   <button
@@ -214,6 +212,19 @@ export default function QuizResultsPage() {
                 <p className="text-xs text-center text-gray-500 mt-4">
                   You'll also join the Speak Up For Good newsletter with weekly speaking tips. Unsubscribe anytime.
                 </p>
+
+                {/* Secondary CTA - Subtle coaching option */}
+                <div className="text-center mt-6">
+                  <p className="text-sm text-gray-600 mb-3">
+                    Want to discuss your results personally?
+                  </p>
+                  <button
+                    onClick={() => window.open('https://calendly.com/alistair-webster/speaker-type-chat', '_blank')}
+                    className="text-indigo-600 hover:text-indigo-700 font-medium text-sm underline transition-colors duration-200"
+                  >
+                    Book a consultation call to discuss your results
+                  </button>
+                </div>
               </div>
             </div>
           </>
