@@ -65,56 +65,42 @@ export default function AdditionalQuestionsPage() {
 
   // Get data from URL params
   const archetype = searchParams.get('archetype');
-  const email = searchParams.get('email');
-  const firstName = searchParams.get('firstName');
   const mainAnswers = searchParams.get('answers');
 
   useEffect(() => {
     // Redirect if missing required data
-    if (!archetype || !email || !firstName || !mainAnswers) {
-      console.log('Missing data, redirecting to quiz:', { archetype, email, firstName, mainAnswers });
+    if (!archetype || !mainAnswers) {
+      console.log('Missing data, redirecting to quiz:', { archetype, mainAnswers });
       router.push('/speaker-quiz');
     } else {
-      console.log('Additional questions page loaded with data:', { archetype, email, firstName, mainAnswers });
+      console.log('Additional questions page loaded with data:', { archetype, mainAnswers });
     }
-  }, [archetype, email, firstName, mainAnswers, router]);
+  }, [archetype, mainAnswers, router]);
 
-  async function handleGetPlan() {
-    if (!archetype || !email || !firstName) return;
+  function handleGetPlan() {
+    if (!archetype) return;
 
-    setLoading(true);
-    try {
-      const response = await fetch('/api/speaker-quiz', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          archetype,
-          email,
-          firstName,
-          answers: mainAnswers ? JSON.parse(mainAnswers) : {},
-          optionalAnswers
-        }),
-      });
-
-      if (response.ok) {
-        router.push(`/speaker-quiz/results?archetype=${archetype}&email=${email}&firstName=${firstName}`);
-      } else {
-        console.error('Failed to submit answers');
-        alert('There was an error submitting your answers. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error submitting answers:', error);
-      alert('There was an error submitting your answers. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+    // Navigate to results page with all collected data
+    const params = new URLSearchParams({
+      archetype,
+      answers: mainAnswers || '{}',
+      optionalAnswers: JSON.stringify(optionalAnswers)
+    });
+    
+    router.push(`/speaker-quiz/results?${params.toString()}`);
   }
 
   function handleSkipToBasic() {
-    if (!archetype || !email || !firstName) return;
+    if (!archetype) return;
     
-    // Submit without optional answers
-    handleGetPlan();
+    // Navigate to results without optional answers
+    const params = new URLSearchParams({
+      archetype,
+      answers: mainAnswers || '{}',
+      optionalAnswers: JSON.stringify({})
+    });
+    
+    router.push(`/speaker-quiz/results?${params.toString()}`);
   }
 
   function nextQuestion() {

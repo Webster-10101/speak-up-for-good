@@ -362,20 +362,14 @@ export default function SpeakerQuizPage() {
   function handleGetPersonalizedResults() {
     if (!archetype) return;
     
-    // If email and firstName are provided, navigate to additional questions
-    if (email && firstName) {
-      const params = new URLSearchParams({
-        archetype,
-        email,
-        firstName,
-        answers: JSON.stringify(answers)
-      });
-      
-      window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
-    } else {
-      // Otherwise, trigger the analysis to show the email collection form
-      handleAnalyzeAnswers();
-    }
+    // Navigate directly to additional questions page
+    const params = new URLSearchParams({
+      archetype,
+      answers: JSON.stringify(answers)
+    });
+    
+    console.log('Navigating to additional questions:', `/speaker-quiz/additional-questions?${params.toString()}`);
+    window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
   }
 
   async function handleSkipToBasic() {
