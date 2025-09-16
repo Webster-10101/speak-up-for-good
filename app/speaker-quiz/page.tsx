@@ -22,13 +22,6 @@ type Question = {
   }[];
 };
 
-type OptionalQuestion = {
-  id: string;
-  prompt: string;
-  type: 'multiple-choice' | 'multiple-select' | 'text';
-  options?: string[];
-  placeholder?: string;
-};
 
 const QUESTIONS: Question[] = [
   {
@@ -137,50 +130,6 @@ const QUESTIONS: Question[] = [
   },
 ];
 
-const OPTIONAL_QUESTIONS: OptionalQuestion[] = [
-  {
-    id: 'situations',
-    prompt: 'The situations I most want to improve in are... (select all that apply)',
-    type: 'multiple-select',
-    options: ['Work meetings', 'Social settings', 'Presentations', 'Everyday conversations', 'Public speaking events']
-  },
-  {
-    id: 'struggle',
-    prompt: 'When it comes to speaking, I struggle most with...',
-    type: 'text',
-    placeholder: 'e.g., finding the right words, feeling confident, keeping people engaged...'
-  },
-  {
-    id: 'authentic',
-    prompt: 'I feel most like myself when I\'m speaking...',
-    type: 'text',
-    placeholder: 'e.g., with close friends, about topics I\'m passionate about, in small groups...'
-  },
-  {
-    id: 'world_class',
-    prompt: 'If I woke up tomorrow as a world-class speaker, I\'d know because...',
-    type: 'text',
-    placeholder: 'e.g., I\'d feel confident in any room, people would seek my input...'
-  },
-  {
-    id: 'confidence_moment',
-    prompt: 'The moment I\'d love to feel more confident in is...',
-    type: 'text',
-    placeholder: 'e.g., presenting to my boss, speaking up in meetings, giving toasts...'
-  },
-  {
-    id: 'life_change',
-    prompt: 'Being a stronger speaker would change things for me by...',
-    type: 'text',
-    placeholder: 'e.g., advancing my career, building better relationships, sharing my ideas...'
-  },
-  {
-    id: 'curiosity',
-    prompt: 'Something I\'ve always wondered about speaking is...',
-    type: 'text',
-    placeholder: 'e.g., how some people make it look so easy, what makes a speaker memorable...'
-  }
-];
 
 function scoreArchetype(answers: Record<string, number>): Archetype | null {
   const totals: Record<Archetype, number> = {
@@ -381,8 +330,6 @@ export default function SpeakerQuizPage() {
   const [quizStarted, setQuizStarted] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
-  const [showOptionalQuestions, setShowOptionalQuestions] = useState(false);
-  const [optionalAnswers, setOptionalAnswers] = useState<Record<string, string | string[]>>({});
   
   const archetype = useMemo(() => scoreArchetype(answers), [answers]);
   const progress = (Object.keys(answers).length / QUESTIONS.length) * 100;
@@ -412,7 +359,21 @@ export default function SpeakerQuizPage() {
     }, 100);
   }
 
-  async function handleGetPlan() {
+  function handleGetPersonalizedResults() {
+    if (!archetype || !email || !firstName) return;
+    
+    // Navigate to additional questions page with current data
+    const params = new URLSearchParams({
+      archetype,
+      email,
+      firstName,
+      answers: JSON.stringify(answers)
+    });
+    
+    window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
+  }
+
+  async function handleSkipToBasic() {
     if (!archetype || !email || !firstName) return;
     setLoading(true);
     
@@ -420,7 +381,7 @@ export default function SpeakerQuizPage() {
       const res = await fetch('/api/speaker-quiz', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, firstName, archetype, answers, optionalAnswers }),
+        body: JSON.stringify({ email, firstName, archetype, answers, optionalAnswers: {} }),
       });
       const data = await res.json();
       
@@ -759,14 +720,14 @@ export default function SpeakerQuizPage() {
                     </div>
                     <div className="space-y-4">
                       <button
-                        onClick={() => setShowOptionalQuestions(true)}
+                        onClick={handleGetPersonalizedResults}
                         className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                       >
                         Next: Get Personalized Results ➡️
                       </button>
                       <button
-                        onClick={handleAnalyzeAnswers}
-                        disabled={analyzing}
+                        onClick={handleSkipToBasic}
+                        disabled={loading}
                         className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-xl text-sm transition-all duration-300"
                       >
                         Skip to Basic Results
@@ -778,113 +739,6 @@ export default function SpeakerQuizPage() {
             </div>
           )}
 
-          {/* Optional Questions Section */}
-          {showOptionalQuestions && !showResults && (
-            <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full mb-4">
-                  <span className="text-2xl">✨</span>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Get Even More Personalized Results!</h3>
-                <div className="text-gray-600 max-w-2xl mx-auto space-y-3">
-                  <p>
-                    These optional questions help me create a truly customized growth plan that speaks to your specific situation and goals.
-                  </p>
-                  <p className="text-sm bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <strong>💡 Pro tip:</strong> You can skip these if you don't have time, but your results will be much improved if you complete them. The more detail and specific examples you provide, the better your personalized plan will be!
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-6 max-w-2xl mx-auto">
-                {OPTIONAL_QUESTIONS.map((question, index) => (
-                  <div key={question.id} className="bg-gray-50 rounded-lg p-6">
-                    <label className="block text-sm font-semibold text-gray-800 mb-3">
-                      {index + 1}. {question.prompt}
-                    </label>
-                    
-                    {question.type === 'multiple-choice' ? (
-                      <div className="space-y-2">
-                        {question.options?.map((option, optionIndex) => (
-                          <label key={optionIndex} className="flex items-center space-x-3 cursor-pointer">
-                            <input
-                              type="radio"
-                              name={question.id}
-                              value={option}
-                              checked={optionalAnswers[question.id] === option}
-                              onChange={(e) => setOptionalAnswers(prev => ({
-                                ...prev,
-                                [question.id]: e.target.value
-                              }))}
-                              className="w-4 h-4 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <span className="text-gray-700">{option}</span>
-                          </label>
-                        ))}
-                      </div>
-                    ) : question.type === 'multiple-select' ? (
-                      <div className="space-y-2">
-                        {question.options?.map((option, optionIndex) => (
-                          <label key={optionIndex} className="flex items-center space-x-3 cursor-pointer">
-                            <input
-                              type="checkbox"
-                              value={option}
-                              checked={Array.isArray(optionalAnswers[question.id]) && (optionalAnswers[question.id] as string[]).includes(option)}
-                              onChange={(e) => {
-                                setOptionalAnswers(prev => {
-                                  const currentSelections = Array.isArray(prev[question.id]) ? prev[question.id] as string[] : [];
-                                  if (e.target.checked) {
-                                    return {
-                                      ...prev,
-                                      [question.id]: [...currentSelections, option]
-                                    };
-                                  } else {
-                                    return {
-                                      ...prev,
-                                      [question.id]: currentSelections.filter(item => item !== option)
-                                    };
-                                  }
-                                });
-                              }}
-                              className="w-4 h-4 text-indigo-600 focus:ring-indigo-500 rounded"
-                            />
-                            <span className="text-gray-700">{option}</span>
-                          </label>
-                        ))}
-                      </div>
-                    ) : (
-                      <textarea
-                        value={optionalAnswers[question.id] || ''}
-                        onChange={(e) => setOptionalAnswers(prev => ({
-                          ...prev,
-                          [question.id]: e.target.value
-                        }))}
-                        placeholder={question.placeholder}
-                        rows={3}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <div className="text-center mt-8 space-y-4">
-                <button
-                  onClick={handleAnalyzeAnswers}
-                  disabled={analyzing}
-                  className="w-full max-w-md mx-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  Create My Personalized Plan! 🎯
-                </button>
-                <button
-                  onClick={handleAnalyzeAnswers}
-                  className="block mx-auto text-gray-600 hover:text-gray-800 text-sm underline"
-                >
-                  Skip and continue with basic results
-                </button>
-              </div>
-            </div>
-          )}
 
           {showResults && (
             <div className="bg-gray-50 rounded-xl p-6">

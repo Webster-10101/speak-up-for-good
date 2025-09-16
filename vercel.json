@@ -1,0 +1,10 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "coaching-hub-development": false
+    }
+  }
+}
+
+
