@@ -360,17 +360,22 @@ export default function SpeakerQuizPage() {
   }
 
   function handleGetPersonalizedResults() {
-    if (!archetype || !email || !firstName) return;
+    if (!archetype) return;
     
-    // Navigate to additional questions page with current data
-    const params = new URLSearchParams({
-      archetype,
-      email,
-      firstName,
-      answers: JSON.stringify(answers)
-    });
-    
-    window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
+    // If email and firstName are provided, navigate to additional questions
+    if (email && firstName) {
+      const params = new URLSearchParams({
+        archetype,
+        email,
+        firstName,
+        answers: JSON.stringify(answers)
+      });
+      
+      window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
+    } else {
+      // Otherwise, trigger the analysis to show the email collection form
+      handleAnalyzeAnswers();
+    }
   }
 
   async function handleSkipToBasic() {
@@ -396,6 +401,20 @@ export default function SpeakerQuizPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleGetPlan() {
+    if (!archetype || !email || !firstName) return;
+    
+    // Navigate to additional questions page with collected data
+    const params = new URLSearchParams({
+      archetype,
+      email,
+      firstName,
+      answers: JSON.stringify(answers)
+    });
+    
+    window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
   }
 
   const handleEmailKeyPress = (e: React.KeyboardEvent) => {
@@ -568,7 +587,7 @@ export default function SpeakerQuizPage() {
                       disabled={!email || !firstName || loading}
                       className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-4 py-3 rounded-lg transition-colors duration-200 w-full"
                     >
-                      {loading ? 'Generating...' : 'Get My Personalized Plan'}
+                      Continue to Additional Questions
                     </button>
                   </div>
                   <p className="text-xs text-center text-gray-500 mt-3">
