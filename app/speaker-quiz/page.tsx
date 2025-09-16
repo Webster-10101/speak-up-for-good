@@ -423,9 +423,6 @@ export default function SpeakerQuizPage() {
 
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-8">
-              <span className="inline-block px-4 py-2 bg-indigo-100 text-indigo-800 text-sm font-medium rounded-full mb-6">
-                Free Speaker Assessment
-              </span>
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
                 What Kind of
                 <span className="text-indigo-600"> Speaker</span>
@@ -616,7 +613,7 @@ export default function SpeakerQuizPage() {
                     onClick={() => window.open('https://calendly.com/alistair-webster/speaker-type-chat', '_blank')}
                     className="text-indigo-600 hover:text-indigo-700 font-medium text-sm underline transition-colors duration-200"
                   >
-                    Book a free 30-minute consultation call
+                    Book a consultation call to discuss your results
                   </button>
                 </div>
               </div>
