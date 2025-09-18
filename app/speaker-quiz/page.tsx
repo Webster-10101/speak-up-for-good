@@ -479,7 +479,7 @@ export default function SpeakerQuizPage() {
               Start Your Speaker Assessment
             </button>
             <p className="text-sm text-gray-500 mt-4">
-              Takes 2 minutes • No payment required • Get results instantly
+              Takes 2 minutes • Instant results • Actionable insights 
             </p>
           </div>
         </div>
