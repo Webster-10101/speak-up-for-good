@@ -38,7 +38,7 @@ const SocialProof = () => {
                 &quot;{testimonial.quote}&quot;
               </blockquote>
               <div className="text-sm text-slate-600">
-                <span className="font-medium">— {testimonial.author}</span>, Ultraspeaking Student
+                <span className="font-medium">— {testimonial.author}</span>
               </div>
             </div>
           ))}
