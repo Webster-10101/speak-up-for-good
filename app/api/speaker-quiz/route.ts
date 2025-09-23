@@ -192,13 +192,13 @@ function calculateSlidingScales(answers: Record<string, any>): Record<string, nu
 
 // Generate personalized speaking plan using OpenAI
 // Speaker type summaries based on the provided documentation
-const SPEAKER_SUMMARIES: Record<Archetype, {
+const SPEAKER_SUMMARIES: Partial<Record<Archetype, {
   description: string;
   strengths: string[];
   whereItShowsUp: string[];
   whereToGrow: string[];
   finalThought: string;
-}> = {
+}>> = {
   'Rambler': {
     description: `You've got energy to spare. When you talk, ideas tumble out fast and furious, and people can feel the spark. The trouble is, that spark sometimes sets everything on fire at once — words rush out, sentences spiral, and clarity gets lost in the noise.
 
@@ -485,11 +485,11 @@ THEIR SPEAKING PROFILE:
 - Energy: ${Math.round(slidingScales.energy)}/100 (${slidingScales.energy > 50 ? 'higher energy' : 'more calm'})
 
 CORE CONTENT TO WORK WITH:
-**Description:** ${summary.description}
-**Strengths:** ${summary.strengths.map(strength => `- ${strength}`).join('\n')}
-**Where It Shows Up:** ${summary.whereItShowsUp.map(example => `- ${example}`).join('\n')}
-**Growth Areas:** ${summary.whereToGrow.map(tip => `- ${tip}`).join('\n')}
-**Final Thought:** ${summary.finalThought}
+**Description:** ${summary?.description || 'A speaker working on their communication skills'}
+**Strengths:** ${summary?.strengths?.map(strength => `- ${strength}`).join('\n') || '- Eager to improve communication skills'}
+**Where It Shows Up:** ${summary?.whereItShowsUp?.map(example => `- ${example}`).join('\n') || '- Various speaking situations'}
+**Growth Areas:** ${summary?.whereToGrow?.map(tip => `- ${tip}`).join('\n') || '- Continue developing speaking confidence'}
+**Final Thought:** ${summary?.finalThought || 'Every speaker has room to grow and improve'}
 
 ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? `
 WHAT THEY SHARED:
@@ -594,15 +594,15 @@ function generateStaticSpeakingPlan(archetype: Archetype, answers: Record<string
 
 ## Who You Are as a Speaker
 
-${summary.description}
+${summary?.description || 'A dedicated speaker working on improving their communication skills'}
 
 ## Your Unique Strengths
 
-${summary.strengths.map(strength => `• ${strength}`).join('\n')}
+${summary?.strengths?.map(strength => `• ${strength}`).join('\n') || '• Committed to improving speaking skills'}
 
 ## Where It Might Show Up
 
-${summary.whereItShowsUp.map(example => `**${example.split(':')[0]}:** ${example.split(':')[1]}`).join('\n\n')}
+${summary?.whereItShowsUp?.map(example => `**${example.split(':')[0]}:** ${example.split(':')[1]}`).join('\n\n') || 'In various speaking situations where growth opportunities arise'}
 
 ## Where to Grow
 
@@ -617,13 +617,13 @@ archetype === 'Rationalist' ? 'purely logical to logical and human' :
 
 Here are three things that help:
 
-${summary.whereToGrow.map(tip => `• ${tip}`).join('\n\n')}
+${summary?.whereToGrow?.map(tip => `• ${tip}`).join('\n\n') || '• Continue developing confidence and clarity in communication'}
 
 ${struggleResponse ? `## Addressing Your Speaking Challenge\n\n${struggleResponse}\n\n` : ''}${coachResponse ? `## A Coach's Response to Your Question\n\n${coachResponse}\n\n` : ''}
 
 ## Final Thought
 
-${summary.finalThought}`;
+${summary?.finalThought || 'Every speaker has potential to grow and connect more powerfully with their audience'}`;
 
   // Add personalized context if available
   if (optionalAnswers && Object.keys(optionalAnswers).length > 0) {
@@ -656,16 +656,24 @@ ${summary.finalThought}`;
 
 // Get MailerLite group IDs based on speaker archetype
 function getMailerLiteGroups(archetype: Archetype): string[] {
-  // MailerLite Group IDs mapping
-  const groupIds = {
+  // MailerLite Group IDs mapping - handle both formats
+  const groupIds: Record<string, string[]> = {
     'Rambler': ['164508817941333197'],
+    'rambler': ['164508817941333197'],
     'Overthinker': ['164508824256907051'], 
+    'overthinker': ['164508824256907051'], 
     'Self-Doubter': ['164508829277488166'],
+    'doubter': ['164508829277488166'],
     'People Pleaser': ['164508833936311822'],
+    'pleaser': ['164508833936311822'],
     'Performer': ['164508838844695656'],
+    'performer': ['164508838844695656'],
     'Intense Speaker': ['164508843953358407'],
+    'intense': ['164508843953358407'],
     'Rationalist': ['164508850141005543'],
-    'Minimalist': ['164508850141005544'] // Add Minimalist group ID
+    'rationalist': ['164508850141005543'],
+    'Minimalist': ['164508850141005544'],
+    'minimalist': ['164508850141005544']
   };
 
   // Always add to the "All Quiz Participants" group + their specific archetype group

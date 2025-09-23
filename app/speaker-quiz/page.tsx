@@ -1,27 +1,27 @@
-&apos;use client&apos;;
+'use client';
 
-import { useMemo, useState, useEffect } from &apos;react&apos;;
-import Link from &apos;next/link&apos;;
-import Image from &apos;next/image&apos;;
+import { useMemo, useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 type Archetype =
-  | &apos;rambler&apos;
-  | &apos;overthinker&apos;
-  | &apos;doubter&apos;
-  | &apos;pleaser&apos;
-  | &apos;performer&apos;
-  | &apos;intense&apos;
-  | &apos;rationalist&apos;
-  | &apos;minimalist&apos;;
+  | 'rambler'
+  | 'overthinker'
+  | 'doubter'
+  | 'pleaser'
+  | 'performer'
+  | 'intense'
+  | 'rationalist'
+  | 'minimalist';
 
 type Question = {
   id: string;
   prompt: string;
-  type: &apos;single&apos; | &apos;multi&apos; | &apos;rating&apos;;
+  type: 'single' | 'multi' | 'rating';
   options?: {
     id: string;
     label: string;
-    flag?: Archetype | &apos;neutral&apos;;
+    flag?: Archetype | 'neutral';
   }[];
   min?: number;  // for rating
   max?: number;  // for rating
@@ -52,120 +52,120 @@ type ScoringResult = {
 
 const QUESTIONS: Question[] = [
   {
-    id: &apos;q1&apos;,
-    prompt: &apos;If you put me on stage, my reaction will be to…&apos;,
-    type: &apos;multi&apos;,
+    id: 'q1',
+    prompt: 'If you put me on stage, my reaction will be to…',
+    type: 'multi',
     maxSelections: 3,
     options: [
-      { id: &apos;rambler&apos;, label: &apos;Fill the space with ideas and energy&apos;, flag: &apos;rambler&apos; },
-      { id: &apos;overthinker&apos;, label: &apos;Hold back until I\&apos;m "ready"&apos;, flag: &apos;overthinker&apos; },
-      { id: &apos;doubter&apos;, label: &apos;Want to speak but second-guess myself&apos;, flag: &apos;doubter&apos; },
-      { id: &apos;pleaser&apos;, label: &apos;Say what I think others want to hear&apos;, flag: &apos;pleaser&apos; },
-      { id: &apos;performer&apos;, label: &apos;Turn on polish and performance mode&apos;, flag: &apos;performer&apos; },
-      { id: &apos;intense&apos;, label: &apos;Come in hot and dominate&apos;, flag: &apos;intense&apos; },
-      { id: &apos;rationalist&apos;, label: &apos;Focus on facts and logic&apos;, flag: &apos;rationalist&apos; },
-      { id: &apos;minimalist&apos;, label: &apos;Say exactly what needs to be said&apos;, flag: &apos;minimalist&apos; },
+      { id: 'rambler', label: 'Fill the space with ideas and energy', flag: 'rambler' },
+      { id: 'overthinker', label: 'Hold back until I\'m "ready"', flag: 'overthinker' },
+      { id: 'doubter', label: 'Want to speak but second-guess myself', flag: 'doubter' },
+      { id: 'pleaser', label: 'Say what I think others want to hear', flag: 'pleaser' },
+      { id: 'performer', label: 'Turn on polish and performance mode', flag: 'performer' },
+      { id: 'intense', label: 'Come in hot and dominate', flag: 'intense' },
+      { id: 'rationalist', label: 'Focus on facts and logic', flag: 'rationalist' },
+      { id: 'minimalist', label: 'Say exactly what needs to be said', flag: 'minimalist' },
     ],
   },
   {
-    id: &apos;q2&apos;,
-    prompt: &apos;When I have to speak without preparation, I typically…&apos;,
-    type: &apos;single&apos;,
+    id: 'q2',
+    prompt: 'When I have to speak without preparation, I typically…',
+    type: 'single',
     options: [
-      { id: &apos;dive_in&apos;, label: &apos;Dive in and find my way as I go&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;stall_time&apos;, label: &apos;Ask questions or stall for thinking time&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;apologize_first&apos;, label: &apos;Apologize for not being prepared&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;say_less&apos;, label: &apos;Keep it very brief to minimize risk&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;perform_anyway&apos;, label: &apos;Perform confidently even without content&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;speak_forcefully&apos;, label: &apos;Speak with conviction regardless&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;stick_to_facts&apos;, label: &apos;Stick to what I know for certain&apos;, flag: &apos;neutral&apos; },
+      { id: 'dive_in', label: 'Dive in and find my way as I go', flag: 'neutral' },
+      { id: 'stall_time', label: 'Ask questions or stall for thinking time', flag: 'neutral' },
+      { id: 'apologize_first', label: 'Apologize for not being prepared', flag: 'neutral' },
+      { id: 'say_less', label: 'Keep it very brief to minimize risk', flag: 'neutral' },
+      { id: 'perform_anyway', label: 'Perform confidently even without content', flag: 'neutral' },
+      { id: 'speak_forcefully', label: 'Speak with conviction regardless', flag: 'neutral' },
+      { id: 'stick_to_facts', label: 'Stick to what I know for certain', flag: 'neutral' },
     ],
   },
   {
-    id: &apos;q3&apos;,
-    prompt: &apos;On a scale of 1–10, how confident do you feel speaking in high-stakes situations?&apos;,
-    type: &apos;rating&apos;,
+    id: 'q3',
+    prompt: 'On a scale of 1–10, how confident do you feel speaking in high-stakes situations?',
+    type: 'rating',
     min: 1,
     max: 10,
   },
   {
-    id: &apos;q4&apos;,
-    prompt: &apos;When someone disagrees with me publicly, I tend to…&apos;,
-    type: &apos;single&apos;,
+    id: 'q4',
+    prompt: 'When someone disagrees with me publicly, I tend to…',
+    type: 'single',
     options: [
-      { id: &apos;explain_more&apos;, label: &apos;Explain my point with more examples and details&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;think_first&apos;, label: &apos;Pause to carefully consider their perspective&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;soften_position&apos;, label: &apos;Soften my position to find middle ground&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;accommodate&apos;, label: &apos;Look for ways to make everyone comfortable&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;defend_polished&apos;, label: &apos;Defend my view with polished confidence&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;push_back&apos;, label: &apos;Push back strongly on what I believe&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;present_evidence&apos;, label: &apos;Present clear evidence for my position&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;state_briefly&apos;, label: &apos;State my view briefly and move on&apos;, flag: &apos;neutral&apos; },
+      { id: 'explain_more', label: 'Explain my point with more examples and details', flag: 'neutral' },
+      { id: 'think_first', label: 'Pause to carefully consider their perspective', flag: 'neutral' },
+      { id: 'soften_position', label: 'Soften my position to find middle ground', flag: 'neutral' },
+      { id: 'accommodate', label: 'Look for ways to make everyone comfortable', flag: 'neutral' },
+      { id: 'defend_polished', label: 'Defend my view with polished confidence', flag: 'neutral' },
+      { id: 'push_back', label: 'Push back strongly on what I believe', flag: 'neutral' },
+      { id: 'present_evidence', label: 'Present clear evidence for my position', flag: 'neutral' },
+      { id: 'state_briefly', label: 'State my view briefly and move on', flag: 'neutral' },
     ],
   },
   {
-    id: &apos;q5&apos;,
-    prompt: &apos;I can find words quickly when I\&apos;m put on the spot&apos;,
-    type: &apos;rating&apos;,
+    id: 'q5',
+    prompt: 'I can find words quickly when I\'m put on the spot',
+    type: 'rating',
     min: 1,
     max: 10,
   },
   {
-    id: &apos;q6&apos;,
-    prompt: &apos;I stay on one idea at a time rather than jumping around&apos;,
-    type: &apos;rating&apos;,
+    id: 'q6',
+    prompt: 'I stay on one idea at a time rather than jumping around',
+    type: 'rating',
     min: 1,
     max: 10,
   },
   {
-    id: &apos;q7&apos;,
-    prompt: &apos;When speaking, I feel like I\&apos;m performing rather than being myself&apos;,
-    type: &apos;rating&apos;,
+    id: 'q7',
+    prompt: 'When speaking, I feel like I\'m performing rather than being myself',
+    type: 'rating',
     min: 1,
     max: 10,
   },
   {
-    id: &apos;q8&apos;,
-    prompt: &apos;After speaking, I usually think…&apos;,
-    type: &apos;single&apos;,
+    id: 'q8',
+    prompt: 'After speaking, I usually think…',
+    type: 'single',
     options: [
-      { id: &apos;said_too_much&apos;, label: &apos;"I probably said too much, but I covered everything"&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;should_have_said&apos;, label: &apos;"I should have said that differently"&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;sounded_dumb&apos;, label: &apos;"I hope I didn\&apos;t sound stupid"&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;hope_comfortable&apos;, label: &apos;"I hope everyone felt comfortable with that"&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;looked_good&apos;, label: &apos;"That came across well and professional"&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;made_impact&apos;, label: &apos;"I made my point powerfully"&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;was_accurate&apos;, label: &apos;"The information was accurate and clear"&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;job_done&apos;, label: &apos;"I said what needed to be said"&apos;, flag: &apos;neutral&apos; },
+      { id: 'said_too_much', label: '"I probably said too much, but I covered everything"', flag: 'neutral' },
+      { id: 'should_have_said', label: '"I should have said that differently"', flag: 'neutral' },
+      { id: 'sounded_dumb', label: '"I hope I didn\'t sound stupid"', flag: 'neutral' },
+      { id: 'hope_comfortable', label: '"I hope everyone felt comfortable with that"', flag: 'neutral' },
+      { id: 'looked_good', label: '"That came across well and professional"', flag: 'neutral' },
+      { id: 'made_impact', label: '"I made my point powerfully"', flag: 'neutral' },
+      { id: 'was_accurate', label: '"The information was accurate and clear"', flag: 'neutral' },
+      { id: 'job_done', label: '"I said what needed to be said"', flag: 'neutral' },
     ],
   },
   {
-    id: &apos;q9&apos;,
-    prompt: &apos;Before speaking, I usually prepare by…&apos;,
-    type: &apos;multi&apos;,
+    id: 'q9',
+    prompt: 'Before speaking, I usually prepare by…',
+    type: 'multi',
     maxSelections: 2,
     options: [
-      { id: &apos;overprepare&apos;, label: &apos;Over-preparing every detail and contingency&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;loose&apos;, label: &apos;Making a loose outline with key points&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;improv&apos;, label: &apos;Relying on enthusiasm and improvisation&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;polish&apos;, label: &apos;Practicing delivery and polishing presentation&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;structure&apos;, label: &apos;Researching thoroughly and building logical flow&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;minimal&apos;, label: &apos;Doing minimal prep - just clarifying the core message&apos;, flag: &apos;neutral&apos; },
+      { id: 'overprepare', label: 'Over-preparing every detail and contingency', flag: 'neutral' },
+      { id: 'loose', label: 'Making a loose outline with key points', flag: 'neutral' },
+      { id: 'improv', label: 'Relying on enthusiasm and improvisation', flag: 'neutral' },
+      { id: 'polish', label: 'Practicing delivery and polishing presentation', flag: 'neutral' },
+      { id: 'structure', label: 'Researching thoroughly and building logical flow', flag: 'neutral' },
+      { id: 'minimal', label: 'Doing minimal prep - just clarifying the core message', flag: 'neutral' },
     ],
   },
   {
-    id: &apos;q10&apos;,
-    prompt: &apos;My biggest speaking challenge is usually…&apos;,
-    type: &apos;single&apos;,
+    id: 'q10',
+    prompt: 'My biggest speaking challenge is usually…',
+    type: 'single',
     options: [
-      { id: &apos;staying_focused&apos;, label: &apos;Staying focused and not going off on tangents&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;starting_without_perfect&apos;, label: &apos;Starting to speak before I feel perfectly ready&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;believing_valuable&apos;, label: &apos;Believing I have something valuable to contribute&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;being_direct&apos;, label: &apos;Being direct when it might create tension&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;being_authentic&apos;, label: &apos;Being authentic instead of just polished&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;moderating_energy&apos;, label: &apos;Moderating my energy and reading the room&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;making_engaging&apos;, label: &apos;Making technical content engaging and relatable&apos;, flag: &apos;neutral&apos; },
-      { id: &apos;knowing_when_stop&apos;, label: &apos;Knowing when I\&apos;ve said enough&apos;, flag: &apos;neutral&apos; },
+      { id: 'staying_focused', label: 'Staying focused and not going off on tangents', flag: 'neutral' },
+      { id: 'starting_without_perfect', label: 'Starting to speak before I feel perfectly ready', flag: 'neutral' },
+      { id: 'believing_valuable', label: 'Believing I have something valuable to contribute', flag: 'neutral' },
+      { id: 'being_direct', label: 'Being direct when it might create tension', flag: 'neutral' },
+      { id: 'being_authentic', label: 'Being authentic instead of just polished', flag: 'neutral' },
+      { id: 'moderating_energy', label: 'Moderating my energy and reading the room', flag: 'neutral' },
+      { id: 'making_engaging', label: 'Making technical content engaging and relatable', flag: 'neutral' },
+      { id: 'knowing_when_stop', label: 'Knowing when I\'ve said enough', flag: 'neutral' },
     ],
   },
 ];
@@ -193,18 +193,18 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
   // Extract answers - handle both new format (arrays/numbers) and legacy format
   const q1 = Array.isArray(answers.q1) ? answers.q1 : [];
   const q2 = answers.q2;
-  const q3 = typeof answers.q3 === &apos;number&apos; ? answers.q3 : 5; // default to mid if missing
-  const q4 = typeof answers.q4 === &apos;number&apos; ? answers.q4 : 5;
-  const q5 = typeof answers.q5 === &apos;number&apos; ? answers.q5 : 5;
-  const q6 = typeof answers.q6 === &apos;number&apos; ? answers.q6 : 5;
-  const q7 = typeof answers.q7 === &apos;number&apos; ? answers.q7 : 5;
-  const q8 = typeof answers.q8 === &apos;number&apos; ? answers.q8 : 5;
+  const q3 = typeof answers.q3 === 'number' ? answers.q3 : 5; // default to mid if missing
+  const q4 = typeof answers.q4 === 'number' ? answers.q4 : 5;
+  const q5 = typeof answers.q5 === 'number' ? answers.q5 : 5;
+  const q6 = typeof answers.q6 === 'number' ? answers.q6 : 5;
+  const q7 = typeof answers.q7 === 'number' ? answers.q7 : 5;
+  const q8 = typeof answers.q8 === 'number' ? answers.q8 : 5;
   const q9 = Array.isArray(answers.q9) ? answers.q9 : [];
   const q10 = Array.isArray(answers.q10) ? answers.q10 : [];
 
   // Base flags from Q1
   for (const selection of q1) {
-    if (typeof selection === &apos;string&apos; && selection in scores) {
+    if (typeof selection === 'string' && selection in scores) {
       scores[selection as Archetype] += 3;
     }
   }
@@ -212,28 +212,28 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
   // Q9 preparation style - Enhanced scoring
   for (const prep of q9) {
     switch (prep) {
-      case &apos;overprepare&apos;:
+      case 'overprepare':
         scores.overthinker += 2;
         scores.doubter += 1;
         scores.rationalist += 1; // Thorough preparation
         break;
-      case &apos;loose&apos;:
+      case 'loose':
         scores.rambler += 2; // Flexible, go-with-flow approach
         scores.pleaser += 1;
         break;
-      case &apos;improv&apos;:
+      case 'improv':
         scores.rambler += 2;
         scores.intense += 2; // Comfort with uncertainty
         break;
-      case &apos;polish&apos;:
+      case 'polish':
         scores.performer += 2;
         scores.pleaser += 1; // Wants to look good
         break;
-      case &apos;structure&apos;:
+      case 'structure':
         scores.rationalist += 2;
         scores.minimalist += 1; // Clear, organized approach
         break;
-      case &apos;minimal&apos;:
+      case 'minimal':
         scores.minimalist += 2;
         scores.rationalist += 1; // Efficient preparation
         break;
@@ -242,29 +242,29 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
 
   // Q2 unprepared speaking behavior  
   switch (q2) {
-    case &apos;dive_in&apos;:
+    case 'dive_in':
       scores.rambler += 2;
       scores.intense += 1;
       break;
-    case &apos;stall_time&apos;:
+    case 'stall_time':
       scores.overthinker += 2;
       scores.rationalist += 1;
       break;
-    case &apos;apologize_first&apos;:
+    case 'apologize_first':
       scores.doubter += 2;
       scores.pleaser += 1;
       break;
-    case &apos;say_less&apos;:
+    case 'say_less':
       scores.minimalist += 2;
       scores.doubter += 1;
       break;
-    case &apos;perform_anyway&apos;:
+    case 'perform_anyway':
       scores.performer += 2;
       break;
-    case &apos;speak_forcefully&apos;:
+    case 'speak_forcefully':
       scores.intense += 2;
       break;
-    case &apos;stick_to_facts&apos;:
+    case 'stick_to_facts':
       scores.rationalist += 2;
       break;
   }
@@ -273,28 +273,28 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
   // Q8 post-speaking thoughts
   const q8Response = answers.q8;
   switch (q8Response) {
-    case &apos;said_too_much&apos;:
+    case 'said_too_much':
       scores.rambler += 2;
       break;
-    case &apos;should_have_said&apos;:
+    case 'should_have_said':
       scores.overthinker += 2;
       break;
-    case &apos;sounded_dumb&apos;:
+    case 'sounded_dumb':
       scores.doubter += 2;
       break;
-    case &apos;hope_comfortable&apos;:
+    case 'hope_comfortable':
       scores.pleaser += 2;
       break;
-    case &apos;looked_good&apos;:
+    case 'looked_good':
       scores.performer += 2;
       break;
-    case &apos;made_impact&apos;:
+    case 'made_impact':
       scores.intense += 2;
       break;
-    case &apos;was_accurate&apos;:
+    case 'was_accurate':
       scores.rationalist += 2;
       break;
-    case &apos;job_done&apos;:
+    case 'job_done':
       scores.minimalist += 2;
       break;
   }
@@ -333,29 +333,29 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
   // Q4: This was missing from scoring! Adding it based on the question options
   const q4Response = answers.q4;
   switch (q4Response) {
-    case &apos;explain_more&apos;:
+    case 'explain_more':
       scores.rambler += 2;
       break;
-    case &apos;think_first&apos;:
+    case 'think_first':
       scores.overthinker += 2;
       break;
-    case &apos;soften_position&apos;:
+    case 'soften_position':
       scores.doubter += 1;
       scores.pleaser += 1;
       break;
-    case &apos;accommodate&apos;:
+    case 'accommodate':
       scores.pleaser += 2;
       break;
-    case &apos;defend_polished&apos;:
+    case 'defend_polished':
       scores.performer += 2;
       break;
-    case &apos;push_back&apos;:
+    case 'push_back':
       scores.intense += 2;
       break;
-    case &apos;present_evidence&apos;:
+    case 'present_evidence':
       scores.rationalist += 2;
       break;
-    case &apos;state_briefly&apos;:
+    case 'state_briefly':
       scores.minimalist += 2;
       break;
   }
@@ -385,28 +385,28 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
   // Q10 biggest challenge
   const q10Response = answers.q10;
   switch (q10Response) {
-    case &apos;staying_focused&apos;:
+    case 'staying_focused':
       scores.rambler += 2;
       break;
-    case &apos;starting_without_perfect&apos;:
+    case 'starting_without_perfect':
       scores.overthinker += 2;
       break;
-    case &apos;believing_valuable&apos;:
+    case 'believing_valuable':
       scores.doubter += 2;
       break;
-    case &apos;being_direct&apos;:
+    case 'being_direct':
       scores.pleaser += 2;
       break;
-    case &apos;being_authentic&apos;:
+    case 'being_authentic':
       scores.performer += 2;
       break;
-    case &apos;moderating_energy&apos;:
+    case 'moderating_energy':
       scores.intense += 2;
       break;
-    case &apos;making_engaging&apos;:
+    case 'making_engaging':
       scores.rationalist += 2;
       break;
-    case &apos;knowing_when_stop&apos;:
+    case 'knowing_when_stop':
       scores.minimalist += 2;
       break;
   }
@@ -430,16 +430,16 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
     // 2. Then Q9 contribution
     let q9ContribA = 0, q9ContribB = 0;
     for (const prep of q9) {
-      if ((prep === &apos;overprepare&apos; && a[0] === &apos;overthinker&apos;) ||
-          (prep === &apos;improv&apos; && a[0] === &apos;rambler&apos;) ||
-          (prep === &apos;polish&apos; && a[0] === &apos;performer&apos;) ||
-          (prep === &apos;structure&apos; && a[0] === &apos;rationalist&apos;)) {
+      if ((prep === 'overprepare' && a[0] === 'overthinker') ||
+          (prep === 'improv' && a[0] === 'rambler') ||
+          (prep === 'polish' && a[0] === 'performer') ||
+          (prep === 'structure' && a[0] === 'rationalist')) {
         q9ContribA += 2;
       }
-      if ((prep === &apos;overprepare&apos; && b[0] === &apos;overthinker&apos;) ||
-          (prep === &apos;improv&apos; && b[0] === &apos;rambler&apos;) ||
-          (prep === &apos;polish&apos; && b[0] === &apos;performer&apos;) ||
-          (prep === &apos;structure&apos; && b[0] === &apos;rationalist&apos;)) {
+      if ((prep === 'overprepare' && b[0] === 'overthinker') ||
+          (prep === 'improv' && b[0] === 'rambler') ||
+          (prep === 'polish' && b[0] === 'performer') ||
+          (prep === 'structure' && b[0] === 'rationalist')) {
         q9ContribB += 2;
       }
     }
@@ -447,12 +447,12 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
     
     // 3. Confidence tie-break
     if (q3 >= 8) {
-      if ((b[0] === &apos;performer&apos; || b[0] === &apos;intense&apos;) && !(a[0] === &apos;performer&apos; || a[0] === &apos;intense&apos;)) return 1;
-      if ((a[0] === &apos;performer&apos; || a[0] === &apos;intense&apos;) && !(b[0] === &apos;performer&apos; || b[0] === &apos;intense&apos;)) return -1;
+      if ((b[0] === 'performer' || b[0] === 'intense') && !(a[0] === 'performer' || a[0] === 'intense')) return 1;
+      if ((a[0] === 'performer' || a[0] === 'intense') && !(b[0] === 'performer' || b[0] === 'intense')) return -1;
     }
     if (q3 <= 4) {
-      if ((b[0] === &apos;doubter&apos; || b[0] === &apos;overthinker&apos;) && !(a[0] === &apos;doubter&apos; || a[0] === &apos;overthinker&apos;)) return 1;
-      if ((a[0] === &apos;doubter&apos; || a[0] === &apos;overthinker&apos;) && !(b[0] === &apos;doubter&apos; || b[0] === &apos;overthinker&apos;)) return -1;
+      if ((b[0] === 'doubter' || b[0] === 'overthinker') && !(a[0] === 'doubter' || a[0] === 'overthinker')) return 1;
+      if ((a[0] === 'doubter' || a[0] === 'overthinker') && !(b[0] === 'doubter' || b[0] === 'overthinker')) return -1;
     }
     
     return 0;
@@ -488,15 +488,15 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
       (q5 * 8) + 
       ((scores.rambler + scores.intense) / totalArchetypeScore * 20) -
       ((scores.overthinker + scores.doubter) / totalArchetypeScore * 25) +
-      (q2 === &apos;dive_in&apos; ? 15 : q2 === &apos;stall_time&apos; ? -15 : q2 === &apos;apologize_first&apos; ? -10 : 0)
+      (q2 === 'dive_in' ? 15 : q2 === 'stall_time' ? -15 : q2 === 'apologize_first' ? -10 : 0)
     )),
     
     // Expressive ↔ Reserved: Speaking behavior + archetype energy
     expressiveness: Math.min(100, Math.max(0,
-      (q2 === &apos;dive_in&apos; || q2 === &apos;speak_forcefully&apos; ? 65 : q2 === &apos;perform_anyway&apos; ? 60 : q2 === &apos;say_less&apos; ? 25 : 40) +
+      (q2 === 'dive_in' || q2 === 'speak_forcefully' ? 65 : q2 === 'perform_anyway' ? 60 : q2 === 'say_less' ? 25 : 40) +
       ((scores.intense + scores.performer) / totalArchetypeScore * 25) -
       ((scores.minimalist + scores.rationalist) / totalArchetypeScore * 20) +
-      (answers.q8 === &apos;made_impact&apos; ? 10 : answers.q8 === &apos;job_done&apos; ? -10 : 0)
+      (answers.q8 === 'made_impact' ? 10 : answers.q8 === 'job_done' ? -10 : 0)
     )),
     
     // Authentic ↔ Performance: Inverted Q7 + archetype authenticity patterns
@@ -512,7 +512,7 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
       (q3 * 9) + 
       ((scores.intense + scores.performer + scores.rambler) / totalArchetypeScore * 20) -
       ((scores.minimalist + scores.rationalist + scores.overthinker) / totalArchetypeScore * 15) +
-      (q2 === &apos;speak_forcefully&apos; || q2 === &apos;dive_in&apos; ? 10 : q2 === &apos;stall_time&apos; || q2 === &apos;say_less&apos; ? -10 : 0)
+      (q2 === 'speak_forcefully' || q2 === 'dive_in' ? 10 : q2 === 'stall_time' || q2 === 'say_less' ? -10 : 0)
     ))
   };
 
@@ -528,198 +528,198 @@ function scoreArchetype(answers: Record<string, any>): ScoringResult | null {
 
 const SUMMARIES: Record<Archetype, { title: string; blurb: string; tip: string; strengths: string[]; growthAreas: string[] }> = {
   rambler: {
-    title: &apos;The Rambler&apos;,
-    blurb: "You&apos;ve got energy to spare. Ideas tumble out fast and furious — that spark sometimes sets everything on fire at once, and clarity gets lost in the noise.",
-    tip: &apos;Pick one arrow. Before you speak, ask: what\&apos;s the one thing I want them to take away?&apos;,
-    strengths: [&apos;You have momentum — never stuck for long&apos;, &apos;Spontaneous — quick to grab ideas and run&apos;, &apos;Courageous — not afraid to open your mouth&apos;],
-    growthAreas: [&apos;Pause on purpose — treat silence as a tool&apos;, &apos;Focus on one main point&apos;, &apos;Wrap up cleanly with conviction&apos;],
+    title: 'The Rambler',
+    blurb: "You've got energy to spare. Ideas tumble out fast and furious — that spark sometimes sets everything on fire at once, and clarity gets lost in the noise.",
+    tip: 'Pick one arrow. Before you speak, ask: what\'s the one thing I want them to take away?',
+    strengths: ['You have momentum — never stuck for long', 'Spontaneous — quick to grab ideas and run', 'Courageous — not afraid to open your mouth'],
+    growthAreas: ['Pause on purpose — treat silence as a tool', 'Focus on one main point', 'Wrap up cleanly with conviction'],
   },
   overthinker: {
-    title: &apos;The Overthinker&apos;,
-    blurb: "You&apos;ve got plenty to say, but when the spotlight&apos;s on, you freeze. Instead of speaking freely, you run mental checks and the moment passes.",
-    tip: &apos;Trust the first thought. Don\&apos;t wait for the perfect answer — speak, then refine if needed.&apos;,
-    strengths: [&apos;Thoughtful — your answers carry weight&apos;, &apos;Authentic — people trust you when you drop the filter&apos;, &apos;Sharp — your analysis makes you credible&apos;],
-    growthAreas: [&apos;Let silence breathe — pauses make you look confident&apos;, &apos;Feel it, don\&apos;t just think it&apos;, &apos;Stop trying to get it "right"&apos;],
+    title: 'The Overthinker',
+    blurb: "You've got plenty to say, but when the spotlight's on, you freeze. Instead of speaking freely, you run mental checks and the moment passes.",
+    tip: 'Trust the first thought. Don\'t wait for the perfect answer — speak, then refine if needed.',
+    strengths: ['Thoughtful — your answers carry weight', 'Authentic — people trust you when you drop the filter', 'Sharp — your analysis makes you credible'],
+    growthAreas: ['Let silence breathe — pauses make you look confident', 'Feel it, don\'t just think it', 'Stop trying to get it "right"'],
   },
   doubter: {
-    title: &apos;The Self-Doubter&apos;,
-    blurb: "You know your stuff, but when it&apos;s time to speak, you shrink back. Fear of judgment makes you play small and trail off before finishing strong.",
-    tip: &apos;Drop the apology and bring conviction. Swap "Sorry if this doesn\&apos;t make sense…" with "Here\&apos;s why this matters."&apos;,
-    strengths: [&apos;Empathetic — tuned in to how others feel&apos;, &apos;Authentic — people relate to your honesty&apos;, &apos;Resilient — fear makes you better at bouncing back&apos;],
-    growthAreas: [&apos;Commit to a strong end — hold the silence&apos;, &apos;Speak from care, not fear&apos;, &apos;Stop apologising for your voice&apos;],
+    title: 'The Self-Doubter',
+    blurb: "You know your stuff, but when it's time to speak, you shrink back. Fear of judgment makes you play small and trail off before finishing strong.",
+    tip: 'Drop the apology and bring conviction. Swap "Sorry if this doesn\'t make sense…" with "Here\'s why this matters."',
+    strengths: ['Empathetic — tuned in to how others feel', 'Authentic — people relate to your honesty', 'Resilient — fear makes you better at bouncing back'],
+    growthAreas: ['Commit to a strong end — hold the silence', 'Speak from care, not fear', 'Stop apologising for your voice'],
   },
   pleaser: {
-    title: &apos;The People Pleaser&apos;,
+    title: 'The People Pleaser',
     blurb: "You care about people and want them to feel valued. But instead of saying what you really think, you slip into performance mode to keep everyone comfortable.",
-    tip: &apos;Risk the truth. Don\&apos;t just say what people want to hear — say what you actually believe.&apos;,
-    strengths: [&apos;Relatable — people lean in because you care&apos;, &apos;Conviction — when you speak honestly, it resonates&apos;, &apos;Adaptable — you listen well and respond&apos;],
-    growthAreas: [&apos;Drop "expert mode" — talk like a friend&apos;, &apos;Ask yourself why this matters to you&apos;, &apos;Stop trying to please everyone&apos;],
+    tip: 'Risk the truth. Don\'t just say what people want to hear — say what you actually believe.',
+    strengths: ['Relatable — people lean in because you care', 'Conviction — when you speak honestly, it resonates', 'Adaptable — you listen well and respond'],
+    growthAreas: ['Drop "expert mode" — talk like a friend', 'Ask yourself why this matters to you', 'Stop trying to please everyone'],
   },
   performer: {
-    title: &apos;The Performer&apos;,
+    title: 'The Performer',
     blurb: "You know how to put on a show — strong delivery, polished presence. But all that polish can get in the way of real connection.",
-    tip: &apos;Bring the feeling. Instead of focusing on technique, ask: what do I actually feel about this?&apos;,
-    strengths: [&apos;Range — you know how to use voice and body&apos;, &apos;Presence — people notice when you enter&apos;, &apos;Work ethic — preparation is second nature&apos;],
-    growthAreas: [&apos;Drop the act and let yourself be real&apos;, &apos;Stay authentic when you slip up&apos;, &apos;Focus on connection over perfection&apos;],
+    tip: 'Bring the feeling. Instead of focusing on technique, ask: what do I actually feel about this?',
+    strengths: ['Range — you know how to use voice and body', 'Presence — people notice when you enter', 'Work ethic — preparation is second nature'],
+    growthAreas: ['Drop the act and let yourself be real', 'Stay authentic when you slip up', 'Focus on connection over perfection'],
   },
   intense: {
-    title: &apos;The Intense Speaker&apos;,
+    title: 'The Intense Speaker',
     blurb: "When you speak, people feel it. Power in your voice, conviction in delivery. But sometimes that intensity comes on so strong it can overwhelm.",
-    tip: &apos;Play with contrast. A few seconds of quiet calm can be more powerful than charging ahead.&apos;,
-    strengths: [&apos;Conviction — people know you mean it&apos;, &apos;Momentum — your energy carries you into flow&apos;, &apos;Creativity — your force shakes up stale thinking&apos;],
-    growthAreas: [&apos;Add lightness — not everything is serious&apos;, &apos;Pause on purpose for breathing room&apos;, &apos;Balance fire with calm for impact&apos;],
+    tip: 'Play with contrast. A few seconds of quiet calm can be more powerful than charging ahead.',
+    strengths: ['Conviction — people know you mean it', 'Momentum — your energy carries you into flow', 'Creativity — your force shakes up stale thinking'],
+    growthAreas: ['Add lightness — not everything is serious', 'Pause on purpose for breathing room', 'Balance fire with calm for impact'],
   },
   rationalist: {
-    title: &apos;The Rationalist&apos;,
+    title: 'The Rationalist',
     blurb: "You like things to make sense — clear structure, solid logic. That gives you credibility, but can make you sound flat and miss the human connection.",
-    tip: &apos;Tell it like it happened. Share stories with detail and feeling, not just the summary.&apos;,
-    strengths: [&apos;Clear — people understand complex ideas&apos;, &apos;Credible — accuracy makes you trustworthy&apos;, &apos;Conviction — your clarity becomes persuasive&apos;],
-    growthAreas: [&apos;Add musicality — play with tone and emotion&apos;, &apos;Switch off "lecture mode"&apos;, &apos;Let people feel your ideas, not just understand them&apos;],
+    tip: 'Tell it like it happened. Share stories with detail and feeling, not just the summary.',
+    strengths: ['Clear — people understand complex ideas', 'Credible — accuracy makes you trustworthy', 'Conviction — your clarity becomes persuasive'],
+    growthAreas: ['Add musicality — play with tone and emotion', 'Switch off "lecture mode"', 'Let people feel your ideas, not just understand them'],
   },
   minimalist: {
-    title: &apos;The Minimalist&apos;,
-    blurb: "You don&apos;t say more than you need to. You get to the point, keep it short — but often hold back the messy, human details that would connect.",
-    tip: &apos;Add one more layer. When you tell a story, add the detail that feels a little too personal.&apos;,
-    strengths: [&apos;Natural focus — people listen when you speak&apos;, &apos;Composure under pressure — you don\&apos;t panic&apos;, &apos;High impact — your words land harder&apos;],
-    growthAreas: [&apos;Trust the first idea — don\&apos;t edit in your head&apos;, &apos;Share more of what\&apos;s true&apos;, &apos;Finish with strength, not trailing off&apos;],
+    title: 'The Minimalist',
+    blurb: "You don't say more than you need to. You get to the point, keep it short — but often hold back the messy, human details that would connect.",
+    tip: 'Add one more layer. When you tell a story, add the detail that feels a little too personal.',
+    strengths: ['Natural focus — people listen when you speak', 'Composure under pressure — you don\'t panic', 'High impact — your words land harder'],
+    growthAreas: ['Trust the first idea — don\'t edit in your head', 'Share more of what\'s true', 'Finish with strength, not trailing off'],
   },
 };
 
 // Test fixtures for archetype scoring validation
 const TEST_FIXTURES = [
   {
-    name: &apos;Rambler&apos;,
+    name: 'Rambler',
     answers: { 
-      q1: [&apos;rambler&apos;], 
-      q2: &apos;dive_in&apos;,
+      q1: ['rambler'], 
+      q2: 'dive_in',
       q3: 6,
-      q4: &apos;explain_more&apos;,
+      q4: 'explain_more',
       q5: 7, // Higher word-finding speed for rambler
       q6: 3, 
       q7: 5,
-      q8: &apos;said_too_much&apos;,
-      q9: [&apos;improv&apos;],
-      q10: &apos;staying_focused&apos;
+      q8: 'said_too_much',
+      q9: ['improv'],
+      q10: 'staying_focused'
     },
-    expectedPrimary: &apos;rambler&apos;
+    expectedPrimary: 'rambler'
   },
   {
-    name: &apos;Overthinker&apos;, 
+    name: 'Overthinker', 
     answers: { 
-      q1: [&apos;overthinker&apos;], 
-      q2: &apos;stall_time&apos;,
+      q1: ['overthinker'], 
+      q2: 'stall_time',
       q3: 4,
-      q4: &apos;think_first&apos;,
+      q4: 'think_first',
       q5: 3,
       q6: 7,
       q7: 4,
-      q8: &apos;should_have_said&apos;,
-      q9: [&apos;overprepare&apos;],
-      q10: &apos;starting_without_perfect&apos;
+      q8: 'should_have_said',
+      q9: ['overprepare'],
+      q10: 'starting_without_perfect'
     },
-    expectedPrimary: &apos;overthinker&apos;
+    expectedPrimary: 'overthinker'
   },
   {
-    name: &apos;Doubter&apos;,
+    name: 'Doubter',
     answers: { 
-      q1: [&apos;doubter&apos;], 
-      q2: &apos;apologize_first&apos;,
+      q1: ['doubter'], 
+      q2: 'apologize_first',
       q3: 2,
-      q4: &apos;soften_position&apos;,
+      q4: 'soften_position',
       q5: 3,
       q6: 6,
       q7: 6,
-      q8: &apos;sounded_dumb&apos;,
-      q9: [&apos;loose&apos;],
-      q10: &apos;believing_valuable&apos;
+      q8: 'sounded_dumb',
+      q9: ['loose'],
+      q10: 'believing_valuable'
     },
-    expectedPrimary: &apos;doubter&apos;
+    expectedPrimary: 'doubter'
   },
   {
-    name: &apos;Pleaser&apos;,
+    name: 'Pleaser',
     answers: { 
-      q1: [&apos;pleaser&apos;], 
-      q2: &apos;apologize_first&apos;,
+      q1: ['pleaser'], 
+      q2: 'apologize_first',
       q3: 5,
-      q4: &apos;accommodate&apos;,
+      q4: 'accommodate',
       q5: 6,
       q6: 6,
       q7: 7,
-      q8: &apos;hope_comfortable&apos;,
-      q9: [&apos;loose&apos;],
-      q10: &apos;being_direct&apos;
+      q8: 'hope_comfortable',
+      q9: ['loose'],
+      q10: 'being_direct'
     },
-    expectedPrimary: &apos;pleaser&apos;
+    expectedPrimary: 'pleaser'
   },
   {
-    name: &apos;Performer&apos;,
+    name: 'Performer',
     answers: { 
-      q1: [&apos;performer&apos;], 
-      q2: &apos;perform_anyway&apos;,
+      q1: ['performer'], 
+      q2: 'perform_anyway',
       q3: 8,
-      q4: &apos;defend_polished&apos;,
+      q4: 'defend_polished',
       q5: 8, // High confidence in word-finding
       q6: 8,
       q7: 8, // High performance feeling
-      q8: &apos;looked_good&apos;,
-      q9: [&apos;polish&apos;],
-      q10: &apos;being_authentic&apos;
+      q8: 'looked_good',
+      q9: ['polish'],
+      q10: 'being_authentic'
     },
-    expectedPrimary: &apos;performer&apos;
+    expectedPrimary: 'performer'
   },
   {
-    name: &apos;Intense&apos;,
+    name: 'Intense',
     answers: { 
-      q1: [&apos;intense&apos;], 
-      q2: &apos;speak_forcefully&apos;,
+      q1: ['intense'], 
+      q2: 'speak_forcefully',
       q3: 9, // Very high confidence
-      q4: &apos;push_back&apos;,
+      q4: 'push_back',
       q5: 8,
       q6: 6,
       q7: 3, // Low performance feeling (authentic)
-      q8: &apos;made_impact&apos;,
-      q9: [&apos;improv&apos;],
-      q10: &apos;moderating_energy&apos;
+      q8: 'made_impact',
+      q9: ['improv'],
+      q10: 'moderating_energy'
     },
-    expectedPrimary: &apos;intense&apos;
+    expectedPrimary: 'intense'
   },
   {
-    name: &apos;Rationalist&apos;,
+    name: 'Rationalist',
     answers: { 
-      q1: [&apos;rationalist&apos;], 
-      q2: &apos;stick_to_facts&apos;,
+      q1: ['rationalist'], 
+      q2: 'stick_to_facts',
       q3: 7,
-      q4: &apos;present_evidence&apos;,
+      q4: 'present_evidence',
       q5: 6,
       q6: 9,
       q7: 4,
-      q8: &apos;was_accurate&apos;,
-      q9: [&apos;structure&apos;],
-      q10: &apos;making_engaging&apos;
+      q8: 'was_accurate',
+      q9: ['structure'],
+      q10: 'making_engaging'
     },
-    expectedPrimary: &apos;rationalist&apos;
+    expectedPrimary: 'rationalist'
   },
   {
-    name: &apos;Minimalist&apos;,
+    name: 'Minimalist',
     answers: { 
-      q1: [&apos;minimalist&apos;], 
-      q2: &apos;say_less&apos;,
+      q1: ['minimalist'], 
+      q2: 'say_less',
       q3: 6,
-      q4: &apos;state_briefly&apos;,
+      q4: 'state_briefly',
       q5: 7,
       q6: 8,
       q7: 3,
-      q8: &apos;job_done&apos;,
-      q9: [&apos;minimal&apos;],
-      q10: &apos;knowing_when_stop&apos;
+      q8: 'job_done',
+      q9: ['minimal'],
+      q10: 'knowing_when_stop'
     },
-    expectedPrimary: &apos;minimalist&apos;
+    expectedPrimary: 'minimalist'
   }
 ];
 
 // Function to run tests and log results
 function runArchetypeTests() {
-  console.log(&apos;🧪 Running Archetype Scoring Tests...\n&apos;);
+  console.log('🧪 Running Archetype Scoring Tests...\n');
   
   let passed = 0;
   let failed = 0;
@@ -736,64 +736,64 @@ function runArchetypeTests() {
       console.log(`❌ ${test.name}: FAIL`);
       console.log(`   Expected: ${test.expectedPrimary}, Got: ${actualPrimary}`);
       console.log(`   Scores:`, result?.scores);
-      if (&apos;note&apos; in test) console.log(`   Note: ${(test as any).note}`);
+      if ('note' in test) console.log(`   Note: ${(test as any).note}`);
       failed++;
     }
   });
   
   console.log(`\n📊 Test Results: ${passed} passed, ${failed} failed`);
   if (failed === 0) {
-    console.log(&apos;🎉 All tests passed!&apos;);
+    console.log('🎉 All tests passed!');
   }
 }
 
 // Auto-run tests in development
-if (typeof window !== &apos;undefined&apos; && process.env.NODE_ENV === &apos;development&apos;) {
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   // Run tests after a short delay to ensure component is mounted
   setTimeout(() => {
     runArchetypeTests();
     
     // Test enhanced scoring specifically
-    console.log(&apos;\n🔬 Testing Enhanced Scoring Features...\n&apos;);
+    console.log('\n🔬 Testing Enhanced Scoring Features...\n');
     
     // Test a rambler with enhanced Q5 scoring
     const enhancedRamblerTest = {
-      q1: [&apos;rambler&apos;], 
-      q2: &apos;dive_in&apos;,
+      q1: ['rambler'], 
+      q2: 'dive_in',
       q3: 6,
-      q4: &apos;explain_more&apos;,
+      q4: 'explain_more',
       q5: 8, // High spontaneity should boost rambler
       q6: 3, 
       q7: 4,
-      q8: &apos;said_too_much&apos;,
-      q9: [&apos;improv&apos;, &apos;loose&apos;], // Multiple prep styles
-      q10: &apos;staying_focused&apos;
+      q8: 'said_too_much',
+      q9: ['improv', 'loose'], // Multiple prep styles
+      q10: 'staying_focused'
     };
     
     const result = scoreArchetype(enhancedRamblerTest);
-    console.log(&apos;Enhanced Rambler Test:&apos;);
-    console.log(&apos;Primary:&apos;, result?.primary);
-    console.log(&apos;Scores:&apos;, result?.scores);
-    console.log(&apos;Sliding Scales:&apos;, result?.slidingScales);
+    console.log('Enhanced Rambler Test:');
+    console.log('Primary:', result?.primary);
+    console.log('Scores:', result?.scores);
+    console.log('Sliding Scales:', result?.slidingScales);
     
     // Verify Q4 scoring is working
     const q4TestAnswers = {
-      q1: [&apos;minimalist&apos;], 
-      q2: &apos;say_less&apos;,
+      q1: ['minimalist'], 
+      q2: 'say_less',
       q3: 6,
-      q4: &apos;state_briefly&apos;, // Should boost minimalist
+      q4: 'state_briefly', // Should boost minimalist
       q5: 6,
       q6: 8,
       q7: 3,
-      q8: &apos;job_done&apos;,
-      q9: [&apos;minimal&apos;],
-      q10: &apos;knowing_when_stop&apos;
+      q8: 'job_done',
+      q9: ['minimal'],
+      q10: 'knowing_when_stop'
     };
     
     const q4Result = scoreArchetype(q4TestAnswers);
-    console.log(&apos;\nQ4 Integration Test (Minimalist):&apos;);
-    console.log(&apos;Primary:&apos;, q4Result?.primary);
-    console.log(&apos;Minimalist Score:&apos;, q4Result?.scores.minimalist);
+    console.log('\nQ4 Integration Test (Minimalist):');
+    console.log('Primary:', q4Result?.primary);
+    console.log('Minimalist Score:', q4Result?.scores.minimalist);
     
   }, 1000);
 }
@@ -805,13 +805,13 @@ function QuizNavigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener(&apos;scroll&apos;, handleScroll);
-    return () => window.removeEventListener(&apos;scroll&apos;, handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? &apos;bg-slate-900/90 backdrop-blur-md shadow-lg border-b border-white/10&apos; : &apos;bg-slate-900/70 backdrop-blur-sm&apos;
+      isScrolled ? 'bg-slate-900/90 backdrop-blur-md shadow-lg border-b border-white/10' : 'bg-slate-900/70 backdrop-blur-sm'
     }`}>
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
@@ -848,7 +848,7 @@ function QuizNavigation() {
               Speaker Quiz
             </span>
             <button
-              onClick={() => window.open(&apos;https://calendly.com/alistair-webster/intro-call&apos;, &apos;_blank&apos;)}
+              onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
               className="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:scale-105"
             >
               Book Call
@@ -863,10 +863,10 @@ function QuizNavigation() {
 function AnalysisLoadingScreen() {
   const [currentMessage, setCurrentMessage] = useState(0);
   const messages = [
-    &apos;Analyzing your responses...&apos;,
-    &apos;Identifying patterns in your speaking style...&apos;,
-    &apos;Matching you with your speaker archetype...&apos;,
-    &apos;Preparing your personalized insights...&apos;
+    'Analyzing your responses...',
+    'Identifying patterns in your speaking style...',
+    'Matching you with your speaker archetype...',
+    'Preparing your personalized insights...'
   ];
 
   useEffect(() => {
@@ -884,7 +884,7 @@ function AnalysisLoadingScreen() {
             <div className="w-24 h-24 mx-auto">
               <div className="absolute inset-0 rounded-full border-4 border-indigo-200"></div>
               <div className="absolute inset-0 rounded-full border-4 border-indigo-600 border-t-transparent animate-spin"></div>
-              <div className="absolute inset-2 rounded-full border-2 border-indigo-400 border-r-transparent animate-spin" style={{animationDuration: &apos;1.5s&apos;, animationDirection: &apos;reverse&apos;}}></div>
+              <div className="absolute inset-2 rounded-full border-2 border-indigo-400 border-r-transparent animate-spin" style={{animationDuration: '1.5s', animationDirection: 'reverse'}}></div>
             </div>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
@@ -898,7 +898,7 @@ function AnalysisLoadingScreen() {
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentMessage ? &apos;bg-indigo-600&apos; : &apos;bg-gray-300&apos;
+                  index === currentMessage ? 'bg-indigo-600' : 'bg-gray-300'
                 }`}
               />
             ))}
@@ -911,10 +911,10 @@ function AnalysisLoadingScreen() {
 
 export default function SpeakerQuizPage() {
   const [answers, setAnswers] = useState<Record<string, any>>({});
-  const [email, setEmail] = useState(&apos;&apos;);
-  const [firstName, setFirstName] = useState(&apos;&apos;);
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(&apos;&apos;);
+  const [successMessage, setSuccessMessage] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [quizStarted, setQuizStarted] = useState(false);
@@ -927,9 +927,9 @@ export default function SpeakerQuizPage() {
   // Calculate progress based on answered questions
   const answeredCount = QUESTIONS.filter(q => {
     const answer = answers[q.id];
-    if (q.type === &apos;rating&apos;) return typeof answer === &apos;number&apos;;
-    if (q.type === &apos;single&apos;) return typeof answer === &apos;string&apos;;
-    if (q.type === &apos;multi&apos;) return Array.isArray(answer) && answer.length > 0;
+    if (q.type === 'rating') return typeof answer === 'number';
+    if (q.type === 'single') return typeof answer === 'string';
+    if (q.type === 'multi') return Array.isArray(answer) && answer.length > 0;
     return false;
   }).length;
   const progress = (answeredCount / QUESTIONS.length) * 100;
@@ -940,23 +940,23 @@ export default function SpeakerQuizPage() {
   function handleContinueToAdditional() {
     const result = scoreArchetype(answers);
     if (!result) {
-      console.log(&apos;No archetype result found, cannot continue&apos;);
+      console.log('No archetype result found, cannot continue');
       return;
     }
 
     // Use consistent parameter names that match what additional-questions page expects
     const params = new URLSearchParams();
-    params.set(&apos;archetype&apos;, result.primary); // Use &apos;archetype&apos; instead of &apos;primary&apos;
-    params.set(&apos;answers&apos;, JSON.stringify(answers)); // Use &apos;answers&apos; instead of &apos;mainAnswers&apos;
+    params.set('archetype', result.primary); // Use 'archetype' instead of 'primary'
+    params.set('answers', JSON.stringify(answers)); // Use 'answers' instead of 'mainAnswers'
     
     // Also include additional data for results page
-    if (result.secondary) params.set(&apos;secondary&apos;, result.secondary);
-    params.set(&apos;scores&apos;, JSON.stringify(result.scores));
-    params.set(&apos;metrics&apos;, JSON.stringify(result.metrics));
-    params.set(&apos;confidence&apos;, result.confidence.toString());
+    if (result.secondary) params.set('secondary', result.secondary);
+    params.set('scores', JSON.stringify(result.scores));
+    params.set('metrics', JSON.stringify(result.metrics));
+    params.set('confidence', result.confidence.toString());
 
-    console.log(&apos;handleContinueToAdditional called with result:&apos;, result);
-    console.log(&apos;Navigating to additional questions:&apos;, `/speaker-quiz/additional-questions?${params.toString()}`);
+    console.log('handleContinueToAdditional called with result:', result);
+    console.log('Navigating to additional questions:', `/speaker-quiz/additional-questions?${params.toString()}`);
     
     window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
   }
@@ -965,10 +965,10 @@ export default function SpeakerQuizPage() {
     setAnalyzing(true);
     
     const messages = [
-      &apos;Analyzing your responses...&apos;,
-      &apos;Identifying patterns in your speaking style...&apos;,
-      &apos;Matching you with your speaker archetype...&apos;,
-      &apos;Preparing your personalized insights...&apos;
+      'Analyzing your responses...',
+      'Identifying patterns in your speaking style...',
+      'Matching you with your speaker archetype...',
+      'Preparing your personalized insights...'
     ];
     
     for (let i = 0; i < messages.length; i++) {
@@ -982,12 +982,12 @@ export default function SpeakerQuizPage() {
     if (!result) return;
 
     const params = new URLSearchParams();
-    params.set(&apos;primary&apos;, result.primary);
-    if (result.secondary) params.set(&apos;secondary&apos;, result.secondary);
-    params.set(&apos;scores&apos;, JSON.stringify(result.scores));
-    params.set(&apos;metrics&apos;, JSON.stringify(result.metrics));
-    params.set(&apos;confidence&apos;, result.confidence.toString());
-    params.set(&apos;mainAnswers&apos;, JSON.stringify(answers));
+    params.set('primary', result.primary);
+    if (result.secondary) params.set('secondary', result.secondary);
+    params.set('scores', JSON.stringify(result.scores));
+    params.set('metrics', JSON.stringify(result.metrics));
+    params.set('confidence', result.confidence.toString());
+    params.set('mainAnswers', JSON.stringify(answers));
 
     window.location.href = `/speaker-quiz/results?${params.toString()}`;
   }
@@ -1001,7 +1001,7 @@ export default function SpeakerQuizPage() {
       answers: JSON.stringify(answers)
     });
     
-    console.log(&apos;Navigating to additional questions:&apos;, `/speaker-quiz/additional-questions?${params.toString()}`);
+    console.log('Navigating to additional questions:', `/speaker-quiz/additional-questions?${params.toString()}`);
     window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
   }
 
@@ -1010,21 +1010,21 @@ export default function SpeakerQuizPage() {
     setLoading(true);
     
     try {
-      const res = await fetch(&apos;/api/speaker-quiz&apos;, {
-        method: &apos;POST&apos;,
-        headers: { &apos;Content-Type&apos;: &apos;application/json&apos; },
+      const res = await fetch('/api/speaker-quiz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, firstName, archetype, answers, optionalAnswers: {} }),
       });
       const data = await res.json();
       
       if (res.ok) {
         // Show success message with better styling
-        setSuccessMessage(data.message || &apos;Check your email for your personalised Speaker Growth Plan!&apos;);
+        setSuccessMessage(data.message || 'Check your email for your personalised Speaker Growth Plan!');
       } else {
-        alert(data?.error ?? &apos;Something went wrong. Please try again.&apos;);
+        alert(data?.error ?? 'Something went wrong. Please try again.');
       }
     } catch (error) {
-      alert(&apos;Something went wrong. Please try again.&apos;);
+      alert('Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -1041,15 +1041,15 @@ export default function SpeakerQuizPage() {
       answers: JSON.stringify(answers)
     });
     
-    console.log(&apos;handleGetPlan called with:&apos;, { archetype, email, firstName, answersCount: Object.keys(answers).length });
-    console.log(&apos;Navigating to:&apos;, `/speaker-quiz/additional-questions?${params.toString()}`);
+    console.log('handleGetPlan called with:', { archetype, email, firstName, answersCount: Object.keys(answers).length });
+    console.log('Navigating to:', `/speaker-quiz/additional-questions?${params.toString()}`);
     
     // Use Next.js router for better navigation
     window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
   }
 
   const handleEmailKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === &apos;Enter&apos; && email && firstName && !loading) {
+    if (e.key === 'Enter' && email && firstName && !loading) {
       handleGetPlan();
     }
   };
@@ -1082,13 +1082,13 @@ export default function SpeakerQuizPage() {
     
     if (!question) return false;
     
-    if (question.type === &apos;rating&apos;) {
-      return typeof answer === &apos;number&apos; && answer >= (question.min || 1) && answer <= (question.max || 10);
+    if (question.type === 'rating') {
+      return typeof answer === 'number' && answer >= (question.min || 1) && answer <= (question.max || 10);
     }
-    if (question.type === &apos;single&apos;) {
-      return typeof answer === &apos;string&apos; && answer.length > 0;
+    if (question.type === 'single') {
+      return typeof answer === 'string' && answer.length > 0;
     }
-    if (question.type === &apos;multi&apos;) {
+    if (question.type === 'multi') {
       return Array.isArray(answer) && answer.length > 0 && 
              (!question.maxSelections || answer.length <= question.maxSelections);
     }
@@ -1270,11 +1270,11 @@ export default function SpeakerQuizPage() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Your Speaking Style Profile</h3>
                 <div className="space-y-4">
                   {[
-                    { key: &apos;clearness&apos;, label: &apos;Clear ↔ Confusing&apos;, leftLabel: &apos;Clear&apos;, rightLabel: &apos;Confusing&apos; },
-                    { key: &apos;spontaneity&apos;, label: &apos;Spontaneous ↔ Cautious&apos;, leftLabel: &apos;Spontaneous&apos;, rightLabel: &apos;Cautious&apos; },
-                    { key: &apos;expressiveness&apos;, label: &apos;Expressive ↔ Reserved&apos;, leftLabel: &apos;Expressive&apos;, rightLabel: &apos;Reserved&apos; },
-                    { key: &apos;authenticity&apos;, label: &apos;Authentic ↔ Performance&apos;, leftLabel: &apos;Authentic&apos;, rightLabel: &apos;Performance&apos; },
-                    { key: &apos;energy&apos;, label: &apos;Energy ↔ Calm&apos;, leftLabel: &apos;Energy&apos;, rightLabel: &apos;Calm&apos; }
+                    { key: 'clearness', label: 'Clear ↔ Confusing', leftLabel: 'Clear', rightLabel: 'Confusing' },
+                    { key: 'spontaneity', label: 'Spontaneous ↔ Cautious', leftLabel: 'Spontaneous', rightLabel: 'Cautious' },
+                    { key: 'expressiveness', label: 'Expressive ↔ Reserved', leftLabel: 'Expressive', rightLabel: 'Reserved' },
+                    { key: 'authenticity', label: 'Authentic ↔ Performance', leftLabel: 'Authentic', rightLabel: 'Performance' },
+                    { key: 'energy', label: 'Energy ↔ Calm', leftLabel: 'Energy', rightLabel: 'Calm' }
                   ].map((scale) => {
                     const value = scoringResult.slidingScales[scale.key as keyof typeof scoringResult.slidingScales];
                     return (
@@ -1374,7 +1374,7 @@ export default function SpeakerQuizPage() {
                     </button>
                   </div>
                   <p className="text-xs text-center text-gray-500 mt-3">
-                    You&apos;ll also join the Speak Up For Good newsletter with weekly speaking tips. Unsubscribe anytime.
+                    you&apos;ll also join the Speak Up For Good newsletter with weekly speaking tips. Unsubscribe anytime.
                   </p>
                   
                   {/* Success Message */}
@@ -1393,7 +1393,7 @@ export default function SpeakerQuizPage() {
                         </div>
                         <div className="ml-auto pl-3">
                           <button
-                            onClick={() => setSuccessMessage(&apos;&apos;)}
+                            onClick={() => setSuccessMessage('')}
                             className="inline-flex text-green-400 hover:text-green-600"
                           >
                             <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -1412,7 +1412,7 @@ export default function SpeakerQuizPage() {
                     Want to discuss your results personally?
                   </p>
                   <button
-                    onClick={() => window.open(&apos;https://calendly.com/alistair-webster/speaker-type-chat&apos;, &apos;_blank&apos;)}
+                    onClick={() => window.open('https://calendly.com/alistair-webster/speaker-type-chat', '_blank')}
                     className="text-indigo-600 hover:text-indigo-700 font-medium text-sm underline transition-colors duration-200"
                   >
                     Book a consultation call to discuss my results
@@ -1451,24 +1451,24 @@ export default function SpeakerQuizPage() {
                   <div 
                     key={q.id} 
                     className={`bg-white rounded-2xl border shadow-sm p-6 transition-all duration-300 ${
-                      index === currentQuestion ? &apos;ring-2 ring-indigo-500 ring-opacity-50&apos; : &apos;&apos;
-                      } ${isAnswered ? &apos;border-green-200&apos; : &apos;&apos;}`}
+                      index === currentQuestion ? 'ring-2 ring-indigo-500 ring-opacity-50' : ''
+                      } ${isAnswered ? 'border-green-200' : ''}`}
                   >
                     <div className="flex items-start gap-4">
                       <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                           isAnswered
-                          ? &apos;bg-green-100 text-green-800&apos; 
+                          ? 'bg-green-100 text-green-800' 
                           : index === currentQuestion 
-                            ? &apos;bg-indigo-100 text-indigo-800&apos; 
-                            : &apos;bg-gray-100 text-gray-600&apos;
+                            ? 'bg-indigo-100 text-indigo-800' 
+                            : 'bg-gray-100 text-gray-600'
                       }`}>
-                          {isAnswered ? &apos;✓&apos; : index + 1}
+                          {isAnswered ? '✓' : index + 1}
                       </div>
                       <div className="flex-1">
                         <p className="font-medium text-gray-900 mb-4">{q.prompt}</p>
                           
                           {/* Rating Questions */}
-                          {q.type === &apos;rating&apos; && (
+                          {q.type === 'rating' && (
                         <div className="space-y-3">
                               <div className="flex justify-between text-sm text-gray-600 mb-2">
                                 <span>Strongly Disagree</span>
@@ -1483,8 +1483,8 @@ export default function SpeakerQuizPage() {
                                       onClick={() => handleAnswerSelect(q.id, value)}
                                       className={`w-10 h-10 rounded-full border-2 transition-colors duration-200 ${
                                         currentAnswer === value
-                                          ? &apos;bg-indigo-600 border-indigo-600 text-white&apos;
-                                          : &apos;border-gray-300 hover:border-indigo-400 text-gray-700&apos;
+                                          ? 'bg-indigo-600 border-indigo-600 text-white'
+                                          : 'border-gray-300 hover:border-indigo-400 text-gray-700'
                                       }`}
                                     >
                                       {value}
@@ -1496,15 +1496,15 @@ export default function SpeakerQuizPage() {
                           )}
 
                           {/* Single Choice Questions */}
-                          {q.type === &apos;single&apos; && q.options && (
+                          {q.type === 'single' && q.options && (
                             <div className="space-y-3">
                               {q.options.map((opt) => (
                             <label 
                                   key={opt.id} 
                               className={`flex cursor-pointer items-start gap-3 p-3 rounded-lg transition-colors duration-200 ${
                                     currentAnswer === opt.id
-                                  ? &apos;bg-indigo-50 border-2 border-indigo-200&apos; 
-                                  : &apos;hover:bg-gray-50 border-2 border-transparent&apos;
+                                  ? 'bg-indigo-50 border-2 border-indigo-200' 
+                                  : 'hover:bg-gray-50 border-2 border-transparent'
                               }`}
                             >
                               <input
@@ -1514,7 +1514,7 @@ export default function SpeakerQuizPage() {
                                     checked={currentAnswer === opt.id}
                                     onChange={() => handleAnswerSelect(q.id, opt.id)}
                               />
-                                  <span className={`text-sm ${currentAnswer === opt.id ? &apos;text-indigo-900 font-medium&apos; : &apos;text-gray-700&apos;}`}>
+                                  <span className={`text-sm ${currentAnswer === opt.id ? 'text-indigo-900 font-medium' : 'text-gray-700'}`}>
                                 {opt.label}
                               </span>
                             </label>
@@ -1523,7 +1523,7 @@ export default function SpeakerQuizPage() {
                           )}
 
                           {/* Multi-Select Questions */}
-                          {q.type === &apos;multi&apos; && q.options && (
+                          {q.type === 'multi' && q.options && (
                             <div className="space-y-3">
                               <div className="text-sm text-gray-600 mb-3">
                                 Select up to {q.maxSelections} options
@@ -1542,10 +1542,10 @@ export default function SpeakerQuizPage() {
                                     key={opt.id} 
                                     className={`flex cursor-pointer items-start gap-3 p-3 rounded-lg transition-colors duration-200 ${
                                       isSelected
-                                        ? &apos;bg-indigo-50 border-2 border-indigo-200&apos; 
+                                        ? 'bg-indigo-50 border-2 border-indigo-200' 
                                         : canSelect
-                                          ? &apos;hover:bg-gray-50 border-2 border-transparent&apos;
-                                          : &apos;opacity-50 cursor-not-allowed border-2 border-transparent&apos;
+                                          ? 'hover:bg-gray-50 border-2 border-transparent'
+                                          : 'opacity-50 cursor-not-allowed border-2 border-transparent'
                                     }`}
                                   >
                                     <input
@@ -1555,7 +1555,7 @@ export default function SpeakerQuizPage() {
                                       disabled={!canSelect}
                                       onChange={(e) => handleMultiSelect(q.id, opt.id, e.target.checked)}
                                     />
-                                    <span className={`text-sm ${isSelected ? &apos;text-indigo-900 font-medium&apos; : &apos;text-gray-700&apos;}`}>
+                                    <span className={`text-sm ${isSelected ? 'text-indigo-900 font-medium' : 'text-gray-700'}`}>
                                       {opt.label}
                                     </span>
                                   </label>
@@ -1578,7 +1578,7 @@ export default function SpeakerQuizPage() {
                       <p className="text-yellow-800 font-medium">Almost there!</p>
                     </div>
                     <p className="text-yellow-700 text-sm">
-                      Please answer {unansweredCount} more question{unansweredCount > 1 ? &apos;s&apos; : &apos;&apos;} to discover your speaker type.
+                      Please answer {unansweredCount} more question{unansweredCount > 1 ? 's' : ''} to discover your speaker type.
                     </p>
                   </div>
                 </div>
@@ -1618,19 +1618,19 @@ export default function SpeakerQuizPage() {
               <div className="grid gap-3">
                 {QUESTIONS.map((q, index) => {
                   const answer = answers[q.id];
-                  let answerText = &apos;No answer selected&apos;;
+                  let answerText = 'No answer selected';
                   
-                  if (q.type === &apos;rating&apos; && typeof answer === &apos;number&apos;) {
+                  if (q.type === 'rating' && typeof answer === 'number') {
                     answerText = `${answer}/10`;
-                  } else if (q.type === &apos;single&apos; && typeof answer === &apos;string&apos; && q.options) {
+                  } else if (q.type === 'single' && typeof answer === 'string' && q.options) {
                     const option = q.options.find(opt => opt.id === answer);
                     answerText = option?.label || answer;
-                  } else if (q.type === &apos;multi&apos; && Array.isArray(answer) && q.options) {
+                  } else if (q.type === 'multi' && Array.isArray(answer) && q.options) {
                     const selectedOptions = answer.map(id => {
                       const option = q.options!.find(opt => opt.id === id);
                       return option?.label || id;
                     });
-                    answerText = selectedOptions.join(&apos;, &apos;);
+                    answerText = selectedOptions.join(', ');
                   }
                   
                   return (

@@ -22,22 +22,6 @@ export default function CoachingHub() {
   const [localValues, setLocalValues] = useState<{[key: string]: string}>({});
   const [updateTimeouts, setUpdateTimeouts] = useState<{[key: string]: NodeJS.Timeout}>({});
 
-  useEffect(() => {
-    if (status === 'loading') return;
-    if (!session) {
-      router.push('/admin/login');
-      return;
-    }
-    fetchContacts();
-  }, [session, status, router, filter, statusFilter, sortBy, fetchContacts]);
-
-  // Cleanup timeouts on unmount
-  useEffect(() => {
-    return () => {
-      Object.values(updateTimeouts).forEach(timeout => clearTimeout(timeout));
-    };
-  }, [updateTimeouts]);
-
   const fetchContacts = useCallback(async () => {
     try {
       let query = supabase
@@ -70,7 +54,23 @@ export default function CoachingHub() {
     } finally {
       setLoading(false);
     }
-  }, [session, filter, statusFilter, sortBy]);
+  }, [filter, statusFilter, sortBy]);
+
+  useEffect(() => {
+    if (status === 'loading') return;
+    if (!session) {
+      router.push('/admin/login');
+      return;
+    }
+    fetchContacts();
+  }, [session, status, router, filter, statusFilter, sortBy, fetchContacts]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(updateTimeouts).forEach(timeout => clearTimeout(timeout));
+    };
+  }, [updateTimeouts]);
 
   async function updateContact(contactId: string, field: string, value: string) {
     try {
