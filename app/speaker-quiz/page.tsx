@@ -1270,11 +1270,11 @@ export default function SpeakerQuizPage() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Your Speaking Style Profile</h3>
                 <div className="space-y-4">
                   {[
-                    { key: 'clearness', label: 'Clear ↔ Confusing', leftLabel: 'Clear', rightLabel: 'Confusing' },
-                    { key: 'spontaneity', label: 'Spontaneous ↔ Cautious', leftLabel: 'Spontaneous', rightLabel: 'Cautious' },
-                    { key: 'expressiveness', label: 'Expressive ↔ Reserved', leftLabel: 'Expressive', rightLabel: 'Reserved' },
-                    { key: 'authenticity', label: 'Authentic ↔ Performance', leftLabel: 'Authentic', rightLabel: 'Performance' },
-                    { key: 'energy', label: 'Energy ↔ Calm', leftLabel: 'Energy', rightLabel: 'Calm' }
+                    { key: 'clearness', label: 'Clear ↔ Confusing', leftLabel: 'Confusing', rightLabel: 'Clear' },
+                    { key: 'spontaneity', label: 'Spontaneous ↔ Cautious', leftLabel: 'Cautious', rightLabel: 'Spontaneous' },
+                    { key: 'expressiveness', label: 'Expressive ↔ Reserved', leftLabel: 'Reserved', rightLabel: 'Expressive' },
+                    { key: 'authenticity', label: 'Authentic ↔ Performance', leftLabel: 'Performance', rightLabel: 'Authentic' },
+                    { key: 'energy', label: 'Energy ↔ Calm', leftLabel: 'Calm', rightLabel: 'High Energy' }
                   ].map((scale) => {
                     const value = scoringResult.slidingScales[scale.key as keyof typeof scoringResult.slidingScales];
                     return (

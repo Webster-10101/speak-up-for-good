@@ -65,10 +65,11 @@ export default function QuizResultsPage() {
     }
   };
 
-  // Calculate sliding scale metrics from answers (simplified archetype calculation)
+  // Calculate sliding scale metrics from answers using the same logic as the quiz page
   function calculateSlidingScales(answers: Record<string, any>): Record<string, number> {
+    // Extract answers - handle both new format (arrays/numbers) and legacy format
     const q1 = Array.isArray(answers.q1) ? answers.q1 : [];
-    const q2 = answers.q2 || 'relax';
+    const q2 = answers.q2;
     const q3 = typeof answers.q3 === 'number' ? answers.q3 : 5;
     const q4 = typeof answers.q4 === 'number' ? answers.q4 : 5;
     const q5 = typeof answers.q5 === 'number' ? answers.q5 : 5;
@@ -77,51 +78,115 @@ export default function QuizResultsPage() {
     const q8 = typeof answers.q8 === 'number' ? answers.q8 : 5;
     const q9 = Array.isArray(answers.q9) ? answers.q9 : [];
 
-    // Simple archetype scoring for sliding scales
-    const archhetypeBoosts = {
-      rambler: (q1.includes('rambler') ? 3 : 0) + (q9.includes('improv') ? 2 : 0),
-      overthinker: (q1.includes('overthinker') ? 3 : 0) + (q9.includes('overprepare') ? 2 : 0),
-      doubter: q1.includes('doubter') ? 3 : 0,
-      pleaser: q1.includes('pleaser') ? 3 : 0,
-      performer: (q1.includes('performer') ? 3 : 0) + (q9.includes('polish') ? 2 : 0),
-      intense: (q1.includes('intense') ? 3 : 0) + (q9.includes('improv') ? 1 : 0),
-      rationalist: (q1.includes('rationalist') ? 3 : 0) + (q9.includes('structure') ? 2 : 0),
-      minimalist: q1.includes('minimalist') ? 3 : 0
-    };
-
+    // Helper functions
     const isLow = (val: number) => val <= 4;
     const isHigh = (val: number) => val >= 7;
 
+    // Calculate archetype scores using the same logic as the quiz page
+    const scores: Record<string, number> = {
+      rambler: 0,
+      overthinker: 0,
+      doubter: 0,
+      pleaser: 0,
+      performer: 0,
+      intense: 0,
+      rationalist: 0,
+      minimalist: 0,
+    };
+
+    // Base flags from Q1
+    for (const selection of q1) {
+      if (typeof selection === 'string' && selection in scores) {
+        scores[selection] += 3;
+      }
+    }
+
+    // Q9 preparation style scoring
+    for (const prep of q9) {
+      if (prep === 'overprepare') {
+        scores.overthinker += 2;
+        scores.doubter += 1;
+        scores.rationalist += 1;
+      } else if (prep === 'structure') {
+        scores.rationalist += 2;
+        scores.minimalist += 1;
+      } else if (prep === 'improv') {
+        scores.rambler += 2;
+        scores.intense += 2;
+      } else if (prep === 'loose') {
+        scores.rambler += 2;
+        scores.pleaser += 1;
+      } else if (prep === 'polish') {
+        scores.performer += 2;
+        scores.pleaser += 1;
+      } else if (prep === 'minimal') {
+        scores.minimalist += 2;
+        scores.rationalist += 1;
+      }
+    }
+
+    // Q2 speaking behavior scoring
+    if (q2 === 'dive_in') {
+      scores.rambler += 2;
+      scores.intense += 1;
+    } else if (q2 === 'stall_time') {
+      scores.overthinker += 2;
+      scores.doubter += 1;
+    } else if (q2 === 'apologize_first') {
+      scores.doubter += 2;
+      scores.pleaser += 1;
+    } else if (q2 === 'perform_anyway') {
+      scores.performer += 2;
+      scores.pleaser += 1;
+    } else if (q2 === 'speak_forcefully') {
+      scores.intense += 2;
+      scores.performer += 1;
+    } else if (q2 === 'say_less') {
+      scores.minimalist += 2;
+      scores.rationalist += 1;
+    }
+
+    const totalArchetypeScore = Math.max(1, Object.values(scores).reduce((sum, score) => sum + score, 0));
+
     return {
+      // Clear ↔ Confusing: High clarity from Q6, boosted by Rationalist/Minimalist tendencies
       clearness: Math.min(100, Math.max(0, 
         (q6 * 8) + 
-        (archhetypeBoosts.rationalist + archhetypeBoosts.minimalist) * 3 -
-        archhetypeBoosts.rambler * 2 +
-        (isHigh(q6) ? 10 : 0)
+        ((scores.rationalist + scores.minimalist) / totalArchetypeScore * 25) -
+        (scores.rambler / totalArchetypeScore * 15) +
+        (isHigh(q6) ? 10 : 0) // Extra boost for high clarity
       )),
+      
+      // Spontaneous ↔ Cautious: Based on Q5 word-finding + archetype tendencies
       spontaneity: Math.min(100, Math.max(0,
         (q5 * 8) + 
-        (archhetypeBoosts.rambler + archhetypeBoosts.intense) * 2.5 -
-        (archhetypeBoosts.overthinker + archhetypeBoosts.doubter) * 3 +
-        (q2 === 'speed' ? 15 : q2 === 'freeze' ? -15 : 0)
+        ((scores.rambler + scores.intense) / totalArchetypeScore * 20) -
+        ((scores.overthinker + scores.doubter) / totalArchetypeScore * 25) +
+        (q2 === 'dive_in' ? 15 : q2 === 'stall_time' ? -15 : q2 === 'apologize_first' ? -10 : 0)
       )),
+      
+      // Expressive ↔ Reserved: Speaking behavior + archetype energy
       expressiveness: Math.min(100, Math.max(0,
-        (q2 === 'speed' || q2 === 'jitter' ? 65 : q2 === 'relax' ? 45 : q2 === 'freeze' ? 25 : 35) +
-        (archhetypeBoosts.intense + archhetypeBoosts.performer) * 3 -
-        (archhetypeBoosts.minimalist + archhetypeBoosts.rationalist) * 2.5 +
-        (isLow(q4) ? 10 : isHigh(q4) ? -5 : 0)
+        (q2 === 'dive_in' || q2 === 'speak_forcefully' ? 65 : q2 === 'perform_anyway' ? 60 : q2 === 'say_less' ? 25 : 40) +
+        ((scores.intense + scores.performer) / totalArchetypeScore * 25) -
+        ((scores.minimalist + scores.rationalist) / totalArchetypeScore * 20) +
+        (answers.q8 === 'made_impact' ? 10 : answers.q8 === 'job_done' ? -10 : 0)
       )),
+      
+      // Authentic ↔ Performance: Inverted Q7 + archetype authenticity patterns
       authenticity: Math.min(100, Math.max(0,
         ((11 - q7) * 8) + 
-        (archhetypeBoosts.doubter + archhetypeBoosts.minimalist + archhetypeBoosts.overthinker) * 2.5 -
-        archhetypeBoosts.performer * 4 +
-        (isLow(q7) ? 15 : isHigh(q7) ? -10 : 0)
+        ((scores.doubter + scores.minimalist + scores.overthinker) / totalArchetypeScore * 20) -
+        (scores.performer / totalArchetypeScore * 30) +
+        (isLow(q7) ? 15 : isHigh(q7) ? -10 : 0) // Extra penalty/bonus for extreme scores
       )),
+      
+      // Energy ↔ Calm: Confidence + archetype energy patterns + speaking behavior
       energy: Math.min(100, Math.max(0,
         (q3 * 9) + 
-        (archhetypeBoosts.intense + archhetypeBoosts.performer + archhetypeBoosts.rambler) * 2.5 -
-        (archhetypeBoosts.minimalist + archhetypeBoosts.rationalist + archhetypeBoosts.overthinker) * 2 +
-        (q2 === 'speed' || q2 === 'jitter' ? 10 : q2 === 'freeze' ? -10 : 0)
+        ((scores.intense + scores.performer + scores.rambler) / totalArchetypeScore * 20) -
+        ((scores.minimalist + scores.rationalist + scores.overthinker) / totalArchetypeScore * 15) +
+        (q2 === 'speak_forcefully' || q2 === 'dive_in' ? 10 : q2 === 'stall_time' || q2 === 'say_less' ? -10 : 0)
       ))
     };
   }
@@ -510,9 +575,9 @@ export default function QuizResultsPage() {
                         const scales = [
                           { key: 'clearness', leftLabel: 'Confusing', rightLabel: 'Clear', description: 'How directly you communicate your ideas' },
                           { key: 'spontaneity', leftLabel: 'Cautious', rightLabel: 'Spontaneous', description: 'How quickly you speak without editing' },
-                          { key: 'expressiveness', leftLabel: 'Expressive', rightLabel: 'Reserved', description: 'Your emotional range and vividness' },
-                          { key: 'authenticity', leftLabel: 'Authentic', rightLabel: 'Performance', description: 'How "real" vs polished you feel when speaking' },
-                          { key: 'energy', leftLabel: 'High Energy', rightLabel: 'Calm', description: 'Your overall intensity and presence' }
+                          { key: 'expressiveness', leftLabel: 'Reserved', rightLabel: 'Expressive', description: 'Your emotional range and vividness' },
+                          { key: 'authenticity', leftLabel: 'Performance', rightLabel: 'Authentic', description: 'How "real" vs polished you feel when speaking' },
+                          { key: 'energy', leftLabel: 'Calm', rightLabel: 'High Energy', description: 'Your overall intensity and presence' }
                         ];
 
                         return scales.map((scale) => {
@@ -539,7 +604,7 @@ export default function QuizResultsPage() {
                               <div className="flex justify-between items-center">
                                 <p className="text-xs text-gray-600">{scale.description}</p>
                                 <span className="text-sm font-medium text-indigo-600">
-                                  {Math.round(value)}% {isLeftSide ? scale.leftLabel.toLowerCase() : scale.rightLabel.toLowerCase()}
+                                  {Math.round(value)}% {value > 50 ? scale.rightLabel.toLowerCase() : scale.leftLabel.toLowerCase()}
                                 </span>
                               </div>
                             </div>
