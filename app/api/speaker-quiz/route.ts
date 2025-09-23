@@ -470,7 +470,7 @@ WRITING STYLE:
 - Use simple words, short varied sentences, natural flow
 - Include personal anecdotes, metaphors, or vivid examples  
 - Make advice actionable and memorable with clear takeaways
-- Add a hint of dry humor - subtle wit that makes people smile without being silly
+- Add very subtle dry humor - just a touch of wit that feels natural, not forced
 - Avoid AI clichés, hype, or trying to sound smart
 - Be direct, honest, and human
 - End with a clear wrap-up or takeaway
@@ -544,7 +544,7 @@ ${struggleAnswer ? `## Let's talk about your main challenge
 ## Bottom line
 [Use the final thought but make it personal and memorable]
 
-Write like you're having a real conversation - no corporate speak, no filler. Just honest, helpful advice that sticks. Feel free to add a bit of dry wit where it fits naturally.`;
+Write like you're having a real conversation - no corporate speak, no filler. Just honest, helpful advice that sticks. Only add humor if it comes naturally - don't force it.`;
 
   try {
     const completion = await openai.chat.completions.create({
