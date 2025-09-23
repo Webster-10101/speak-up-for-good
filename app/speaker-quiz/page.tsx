@@ -1296,7 +1296,7 @@ export default function SpeakerQuizPage() {
                           ></div>
                         </div>
                         <div className="text-center text-sm text-gray-600 mt-2">
-                          {Math.round(value)}% towards {value > 50 ? scale.rightLabel : scale.leftLabel}
+                          {Math.round(value > 50 ? value : 100 - value)}% {value > 50 ? scale.rightLabel.toLowerCase() : scale.leftLabel.toLowerCase()}
                         </div>
                       </div>
                     );

@@ -604,7 +604,7 @@ export default function QuizResultsPage() {
                               <div className="flex justify-between items-center">
                                 <p className="text-xs text-gray-600">{scale.description}</p>
                                 <span className="text-sm font-medium text-indigo-600">
-                                  {Math.round(value)}% {value > 50 ? scale.rightLabel.toLowerCase() : scale.leftLabel.toLowerCase()}
+                                  {Math.round(value > 50 ? value : 100 - value)}% {value > 50 ? scale.rightLabel.toLowerCase() : scale.leftLabel.toLowerCase()}
                                 </span>
                               </div>
                             </div>
