@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
@@ -38,7 +38,7 @@ export default function CoachingHub() {
     };
   }, [updateTimeouts]);
 
-  async function fetchContacts() {
+  const fetchContacts = useCallback(async () => {
     try {
       let query = supabase
         .from('quiz_responses')
@@ -70,7 +70,7 @@ export default function CoachingHub() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [session, filter, statusFilter, sortBy]);
 
   async function updateContact(contactId: string, field: string, value: string) {
     try {
