@@ -90,18 +90,6 @@ export default function AdditionalQuestionsPage() {
     router.push(`/speaker-quiz/results?${params.toString()}`);
   }
 
-  function handleSkipToBasic() {
-    if (!archetype) return;
-    
-    // Navigate to results without optional answers
-    const params = new URLSearchParams({
-      archetype,
-      answers: mainAnswers || '{}',
-      optionalAnswers: JSON.stringify({})
-    });
-    
-    router.push(`/speaker-quiz/results?${params.toString()}`);
-  }
 
   function nextQuestion() {
     if (currentQuestion < OPTIONAL_QUESTIONS.length - 1) {
@@ -134,7 +122,7 @@ export default function AdditionalQuestionsPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Get Even More Personalized Results!
+            Get Your Full Personalized Growth Plan
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             These additional questions help me create a truly customized growth plan that speaks 
@@ -241,48 +229,25 @@ export default function AdditionalQuestionsPage() {
               Previous
             </button>
 
-            <div className="flex gap-4">
+            {currentQuestion === OPTIONAL_QUESTIONS.length - 1 ? (
               <button
-                onClick={handleSkipToBasic}
+                onClick={handleGetPlan}
                 disabled={loading}
-                className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 transition-colors"
+                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 transition-all font-semibold"
               >
-                Skip to Basic Results
+                {loading ? 'Getting Your Plan...' : 'Get My Personalized Plan →'}
               </button>
-
-              {currentQuestion === OPTIONAL_QUESTIONS.length - 1 ? (
-                <button
-                  onClick={handleGetPlan}
-                  disabled={loading}
-                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 transition-all font-semibold"
-                >
-                  {loading ? 'Getting Your Plan...' : 'Get My Personalized Plan →'}
-                </button>
-              ) : (
-                <button
-                  onClick={nextQuestion}
-                  className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all"
-                >
-                  Next
-                </button>
-              )}
-            </div>
+            ) : (
+              <button
+                onClick={nextQuestion}
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all"
+              >
+                Next
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Skip Link */}
-        <div className="text-center mt-8">
-          <p className="text-gray-500 text-sm">
-            Short on time? You can always{' '}
-            <button 
-              onClick={handleSkipToBasic}
-              className="text-indigo-600 hover:text-indigo-800 underline"
-            >
-              skip to your basic results
-            </button>
-            {' '}and come back later.
-          </p>
-        </div>
       </div>
     </main>
   );

@@ -56,7 +56,7 @@ const Hero = () => {
                 href="/speaker-quiz"
                 className="inline-flex items-center text-white hover:text-blue-300 transition-colors"
               >
-                <span className="font-semibold">Take our 2-minute Speaker Quiz</span>
+                <span className="font-semibold">Take my 2-minute Speaker Quiz</span>
                 <span className="ml-2">→</span>
               </Link>
               <p className="text-slate-400 text-xs mt-1">Discover your speaker archetype and get a personalized growth plan</p>
