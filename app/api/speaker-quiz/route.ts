@@ -743,44 +743,44 @@ async function sendEmail(email: string, firstName: string, archetype: Archetype,
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
           
-          <div style="text-align: center; margin-bottom: 30px;">
+          <div style="text-align: center; margin-bottom: 20px;">
             <h1 style="color: #667eea; margin: 0; font-size: 24px;">Speak Up For Good</h1>
           </div>
           
-          <p style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">Hi ${firstName},</p>
+          <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Hi ${firstName},</p>
           
-          <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
+          <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">
             Thanks for taking the speaker quiz! Based on your answers, you're a <strong>${archetype}</strong>. 
             ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? 'I\'ve personalized this plan based on what you shared.' : 'Here\'s your personalized growth plan.'}
           </p>
           
-          <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 20px; margin: 25px 0;">
-            <div style="white-space: pre-wrap; font-size: 15px; line-height: 1.7; color: #2d3748;">
+          <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 15px; margin: 15px 0;">
+            <div style="white-space: pre-wrap; font-size: 15px; line-height: 1.5; color: #2d3748;">
               ${plan.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #667eea;">$1</strong>')
-                    .replace(/^# (.*$)/gm, '<h2 style="color: #667eea; margin: 25px 0 15px 0; font-size: 20px;">$1</h2>')
-                    .replace(/^## (.*$)/gm, '<h3 style="color: #4a5568; margin: 20px 0 12px 0; font-size: 16px; font-weight: 600;">$1</h3>')
-                    .replace(/^- (.*$)/gm, '<div style="margin: 8px 0; padding-left: 15px;">• $1</div>')
-                    .replace(/^\d+\. (.*$)/gm, '<div style="margin: 8px 0; padding-left: 15px;">$1</div>')
-                    .replace(/\n\n/g, '<br><br>')
+                    .replace(/^# (.*$)/gm, '<h2 style="color: #667eea; margin: 15px 0 10px 0; font-size: 18px;">$1</h2>')
+                    .replace(/^## (.*$)/gm, '<h3 style="color: #4a5568; margin: 12px 0 8px 0; font-size: 16px; font-weight: 600;">$1</h3>')
+                    .replace(/^- (.*$)/gm, '<div style="margin: 5px 0; padding-left: 15px;">• $1</div>')
+                    .replace(/^\d+\. (.*$)/gm, '<div style="margin: 5px 0; padding-left: 15px;">$1</div>')
+                    .replace(/\n\n/g, '<br>')
                     .replace(/\n/g, '<br>')}
             </div>
           </div>
           
-          <div style="background: #667eea; color: white; padding: 25px; border-radius: 8px; margin: 30px 0; text-align: center;">
-            <h3 style="margin: 0 0 15px 0; font-size: 18px;">Want to dive deeper?</h3>
-            <p style="margin: 15px 0; opacity: 0.95;">I offer free 30-minute calls to discuss your results and create a roadmap for your specific goals.</p>
+          <div style="border: 2px solid #667eea; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+            <h3 style="margin: 0 0 10px 0; font-size: 18px; color: #667eea;">Want to dive deeper?</h3>
+            <p style="margin: 10px 0; color: #4a5568; font-size: 15px;">I offer free 30-minute calls to discuss your results and create a roadmap for your specific goals.</p>
             <a href="https://calendly.com/alistair-webster/speaker-type-chat" 
-               style="display: inline-block; background: #f59e0b; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 15px 0;">
+               style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 10px 0;">
               Book a free call
             </a>
           </div>
           
-          <p style="font-size: 14px; color: #666; margin-top: 30px;">
+          <p style="font-size: 14px; color: #666; margin-top: 20px;">
             Best,<br>
             <strong>Alistair</strong>
           </p>
           
-          <p style="font-size: 12px; color: #999; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+          <p style="font-size: 12px; color: #999; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
             You'll receive weekly speaking tips. Unsubscribe anytime.
           </p>
           
