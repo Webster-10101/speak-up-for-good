@@ -874,7 +874,7 @@ function AnalysisLoadingScreen() {
       setCurrentMessage(prev => (prev + 1) % messages.length);
     }, 800);
     return () => clearInterval(interval);
-  }, []);
+  }, [messages.length]);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">

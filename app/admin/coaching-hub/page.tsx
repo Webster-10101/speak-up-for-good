@@ -29,7 +29,7 @@ export default function CoachingHub() {
       return;
     }
     fetchContacts();
-  }, [session, status, router, filter, statusFilter, sortBy]);
+  }, [session, status, router, filter, statusFilter, sortBy, fetchContacts]);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
