@@ -464,101 +464,86 @@ async function generateSpeakingPlan(archetype: Archetype, answers: Record<string
   const curiosityAnswer = optionalAnswers?.curiosity as string || '';
   const struggleAnswer = optionalAnswers?.struggle as string || '';
   
-  const prompt = `You are a professional speaking coach creating a personalized growth plan. 
+  const prompt = `You are Alistair Webster, a speaking coach writing a personalized growth plan. Write in Alistair's conversational, authentic style - like you're talking to an intelligent friend.
 
-The user has been identified as "${archetype}" - someone who is ${ARCHETYPE_CONTEXTS[archetype]}.
+WRITING STYLE:
+- Use simple words, short varied sentences, natural flow
+- Include personal anecdotes, metaphors, or vivid examples  
+- Make advice actionable and memorable with clear takeaways
+- Avoid AI clichés, hype, or trying to sound smart
+- Be direct, honest, and human
+- End with a clear wrap-up or takeaway
 
-THEIR SPEAKING STYLE PROFILE:
-Based on their quiz responses, here's how they score on key speaking dimensions (0-100 scale):
-- Clearness vs Confusing: ${Math.round(slidingScales.clearness)}/100 (${slidingScales.clearness > 50 ? 'more clear' : 'tends toward confusing'})
-- Spontaneous vs Cautious: ${Math.round(slidingScales.spontaneity)}/100 (${slidingScales.spontaneity > 50 ? 'more spontaneous' : 'more cautious'}) 
-- Expressive vs Reserved: ${Math.round(slidingScales.expressiveness)}/100 (${slidingScales.expressiveness > 50 ? 'more expressive' : 'more reserved'})
-- Authentic vs Performance: ${Math.round(slidingScales.authenticity)}/100 (${slidingScales.authenticity > 50 ? 'more authentic' : 'more performance-oriented'})
-- High Energy vs Calm: ${Math.round(slidingScales.energy)}/100 (${slidingScales.energy > 50 ? 'higher energy' : 'more calm'})
+The user is a "${archetype}" - someone who is ${ARCHETYPE_CONTEXTS[archetype]}.
 
-STRUCTURED SPEAKER TYPE CONTENT:
-Here is the core content for ${archetype} speakers that you MUST incorporate:
+THEIR SPEAKING PROFILE:
+- Clearness: ${Math.round(slidingScales.clearness)}/100 (${slidingScales.clearness > 50 ? 'more clear' : 'tends toward confusing'})
+- Spontaneity: ${Math.round(slidingScales.spontaneity)}/100 (${slidingScales.spontaneity > 50 ? 'more spontaneous' : 'more cautious'}) 
+- Expressiveness: ${Math.round(slidingScales.expressiveness)}/100 (${slidingScales.expressiveness > 50 ? 'more expressive' : 'more reserved'})
+- Authenticity: ${Math.round(slidingScales.authenticity)}/100 (${slidingScales.authenticity > 50 ? 'more authentic' : 'more performance-oriented'})
+- Energy: ${Math.round(slidingScales.energy)}/100 (${slidingScales.energy > 50 ? 'higher energy' : 'more calm'})
 
+CORE CONTENT TO WORK WITH:
 **Description:** ${summary.description}
-
-**Unique Strengths:**
-${summary.strengths.map(strength => `- ${strength}`).join('\n')}
-
-**Where It Might Show Up:**
-${summary.whereItShowsUp.map(example => `- ${example}`).join('\n')}
-
-**Where to Grow:**
-${summary.whereToGrow.map(tip => `- ${tip}`).join('\n')}
-
+**Strengths:** ${summary.strengths.map(strength => `- ${strength}`).join('\n')}
+**Where It Shows Up:** ${summary.whereItShowsUp.map(example => `- ${example}`).join('\n')}
+**Growth Areas:** ${summary.whereToGrow.map(tip => `- ${tip}`).join('\n')}
 **Final Thought:** ${summary.finalThought}
 
 ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? `
-ADDITIONAL CONTEXT FROM USER:
+WHAT THEY SHARED:
 ${Object.entries(optionalAnswers)
   .filter(([_, answer]) => {
-    if (Array.isArray(answer)) {
-      return answer.length > 0;
-    }
+    if (Array.isArray(answer)) return answer.length > 0;
     return answer && typeof answer === 'string' && answer.trim();
   })
   .map(([key, answer]) => {
     const questionMap: Record<string, string> = {
-      'situations': 'Situations they want to improve in',
-      'struggle': 'What they struggle most with',
-      'authentic': 'When they feel most like themselves speaking',
-      'world_class': 'How they\'d know if they were world-class',
-      'confidence_moment': 'Moment they\'d love to feel more confident in',
-      'life_change': 'How being a stronger speaker would change things',
-      'curiosity': 'Something they\'ve always wondered about speaking'
+      'situations': 'Focus areas',
+      'struggle': 'Main challenge', 
+      'authentic': 'When they feel most themselves',
+      'world_class': 'Their vision of world-class speaking',
+      'confidence_moment': 'Key confidence goal',
+      'life_change': 'Desired impact',
+      'curiosity': 'Something they wonder about'
     };
     const formattedAnswer = Array.isArray(answer) ? answer.join(', ') : answer;
     return `- ${questionMap[key] || key}: ${formattedAnswer}`;
   })
   .join('\n')}
-
-Use this additional context to make the plan even more personalized and relevant to their specific situation.
 ` : ''}
 
-INSTRUCTIONS:
-1. Create a comprehensive but concise Speaker Growth Plan that incorporates ALL the structured content above
-2. Use the structured content as your foundation but personalize it based on their speaking style scores and additional context
-3. Include personalized coaching responses to their specific challenges and questions
-4. Make it personal, actionable, and encouraging. Use "you" throughout
-5. Reference their specific speaking style scores to make recommendations more targeted
-6. Format the response in clean markdown with clear headings and bullet points
+TASK:
+Write a growth plan that feels like a conversation with Alistair. Use the core content as your foundation, but make it personal based on their scores and what they shared. Include specific advice for their challenges and questions.
 
-Structure your response as:
-# Your Speaker Growth Plan - ${archetype}
+Structure it simply:
+# Your Speaker Growth Plan
 
-## Who You Are as a Speaker
-[Use the description but personalize it with their scores]
+## What I noticed about you
+[Use the description but make it conversational and reference their specific scores/context]
 
-## Your Unique Strengths
-[Use the strengths list but add insights from their scores]
+## Your natural strengths  
+[Use the strengths but add personal insights]
 
-## Where It Might Show Up
-[Use the examples but perhaps reference their specific situations if mentioned]
+## Where this probably shows up
+[Use the examples but make them relatable and specific to their context]
 
-## Where to Grow
-[Use the growth tips but connect them to their specific scores and challenges]
+## What to work on
+[Use the growth tips but make them actionable and memorable]
 
-${struggleAnswer ? `## Addressing Your Speaking Challenge
-[Provide specific coaching advice for their struggle: "${struggleAnswer}" - connect it to their archetype and give actionable solutions]
+${struggleAnswer ? `## Let's talk about your main challenge
+[Address their specific struggle: "${struggleAnswer}" - give real, actionable advice]
 
-` : ''}${curiosityAnswer ? `## A Coach's Response to Your Question
-[Address their curiosity: "${curiosityAnswer}" with several sentences connecting it to their archetype and growth path]
+` : ''}${curiosityAnswer ? `## About that question you asked
+[Respond to their curiosity: "${curiosityAnswer}" - be thoughtful and helpful]
 
-` : ''}## Immediate Action Steps
-[3-4 practical things they can do this week based on their scores, struggles, and context]
+` : ''}## Three things to try this week
+[Give 3 specific, doable actions based on everything above]
 
-## Final Thought
-[Use the final thought but make it personal to them]
+## Bottom line
+[Use the final thought but make it personal and memorable]
 
-IMPORTANT: 
-- If they shared a specific struggle ("${struggleAnswer}"), give detailed, actionable advice for that exact challenge
-- If they shared a curiosity ("${curiosityAnswer}"), provide thoughtful insights that satisfy their curiosity while connecting to growth
-- Reference what they said and give specific advice about their situations, struggles, and goals
-- Make the advice feel like it's coming from an experienced coach who truly understands their archetype`;
+Write like you're having a real conversation - no corporate speak, no filler. Just honest, helpful advice that sticks.`;
 
   try {
     const completion = await openai.chat.completions.create({
@@ -737,107 +722,59 @@ async function addToMailerLite(email: string, firstName: string, archetype: Arch
 async function sendEmail(email: string, firstName: string, archetype: Archetype, plan: string, optionalAnswers?: Record<string, string | string[]>): Promise<void> {
   if (!process.env.RESEND_API_KEY) {
     console.log('Resend API key not configured - logging email content instead');
-    console.log('Email to send:', `Subject: Your Personal Speaker Growth Plan - ${archetype}\n\n${plan}`);
+    console.log('Email to send:', `Subject: Your Speaker Growth Plan - ${archetype}\n\n${plan}`);
     return;
   }
 
   try {
     const { data, error } = await resend.emails.send({
-      from: 'Alistair Webster from Speak Up For Good <hello@speakupforgood.com>',
+      from: 'Alistair Webster <hello@speakupforgood.com>',
       to: [email],
-      subject: `🎯 Your Personal Speaker Growth Plan - ${archetype}`,
+      subject: `Your Speaker Growth Plan - ${archetype}`,
       html: `
-        <div style="font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; background: #ffffff;">
-          <!-- Header with Logo/Branding -->
-          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; color: white;">
-            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; display: inline-block;">
-              <h1 style="margin: 0; font-size: 32px; font-weight: 700;">SPEAK UP FOR GOOD</h1>
-              <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9; letter-spacing: 1px;">COACHING • WORKSHOPS • CONFIDENCE</p>
-            </div>
-            <h2 style="margin: 0; font-size: 28px; font-weight: 600;">🎯 Your Personal Speaker Growth Plan</h2>
-            <p style="margin: 10px 0 0 0; opacity: 0.95; font-size: 18px;">Tailored for <strong>${archetype}</strong></p>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+          
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #667eea; margin: 0; font-size: 24px;">Speak Up For Good</h1>
           </div>
           
-          <div style="padding: 40px 30px; background: #ffffff;">
-            <p style="font-size: 18px; margin-bottom: 25px; color: #4a5568;">Hi ${firstName}! 👋</p>
-            
-            <p style="margin-bottom: 25px; font-size: 16px; line-height: 1.7;">Thank you for taking the Speaker Archetype Quiz! Based on your responses, you've been identified as <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; font-size: 18px;">"${archetype}"</span>.</p>
-            
-            ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? `
-            <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 20px; margin: 25px 0;">
-              <h3 style="color: #0c4a6e; margin: 0 0 15px 0; font-size: 16px; font-weight: 600;">✨ I've personalized your plan based on your specific goals:</h3>
-              <div style="font-size: 14px; color: #1e40af; line-height: 1.6;">
-                ${Object.entries(optionalAnswers)
-                  .filter(([_, answer]) => {
-                    if (Array.isArray(answer)) return answer.length > 0;
-                    return answer && typeof answer === 'string' && answer.trim();
-                  })
-                  .map(([key, answer]) => {
-                    const questionLabels: Record<string, string> = {
-                      'situations': 'Focus areas',
-                      'struggle': 'Main challenge',
-                      'confidence_moment': 'Key confidence goal',
-                      'life_change': 'Desired impact'
-                    };
-                    if (['situations', 'struggle', 'confidence_moment', 'life_change'].includes(key)) {
-                      const formattedAnswer = Array.isArray(answer) ? answer.join(', ') : answer;
-                      return `<strong>${questionLabels[key]}:</strong> ${formattedAnswer}`;
-                    }
-                    return null;
-                  })
-                  .filter(Boolean)
-                  .join('<br><br>')}
-              </div>
-            </div>
-            ` : ''}
-            
-            <p style="margin-bottom: 30px; font-size: 16px; line-height: 1.7;">Here's your ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? 'fully customized' : 'personalized'} roadmap to speaking success:</p>
-            
-            <!-- Plan Content with Better Formatting -->
-            <div style="background: linear-gradient(145deg, #f8fafc 0%, #ffffff 100%); padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-              <div style="white-space: pre-wrap; font-size: 15px; line-height: 1.8; color: #2d3748;">
-                ${plan.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #667eea; font-weight: 700;">$1</strong>')
-                      .replace(/^# (.*$)/gm, '<h2 style="color: #667eea; margin: 25px 0 15px 0; font-size: 22px; font-weight: 700; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">$1</h2>')
-                      .replace(/^## (.*$)/gm, '<h3 style="color: #4a5568; margin: 20px 0 12px 0; font-size: 18px; font-weight: 600;">$1</h3>')
-                      .replace(/^- (.*$)/gm, '<div style="margin: 10px 0; padding-left: 15px; position: relative;"><span style="position: absolute; left: 0; color: #667eea; font-weight: bold;">•</span>$1</div>')
-                      .replace(/^\d+\. (.*$)/gm, '<div style="margin: 10px 0; padding-left: 20px; position: relative; counter-increment: step-counter;"><span style="position: absolute; left: 0; color: #667eea; font-weight: bold;">$1</span></div>')
-                      .replace(/\n\n/g, '</div><div style="margin: 15px 0;">')
-                      .replace(/\n/g, '<br>')}
-              </div>
-            </div>
-            
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 8px; margin: 30px 0; color: white; text-align: center;">
-              <h3 style="margin: 0 0 15px 0; font-size: 20px;">🎯 READY TO ACCELERATE YOUR PROGRESS?</h3>
-              <p style="margin: 15px 0; opacity: 0.95;">Your growth plan gives you the roadmap, but sometimes it helps to have a guide.</p>
-              
-              <p style="margin: 15px 0; opacity: 0.95;">I'm offering free 30-minute consultation calls where we can:</p>
-              <ul style="text-align: left; margin: 15px 0; padding-left: 20px; opacity: 0.95;">
-                <li>✓ Dive deeper into your ${archetype} results</li>
-                <li>✓ Identify your biggest speaking opportunities right now</li>
-                <li>✓ Create a personalized roadmap for your specific goals</li>
-                <li>✓ Get answers to any questions about your plan</li>
-              </ul>
-              
-              <p style="margin: 15px 0; opacity: 0.95;">This is completely free with no obligation - just my way of helping fellow speakers grow.</p>
-              
-              <a href="https://calendly.com/alistair-webster/speaker-type-chat" 
-                 style="display: inline-block; background: #f59e0b; color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; margin: 20px 0; font-size: 16px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); transition: all 0.3s ease;">
-                📅 Book Your Free Consultation
-              </a>
-            </div>
-            
-            <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 30px;">
-              <p style="margin-bottom: 15px;">Best regards,<br><strong>Alistair Webster</strong><br>Speak Up For Good</p>
-              
-              <p style="font-size: 14px; color: #718096; margin: 15px 0;">
-                P.S. You'll receive weekly speaking tips in your inbox. If you ever want to unsubscribe, just click the link at the bottom of any email.
-              </p>
+          <p style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">Hi ${firstName},</p>
+          
+          <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
+            Thanks for taking the speaker quiz! Based on your answers, you're a <strong>${archetype}</strong>. 
+            ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? 'I\'ve personalized this plan based on what you shared.' : 'Here\'s your personalized growth plan.'}
+          </p>
+          
+          <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 20px; margin: 25px 0;">
+            <div style="white-space: pre-wrap; font-size: 15px; line-height: 1.7; color: #2d3748;">
+              ${plan.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #667eea;">$1</strong>')
+                    .replace(/^# (.*$)/gm, '<h2 style="color: #667eea; margin: 25px 0 15px 0; font-size: 20px;">$1</h2>')
+                    .replace(/^## (.*$)/gm, '<h3 style="color: #4a5568; margin: 20px 0 12px 0; font-size: 16px; font-weight: 600;">$1</h3>')
+                    .replace(/^- (.*$)/gm, '<div style="margin: 8px 0; padding-left: 15px;">• $1</div>')
+                    .replace(/^\d+\. (.*$)/gm, '<div style="margin: 8px 0; padding-left: 15px;">$1</div>')
+                    .replace(/\n\n/g, '<br><br>')
+                    .replace(/\n/g, '<br>')}
             </div>
           </div>
           
-          <div style="background: #f7fafc; padding: 20px; text-align: center; font-size: 12px; color: #718096;">
-            <p style="margin: 0;">This email was sent because you completed the Speaker Archetype Quiz at Speak Up For Good.</p>
+          <div style="background: #667eea; color: white; padding: 25px; border-radius: 8px; margin: 30px 0; text-align: center;">
+            <h3 style="margin: 0 0 15px 0; font-size: 18px;">Want to dive deeper?</h3>
+            <p style="margin: 15px 0; opacity: 0.95;">I offer free 30-minute calls to discuss your results and create a roadmap for your specific goals.</p>
+            <a href="https://calendly.com/alistair-webster/speaker-type-chat" 
+               style="display: inline-block; background: #f59e0b; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 15px 0;">
+              Book a free call
+            </a>
           </div>
+          
+          <p style="font-size: 14px; color: #666; margin-top: 30px;">
+            Best,<br>
+            <strong>Alistair</strong>
+          </p>
+          
+          <p style="font-size: 12px; color: #999; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+            You'll receive weekly speaking tips. Unsubscribe anytime.
+          </p>
+          
         </div>
       `,
     });
