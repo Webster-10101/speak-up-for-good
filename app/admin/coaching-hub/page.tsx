@@ -21,6 +21,8 @@ export default function CoachingHub() {
   const [selectedContact, setSelectedContact] = useState<QuizResponse | null>(null);
   const [localValues, setLocalValues] = useState<{[key: string]: string}>({});
   const [updateTimeouts, setUpdateTimeouts] = useState<{[key: string]: NodeJS.Timeout}>({});
+  const [selectedContacts, setSelectedContacts] = useState<Set<string>>(new Set());
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchContacts = useCallback(async () => {
     try {
@@ -135,6 +137,96 @@ export default function CoachingHub() {
     return localValues[key] !== undefined ? localValues[key] : (contact[field as keyof QuizResponse] as string || '');
   }
 
+  // Selection handlers
+  const toggleContactSelection = (contactId: string) => {
+    setSelectedContacts(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(contactId)) {
+        newSet.delete(contactId);
+      } else {
+        newSet.add(contactId);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedContacts.size === contacts.length) {
+      setSelectedContacts(new Set());
+    } else {
+      setSelectedContacts(new Set(contacts.map(c => c.id!)));
+    }
+  };
+
+  // Delete handlers
+  const deleteSelectedContacts = async () => {
+    if (selectedContacts.size === 0) return;
+    
+    const confirmMessage = selectedContacts.size === 1 
+      ? 'Are you sure you want to delete this contact?' 
+      : `Are you sure you want to delete ${selectedContacts.size} contacts?`;
+    
+    if (!confirm(confirmMessage)) return;
+
+    setIsDeleting(true);
+    try {
+      const { error } = await supabase
+        .from('quiz_responses')
+        .delete()
+        .in('id', Array.from(selectedContacts));
+
+      if (error) {
+        console.error('Error deleting contacts:', error);
+        alert('Error deleting contacts. Please try again.');
+        return;
+      }
+
+      // Update local state
+      setContacts(prev => prev.filter(contact => !selectedContacts.has(contact.id!)));
+      setSelectedContacts(new Set());
+      
+      alert(`Successfully deleted ${selectedContacts.size} contact${selectedContacts.size > 1 ? 's' : ''}`);
+    } catch (error) {
+      console.error('Error deleting contacts:', error);
+      alert('Error deleting contacts. Please try again.');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const deleteSingleContact = async (contactId: string) => {
+    if (!confirm('Are you sure you want to delete this contact?')) return;
+
+    setIsDeleting(true);
+    try {
+      const { error } = await supabase
+        .from('quiz_responses')
+        .delete()
+        .eq('id', contactId);
+
+      if (error) {
+        console.error('Error deleting contact:', error);
+        alert('Error deleting contact. Please try again.');
+        return;
+      }
+
+      // Update local state
+      setContacts(prev => prev.filter(contact => contact.id !== contactId));
+      setSelectedContacts(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(contactId);
+        return newSet;
+      });
+      
+      alert('Contact deleted successfully');
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+      alert('Error deleting contact. Please try again.');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   const archetypes = [
     'Rambler', 'Overthinker', 'Self-Doubter', 'People Pleaser', 
     'Performer', 'Intense Speaker', 'Rationalist'
@@ -230,6 +322,32 @@ export default function CoachingHub() {
           </div>
         </div>
 
+        {/* Bulk Actions */}
+        {selectedContacts.size > 0 && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-red-700">
+                  {selectedContacts.size} contact{selectedContacts.size > 1 ? 's' : ''} selected
+                </span>
+                <button
+                  onClick={() => setSelectedContacts(new Set())}
+                  className="text-sm text-red-600 hover:text-red-800"
+                >
+                  Clear selection
+                </button>
+              </div>
+              <button
+                onClick={deleteSelectedContacts}
+                disabled={isDeleting}
+                className="bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              >
+                {isDeleting ? 'Deleting...' : `Delete Selected (${selectedContacts.size})`}
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Filters and Controls */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex flex-wrap gap-4 items-center">
@@ -283,6 +401,14 @@ export default function CoachingHub() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <input
+                      type="checkbox"
+                      checked={contacts.length > 0 && selectedContacts.size === contacts.length}
+                      onChange={toggleSelectAll}
+                      className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                  </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
@@ -290,11 +416,22 @@ export default function CoachingHub() {
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Focus Area</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sessions</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {contacts.map((contact) => (
-                  <tr key={contact.id} className="hover:bg-gray-50">
+                  <tr key={contact.id} className={`hover:bg-gray-50 ${
+                    selectedContacts.has(contact.id!) ? 'bg-blue-50' : ''
+                  }`}>
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <input
+                        type="checkbox"
+                        checked={selectedContacts.has(contact.id!)}
+                        onChange={() => toggleContactSelection(contact.id!)}
+                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      />
+                    </td>
                     <td className="px-4 py-4 whitespace-nowrap">
                       <div>
                         <div className="text-sm font-medium text-gray-900">{contact.first_name}</div>
@@ -347,6 +484,15 @@ export default function CoachingHub() {
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                       {formatDate(contact.updated_at)}
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <button
+                        onClick={() => deleteSingleContact(contact.id!)}
+                        disabled={isDeleting}
+                        className="text-red-600 hover:text-red-800 disabled:opacity-50 text-sm font-medium"
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
