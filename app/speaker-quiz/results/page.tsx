@@ -717,7 +717,8 @@ export default function QuizResultsPage() {
                 <p className="text-green-800 font-medium mb-2">{successMessage}</p>
                 <p className="text-green-700 text-sm">
                   Your personalized growth plan should arrive within the next few minutes. 
-                  If you don&apos;t see it, check your spam folder.
+                  <br />
+                  <span className="font-medium">Email delivery can take 2-5 minutes.</span> If you don&apos;t see it, check your spam folder.
                 </p>
               </div>
               
