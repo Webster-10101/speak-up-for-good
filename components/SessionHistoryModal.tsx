@@ -254,7 +254,7 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
                         {question || key}
                       </h4>
                       <p className="text-gray-800 leading-relaxed">
-                        "{answer}"
+                        &quot;{answer}&quot;
                       </p>
                     </div>
                   );
