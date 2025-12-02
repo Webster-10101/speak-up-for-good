@@ -63,11 +63,11 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Get In Touch</h3>
             <div className="space-y-3">
               <a
-                href="mailto:alistair@speakupforgood.com"
+                href="mailto:hello@speakupforgood.com"
                 className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                <span>alistair@speakupforgood.com</span>
+                <span>hello@speakupforgood.com</span>
               </a>
               <button
                 onClick={() => scrollToSection('newsletter')}

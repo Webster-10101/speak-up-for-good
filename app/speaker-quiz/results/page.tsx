@@ -9,6 +9,7 @@ export default function QuizResultsPage() {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [processingStage, setProcessingStage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
   // Get data from URL params
@@ -30,7 +31,13 @@ export default function QuizResultsPage() {
     if (!archetype || !email || !firstName) return;
 
     setLoading(true);
+    setProcessingStage('Analyzing your responses...');
+    
     try {
+      // Show processing stages to keep user engaged
+      setTimeout(() => setProcessingStage('Generating your personalized plan with AI...'), 1000);
+      setTimeout(() => setProcessingStage('Preparing your email...'), 3000);
+      
       const response = await fetch('/api/speaker-quiz', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -46,7 +53,10 @@ export default function QuizResultsPage() {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccessMessage(data.message || 'Check your email for your personalised Speaker Growth Plan!');
+        setProcessingStage('Success! Check your email...');
+        setTimeout(() => {
+          setSuccessMessage(data.message || 'Check your email for your personalised Speaker Growth Plan!');
+        }, 500);
       } else {
         console.error('Failed to submit answers');
         alert('There was an error submitting your answers. Please try again.');
@@ -55,7 +65,10 @@ export default function QuizResultsPage() {
       console.error('Error submitting answers:', error);
       alert('There was an error submitting your answers. Please try again.');
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+        setProcessingStage('');
+      }, 1000);
     }
   }
 
@@ -650,8 +663,30 @@ export default function QuizResultsPage() {
                     disabled={!email || !firstName || loading}
                     className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-4 py-3 rounded-lg transition-colors duration-200"
                   >
-                    {loading ? 'Sending Your Plan...' : 'Get My Personalized Growth Plan'}
+                    {loading ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Creating Your Plan...</span>
+                      </div>
+                    ) : (
+                      'Get My Personalized Growth Plan'
+                    )}
                   </button>
+                  
+                  {/* Processing feedback */}
+                  {loading && processingStage && (
+                    <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <div className="flex items-center justify-center space-x-3">
+                        <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <div className="text-center">
+                          <p className="text-blue-800 font-medium">{processingStage}</p>
+                          <p className="text-blue-600 text-sm mt-1">
+                            This usually takes 5-15 seconds. Please don't close this page.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <p className="text-xs text-center text-gray-500 mt-4">
@@ -676,15 +711,39 @@ export default function QuizResultsPage() {
         ) : (
           <div className="max-w-2xl mx-auto text-center">
             <div className="bg-white rounded-xl shadow-lg p-8">
-              <div className="text-green-600 text-6xl mb-4">✨</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Plan Sent!</h2>
-              <p className="text-gray-600 mb-6">{successMessage}</p>
-              <button
-                onClick={() => router.push('/')}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
-              >
-                Return to Home
-              </button>
+              <div className="text-green-600 text-6xl mb-4">🎉</div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Your Plan is On Its Way!</h2>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
+                <p className="text-green-800 font-medium mb-2">{successMessage}</p>
+                <p className="text-green-700 text-sm">
+                  Your personalized growth plan should arrive within the next few minutes. 
+                  If you don't see it, check your spam folder.
+                </p>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h3 className="font-semibold text-blue-900 mb-2">What's Next?</h3>
+                  <p className="text-blue-800 text-sm">
+                    While you wait, consider booking a free call to discuss your results and get personalized coaching advice.
+                  </p>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <button
+                    onClick={() => window.open('https://calendly.com/alistair-webster/speaker-type-chat', '_blank')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
+                  >
+                    Book Free Consultation
+                  </button>
+                  <button
+                    onClick={() => router.push('/')}
+                    className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
+                  >
+                    Return to Home
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
