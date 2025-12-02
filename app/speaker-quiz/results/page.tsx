@@ -681,7 +681,7 @@ export default function QuizResultsPage() {
                         <div className="text-center">
                           <p className="text-blue-800 font-medium">{processingStage}</p>
                           <p className="text-blue-600 text-sm mt-1">
-                            This usually takes 5-15 seconds. Please don't close this page.
+                            This usually takes 5-15 seconds. Please don&apos;t close this page.
                           </p>
                         </div>
                       </div>
@@ -717,13 +717,13 @@ export default function QuizResultsPage() {
                 <p className="text-green-800 font-medium mb-2">{successMessage}</p>
                 <p className="text-green-700 text-sm">
                   Your personalized growth plan should arrive within the next few minutes. 
-                  If you don't see it, check your spam folder.
+                  If you don&apos;t see it, check your spam folder.
                 </p>
               </div>
               
               <div className="space-y-4">
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-blue-900 mb-2">What's Next?</h3>
+                  <h3 className="font-semibold text-blue-900 mb-2">What&apos;s Next?</h3>
                   <p className="text-blue-800 text-sm">
                     While you wait, consider booking a free call to discuss your results and get personalized coaching advice.
                   </p>
