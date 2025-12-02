@@ -182,7 +182,7 @@ export async function POST(request: NextRequest) {
         await updateEmailStatus(contactId, 'retrying');
 
         // Extract plan from stored email content (simple extraction)
-        const planMatch = contact.email_content.match(/<div style="white-space: pre-wrap[^>]*>(.*?)<\/div>/s);
+        const planMatch = contact.email_content.match(/<div style="white-space: pre-wrap[^>]*>([\s\S]*?)<\/div>/);
         const plan = planMatch ? planMatch[1].replace(/<[^>]*>/g, '').trim() : 'Your personalized speaking plan';
 
         // Attempt to send email
