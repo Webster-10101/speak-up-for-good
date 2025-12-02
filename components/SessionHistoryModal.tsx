@@ -9,82 +9,77 @@ interface SessionHistoryModalProps {
   onClose: () => void;
 }
 
-// Quiz questions mapping for better display
+// Current quiz structure - matches the actual quiz questions
 const QUIZ_QUESTIONS = {
-  1: "How do you typically feel before giving a presentation or speaking up in a meeting?",
-  2: "When you're explaining something complex, what usually happens?",
-  3: "How do you handle it when someone disagrees with you during a discussion?",
-  4: "What's your biggest challenge when trying to persuade someone?",
-  5: "How do you typically prepare for important conversations?",
-  6: "When you're passionate about a topic, how do others usually respond?",
-  7: "What happens when you're put on the spot to give your opinion?",
-  8: "How do you usually wrap up your key points?"
+  q1: "If you put me on stage, my reaction will be to…",
+  q2: "When I have to speak without preparation, I typically…",
+  q3: "On a scale of 1–10, how confident do you feel speaking in high-stakes situations?",
+  q4: "When someone disagrees with me publicly, I tend to…",
+  q5: "I can find words quickly when I'm put on the spot",
+  q6: "I stay on one idea at a time rather than jumping around",
+  q7: "When speaking, I feel like I'm performing rather than being myself",
+  q8: "After speaking, I usually think…",
+  q9: "Before speaking, I usually prepare by…",
+  q10: "My biggest speaking challenge is usually…"
 };
 
 const ANSWER_OPTIONS = {
-  1: [
-    "Excited and energized - I love having the floor",
-    "Nervous but determined - I know I have something valuable to say",
-    "Worried I'll ramble or go off track",
-    "Anxious about being judged or criticized",
-    "Focused on making sure everyone likes what I have to say",
-    "Concerned I'll be too intense or overwhelming"
+  q1: [
+    'Fill the space with ideas and energy',
+    'Hold back until I\'m "ready"',
+    'Want to speak but second-guess myself',
+    'Say what I think others want to hear',
+    'Turn on polish and performance mode',
+    'Come in hot and dominate',
+    'Focus on facts and logic',
+    'Say exactly what needs to be said'
   ],
-  2: [
-    "I get animated and passionate, sometimes losing my audience",
-    "I overthink every detail and worry I'm not being clear enough",
-    "I second-guess myself and back down from my main points",
-    "I try to cover all angles to avoid any conflict",
-    "I focus on being polished and impressive",
-    "I dive deep into the logic but may lose the human connection"
+  q2: [
+    'Dive in and find my way as I go',
+    'Ask questions or stall for thinking time',
+    'Apologize for not being prepared',
+    'Keep it very brief to minimize risk',
+    'Perform confidently even without content',
+    'Speak with conviction regardless',
+    'Stick to what I know for certain'
   ],
-  3: [
-    "I get more passionate and might come across as pushy",
-    "I worry I haven't explained myself well enough",
-    "I start to doubt my position and may give in too easily",
-    "I try to find middle ground, even if it dilutes my message",
-    "I focus on maintaining my credibility and composure",
-    "I present more evidence, but may miss the emotional side"
+  q4: [
+    'Explain my point with more examples and details',
+    'Pause to carefully consider their perspective',
+    'Soften my position to find middle ground',
+    'Look for ways to make everyone comfortable',
+    'Defend my view with polished confidence',
+    'Push back strongly on what I believe',
+    'Present clear evidence for my position',
+    'State my view briefly and move on'
   ],
-  4: [
-    "I can be too forceful and overwhelming",
-    "I get stuck in analysis paralysis",
-    "I don't believe strongly enough in my own ideas",
-    "I'm too worried about hurting feelings or creating conflict",
-    "I focus too much on style over substance",
-    "I rely too heavily on facts and miss the emotional appeal"
+  q8: [
+    '"I probably said too much, but I covered everything"',
+    '"I should have said that differently"',
+    '"I hope I didn\'t sound stupid"',
+    '"I hope everyone felt comfortable with that"',
+    '"That came across well and professional"',
+    '"I made my point powerfully"',
+    '"The information was accurate and clear"',
+    '"I said what needed to be said"'
   ],
-  5: [
-    "I brainstorm all my ideas but struggle to organize them",
-    "I research extensively and plan every detail",
-    "I rehearse but still doubt I'm ready",
-    "I think about how to make everyone comfortable",
-    "I practice until my delivery is smooth and polished",
-    "I gather all my facts and data points"
+  q9: [
+    'Over-preparing every detail and contingency',
+    'Making a loose outline with key points',
+    'Relying on enthusiasm and improvisation',
+    'Practicing delivery and polishing presentation',
+    'Researching thoroughly and building logical flow',
+    'Doing minimal prep - just clarifying the core message'
   ],
-  6: [
-    "They get caught up in my energy, but sometimes tune out",
-    "They appreciate my thoroughness but may get overwhelmed",
-    "They sense my expertise but wish I had more confidence",
-    "They feel comfortable but may not remember my key points",
-    "They're impressed by my presentation but may not feel connected",
-    "They respect my knowledge but may not feel emotionally engaged"
-  ],
-  7: [
-    "I jump right in with whatever comes to mind",
-    "I take time to think but worry I'm taking too long",
-    "I give a quick answer and wish I'd said more",
-    "I check the room and try to say what people want to hear",
-    "I give a confident response, even if I'm unsure inside",
-    "I provide a logical answer but may miss the bigger picture"
-  ],
-  8: [
-    "I summarize quickly and move on",
-    "I repeat my points to make sure they're clear",
-    "I end softly and hope my message landed",
-    "I ask if everyone's on board and comfortable",
-    "I end with a strong, memorable statement",
-    "I state my conclusion and expect people to understand"
+  q10: [
+    'Staying focused and not going off on tangents',
+    'Starting to speak before I feel perfectly ready',
+    'Believing I have something valuable to contribute',
+    'Being direct when it might create tension',
+    'Being authentic instead of just polished',
+    'Moderating my energy and reading the room',
+    'Making technical content engaging and relatable',
+    'Knowing when I\'ve said enough'
   ]
 };
 
@@ -230,20 +225,105 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
             <h3 className="font-medium text-purple-900 mb-4">Original Quiz Responses</h3>
             {contact.main_answers && Object.keys(contact.main_answers).length > 0 ? (
               <div className="space-y-4">
-                {Object.entries(contact.main_answers).map(([questionNum, answerIndex]) => {
-                  const qNum = parseInt(questionNum);
-                  const aIndex = typeof answerIndex === 'number' ? answerIndex : parseInt(answerIndex as string);
-                  const question = QUIZ_QUESTIONS[qNum as keyof typeof QUIZ_QUESTIONS];
-                  const options = ANSWER_OPTIONS[qNum as keyof typeof ANSWER_OPTIONS];
-                  const selectedAnswer = options && options[aIndex];
+                {Object.entries(contact.main_answers).map(([questionId, answer]) => {
+                  const question = QUIZ_QUESTIONS[questionId as keyof typeof QUIZ_QUESTIONS];
+                  const options = ANSWER_OPTIONS[questionId as keyof typeof ANSWER_OPTIONS];
+                  
+                  const formatAnswer = (answer: any) => {
+                    // Handle rating questions (q3, q5, q6, q7)
+                    if (['q3', 'q5', 'q6', 'q7'].includes(questionId)) {
+                      return `${answer}/10`;
+                    }
+                    
+                    // Handle multi-select questions (q1, q9)
+                    if (Array.isArray(answer)) {
+                      if (options) {
+                        // Map array indices to option labels
+                        return answer.map((item: any) => {
+                          if (typeof item === 'number' && options[item]) {
+                            return options[item];
+                          } else if (typeof item === 'string') {
+                            // Handle archetype flags for q1
+                            const archetypeLabels = {
+                              'rambler': 'Fill the space with ideas and energy',
+                              'overthinker': 'Hold back until I\'m "ready"',
+                              'doubter': 'Want to speak but second-guess myself',
+                              'pleaser': 'Say what I think others want to hear',
+                              'performer': 'Turn on polish and performance mode',
+                              'intense': 'Come in hot and dominate',
+                              'rationalist': 'Focus on facts and logic',
+                              'minimalist': 'Say exactly what needs to be said'
+                            };
+                            return archetypeLabels[item as keyof typeof archetypeLabels] || item;
+                          }
+                          return item;
+                        }).join(', ');
+                      }
+                      return answer.join(', ');
+                    }
+                    
+                    // Handle single-select questions (q2, q4, q8, q10)
+                    if (typeof answer === 'string') {
+                      // Handle option IDs for single-select questions
+                      const singleSelectLabels = {
+                        // q2 options
+                        'dive_in': 'Dive in and find my way as I go',
+                        'stall_time': 'Ask questions or stall for thinking time',
+                        'apologize_first': 'Apologize for not being prepared',
+                        'say_less': 'Keep it very brief to minimize risk',
+                        'perform_anyway': 'Perform confidently even without content',
+                        'speak_forcefully': 'Speak with conviction regardless',
+                        'stick_to_facts': 'Stick to what I know for certain',
+                        
+                        // q4 options
+                        'explain_more': 'Explain my point with more examples and details',
+                        'think_first': 'Pause to carefully consider their perspective',
+                        'soften_position': 'Soften my position to find middle ground',
+                        'accommodate': 'Look for ways to make everyone comfortable',
+                        'defend_polished': 'Defend my view with polished confidence',
+                        'push_back': 'Push back strongly on what I believe',
+                        'present_evidence': 'Present clear evidence for my position',
+                        'state_briefly': 'State my view briefly and move on',
+                        
+                        // q8 options
+                        'said_too_much': '"I probably said too much, but I covered everything"',
+                        'should_have_said': '"I should have said that differently"',
+                        'sounded_dumb': '"I hope I didn\'t sound stupid"',
+                        'hope_comfortable': '"I hope everyone felt comfortable with that"',
+                        'looked_good': '"That came across well and professional"',
+                        'made_impact': '"I made my point powerfully"',
+                        'was_accurate': '"The information was accurate and clear"',
+                        'job_done': '"I said what needed to be said"',
+                        
+                        // q10 options
+                        'staying_focused': 'Staying focused and not going off on tangents',
+                        'starting_without_perfect': 'Starting to speak before I feel perfectly ready',
+                        'believing_valuable': 'Believing I have something valuable to contribute',
+                        'being_direct': 'Being direct when it might create tension',
+                        'being_authentic': 'Being authentic instead of just polished',
+                        'moderating_energy': 'Moderating my energy and reading the room',
+                        'making_engaging': 'Making technical content engaging and relatable',
+                        'knowing_when_stop': 'Knowing when I\'ve said enough'
+                      };
+                      
+                      return singleSelectLabels[answer as keyof typeof singleSelectLabels] || answer;
+                    }
+                    
+                    // Handle numeric answers for options array
+                    if (typeof answer === 'number' && options && options[answer]) {
+                      return options[answer];
+                    }
+                    
+                    return String(answer);
+                  };
                   
                   return (
-                    <div key={questionNum} className="border-b border-purple-200 pb-3 last:border-b-0">
+                    <div key={questionId} className="border-b border-purple-200 pb-3 last:border-b-0">
                       <h4 className="font-medium text-purple-800 text-sm mb-2">
-                        Q{questionNum}: {question}
+                        {questionId.toUpperCase()}: {question}
                       </h4>
                       <p className="text-purple-700 text-sm pl-4 italic">
-                        &quot;{selectedAnswer || `Answer ${aIndex + 1}`}&quot;
+                        &quot;{formatAnswer(answer)}&quot;
                       </p>
                     </div>
                   );
