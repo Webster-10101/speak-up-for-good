@@ -29,7 +29,7 @@ function generateEmailHTML(firstName: string, archetype: Archetype, plan: string
                 .replace(/^# (.*$)/gm, '<h2 style="color: #667eea; margin: 15px 0 10px 0; font-size: 18px;">$1</h2>')
                 .replace(/^## (.*$)/gm, '<h3 style="color: #4a5568; margin: 12px 0 8px 0; font-size: 16px;">$1</h3>')
                 .replace(/^\* (.*$)/gm, '<li style="margin: 5px 0;">$1</li>')
-                .replace(/(<li.*<\/li>)/s, '<ul style="margin: 10px 0; padding-left: 20px;">$1</ul>')}
+                .replace(/(<li[\s\S]*?<\/li>)/g, '<ul style="margin: 10px 0; padding-left: 20px;">$1</ul>')}
         </div>
       </div>
       
