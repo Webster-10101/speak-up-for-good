@@ -23,6 +23,17 @@ const QUIZ_QUESTIONS = {
   q10: "My biggest speaking challenge is usually…"
 };
 
+// Optional questions from additional-questions page
+const OPTIONAL_QUESTIONS = {
+  situations: "The situations I most want to improve in are...",
+  struggle: "When it comes to speaking, I struggle most with...",
+  authentic: "I feel most like myself when I'm speaking...",
+  world_class: "If I woke up tomorrow as a world-class speaker, I'd know because...",
+  confidence_moment: "The moment I'd love to feel more confident in is...",
+  life_change: "Being a stronger speaker would change things for me by...",
+  curiosity: "Something I've always wondered about speaking is..."
+};
+
 const ANSWER_OPTIONS = {
   q1: [
     'Fill the space with ideas and energy',
@@ -198,16 +209,16 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
             </div>
             <div className="flex gap-2">
               <button
+                onClick={() => setShowInitialNotes(!showInitialNotes)}
+                className="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 font-medium"
+              >
+                {showInitialNotes ? 'Hide' : 'View'} Written Responses
+              </button>
+              <button
                 onClick={() => setShowQuizAnswers(!showQuizAnswers)}
                 className="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded hover:bg-purple-200"
               >
                 {showQuizAnswers ? 'Hide' : 'View'} Quiz Answers
-              </button>
-              <button
-                onClick={() => setShowInitialNotes(!showInitialNotes)}
-                className="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded hover:bg-blue-200"
-              >
-                {showInitialNotes ? 'Hide' : 'View'} Additional Notes
               </button>
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
@@ -219,10 +230,50 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
           </div>
         </div>
 
+        {/* Written Responses - Most Valuable Insights */}
+        {showInitialNotes && (
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+              <h3 className="font-semibold text-blue-900 text-lg">Written Responses - Key Insights</h3>
+            </div>
+            {contact.optional_answers && Object.keys(contact.optional_answers).length > 0 ? (
+              <div className="space-y-6">
+                {Object.entries(contact.optional_answers).map(([key, value]) => {
+                  const question = OPTIONAL_QUESTIONS[key as keyof typeof OPTIONAL_QUESTIONS];
+                  const answer = Array.isArray(value) ? value.join(', ') : value;
+                  
+                  // Skip empty answers
+                  if (!answer || (typeof answer === 'string' && answer.trim() === '')) {
+                    return null;
+                  }
+                  
+                  return (
+                    <div key={key} className="bg-white rounded-lg p-4 border-l-4 border-blue-500 shadow-sm">
+                      <h4 className="font-medium text-blue-900 text-sm mb-2 uppercase tracking-wide">
+                        {question || key}
+                      </h4>
+                      <p className="text-gray-800 leading-relaxed">
+                        "{answer}"
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <div className="text-blue-600 text-lg mb-2">📝</div>
+                <p className="text-blue-700 font-medium">No written responses recorded</p>
+                <p className="text-blue-600 text-sm mt-1">This contact may have skipped the additional questions or was added manually.</p>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Quiz Answers */}
         {showQuizAnswers && (
           <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6">
-            <h3 className="font-medium text-purple-900 mb-4">Original Quiz Responses</h3>
+            <h3 className="font-medium text-purple-900 mb-4">Quiz Responses (Multiple Choice)</h3>
             {contact.main_answers && Object.keys(contact.main_answers).length > 0 ? (
               <div className="space-y-4">
                 {Object.entries(contact.main_answers).map(([questionId, answer]) => {
@@ -333,27 +384,6 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
               <p className="text-purple-700 text-sm">
                 No quiz responses recorded. This contact may have been added manually.
               </p>
-            )}
-          </div>
-        )}
-
-        {/* Initial Quiz Notes */}
-        {showInitialNotes && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-            <h3 className="font-medium text-blue-900 mb-3">Initial Quiz Responses</h3>
-            {contact.optional_answers && Object.keys(contact.optional_answers).length > 0 ? (
-              <div className="space-y-2">
-                {Object.entries(contact.optional_answers).map(([key, value]) => (
-                  <div key={key} className="text-sm">
-                    <span className="font-medium text-blue-800">{key}:</span>{' '}
-                    <span className="text-blue-700">
-                      {Array.isArray(value) ? value.join(', ') : value}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-blue-700 text-sm">No additional quiz responses recorded.</p>
             )}
           </div>
         )}
