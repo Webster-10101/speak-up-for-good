@@ -30,6 +30,15 @@ export interface QuizResponse {
   last_session_focus?: string
   next_session_goal?: string
   notes?: string
+  
+  // Email tracking fields
+  email_content?: string
+  email_subject?: string
+  email_status?: 'pending' | 'sent' | 'failed' | 'retrying'
+  email_error?: string
+  email_sent_at?: string
+  email_retry_count?: number
+  resend_email_id?: string
 }
 
 // Type for coaching sessions

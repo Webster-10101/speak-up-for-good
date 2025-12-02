@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase';
 import type { QuizResponse } from '@/lib/supabase';
 import AddContactForm from '@/components/AddContactForm';
 import SessionHistoryModal from '@/components/SessionHistoryModal';
+import EmailPreviewModal from '@/components/EmailPreviewModal';
 
 export default function CoachingHub() {
   const { data: session, status } = useSession();
@@ -15,10 +16,12 @@ export default function CoachingHub() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [emailStatusFilter, setEmailStatusFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'created_at' | 'updated_at' | 'first_name' | 'status'>('updated_at');
   const [editingCell, setEditingCell] = useState<{contactId: string, field: string} | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedContact, setSelectedContact] = useState<QuizResponse | null>(null);
+  const [emailPreviewContact, setEmailPreviewContact] = useState<QuizResponse | null>(null);
   const [localValues, setLocalValues] = useState<{[key: string]: string}>({});
   const [updateTimeouts, setUpdateTimeouts] = useState<{[key: string]: NodeJS.Timeout}>({});
   const [selectedContacts, setSelectedContacts] = useState<Set<string>>(new Set());
@@ -40,6 +43,11 @@ export default function CoachingHub() {
         query = query.eq('status', statusFilter);
       }
 
+      // Apply email status filter
+      if (emailStatusFilter !== 'all') {
+        query = query.eq('email_status', emailStatusFilter);
+      }
+
       // Apply sorting
       query = query.order(sortBy, { ascending: false });
 
@@ -56,7 +64,7 @@ export default function CoachingHub() {
     } finally {
       setLoading(false);
     }
-  }, [filter, statusFilter, sortBy]);
+  }, [filter, statusFilter, emailStatusFilter, sortBy]);
 
   useEffect(() => {
     if (status === 'loading') return;
@@ -65,7 +73,7 @@ export default function CoachingHub() {
       return;
     }
     fetchContacts();
-  }, [session, status, router, filter, statusFilter, sortBy, fetchContacts]);
+  }, [session, status, router, filter, statusFilter, emailStatusFilter, sortBy, fetchContacts]);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
@@ -234,6 +242,7 @@ export default function CoachingHub() {
 
   const signupSources = ['Quiz', 'LinkedIn', 'Calendly', 'Referral', 'Manual Entry'];
   const statuses = ['Lead', 'Call Booked', 'Client', 'Lapsed Client'];
+  const emailStatuses = ['pending', 'sent', 'failed', 'retrying'];
 
   const getStatusBadgeColor = (status?: string) => {
     switch (status) {
@@ -241,6 +250,16 @@ export default function CoachingHub() {
       case 'Call Booked': return 'bg-yellow-100 text-yellow-800';
       case 'Client': return 'bg-green-100 text-green-800';
       case 'Lapsed Client': return 'bg-gray-100 text-gray-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getEmailStatusBadgeColor = (status?: string) => {
+    switch (status) {
+      case 'sent': return 'bg-green-100 text-green-800';
+      case 'failed': return 'bg-red-100 text-red-800';
+      case 'retrying': return 'bg-yellow-100 text-yellow-800';
+      case 'pending': return 'bg-gray-100 text-gray-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -322,6 +341,37 @@ export default function CoachingHub() {
           </div>
         </div>
 
+        {/* Email Status Summary */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Email Status Overview</h3>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">
+                {contacts.filter(c => c.email_status === 'sent').length}
+              </div>
+              <div className="text-sm text-gray-500">Emails Sent</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-600">
+                {contacts.filter(c => c.email_status === 'pending' || !c.email_status).length}
+              </div>
+              <div className="text-sm text-gray-500">Pending</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-red-600">
+                {contacts.filter(c => c.email_status === 'failed').length}
+              </div>
+              <div className="text-sm text-gray-500">Failed</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-yellow-600">
+                {contacts.filter(c => c.email_status === 'retrying').length}
+              </div>
+              <div className="text-sm text-gray-500">Retrying</div>
+            </div>
+          </div>
+        </div>
+
         {/* Bulk Actions */}
         {selectedContacts.size > 0 && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -380,6 +430,22 @@ export default function CoachingHub() {
             </div>
             
             <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Email Status:</label>
+              <select 
+                value={emailStatusFilter} 
+                onChange={(e) => setEmailStatusFilter(e.target.value)}
+                className="border border-gray-300 rounded-lg px-3 py-2"
+              >
+                <option value="all">All Email Statuses</option>
+                {emailStatuses.map(status => (
+                  <option key={status} value={status}>
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Sort by:</label>
               <select 
                 value={sortBy} 
@@ -413,6 +479,7 @@ export default function CoachingHub() {
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Archetype</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email Status</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Focus Area</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sessions</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated</th>
@@ -464,6 +531,20 @@ export default function CoachingHub() {
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
                         {contact.archetype || 'N/A'}
                       </span>
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getEmailStatusBadgeColor(contact.email_status)}`}>
+                          {contact.email_status || 'pending'}
+                        </span>
+                        <button
+                          onClick={() => setEmailPreviewContact(contact)}
+                          className="text-indigo-600 hover:text-indigo-800 text-xs font-medium"
+                          title="View email details"
+                        >
+                          View
+                        </button>
+                      </div>
                     </td>
                     <td className="px-4 py-4 max-w-xs">
                       <input
@@ -523,6 +604,17 @@ export default function CoachingHub() {
           <SessionHistoryModal
             contact={selectedContact}
             onClose={() => setSelectedContact(null)}
+          />
+        )}
+
+        {/* Email Preview Modal */}
+        {emailPreviewContact && (
+          <EmailPreviewModal
+            contactId={emailPreviewContact.id!}
+            contactName={emailPreviewContact.first_name}
+            contactEmail={emailPreviewContact.email}
+            onClose={() => setEmailPreviewContact(null)}
+            onEmailStatusChange={fetchContacts}
           />
         )}
       </div>
