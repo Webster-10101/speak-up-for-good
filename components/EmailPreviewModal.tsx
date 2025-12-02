@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Mail, RefreshCw, CheckCircle, AlertCircle, Clock } from 'lucide-react';
 
 interface EmailPreviewModalProps {
@@ -33,9 +33,9 @@ export default function EmailPreviewModal({
   const [error, setError] = useState<string | null>(null);
 
   // Load email data on mount
-  useState(() => {
+  useEffect(() => {
     loadEmailData();
-  });
+  }, []);
 
   const loadEmailData = async () => {
     try {
@@ -279,3 +279,4 @@ export default function EmailPreviewModal({
     </div>
   );
 }
+
