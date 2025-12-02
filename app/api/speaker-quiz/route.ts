@@ -47,9 +47,10 @@ const ARCHETYPE_CONTEXTS: Record<string, string> = {
   'Minimalist': 'doesn\'t say more than needed, gets to the point but holds back messy human details that would connect - needs to add one more layer and share more truth'
 };
 
-// Initialize OpenAI client
+// Initialize OpenAI client with timeout
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+  timeout: 30000, // 30 second timeout
 });
 
 // Initialize Resend client
@@ -442,6 +443,11 @@ function generateStruggleResponse(struggleAnswer: string, archetype: Archetype):
 }
 
 async function generateSpeakingPlan(archetype: Archetype, answers: Record<string, any>, optionalAnswers?: Record<string, string | string[]>): Promise<string> {
+  // If no OpenAI API key, use static content immediately
+  if (!process.env.OPENAI_API_KEY) {
+    console.log('No OpenAI API key - using static content');
+    return generateStaticSpeakingPlan(archetype, answers, optionalAnswers);
+  }
   if (!process.env.OPENAI_API_KEY) {
     // Fallback to static content if OpenAI is not available
     return generateStaticSpeakingPlan(archetype, answers, optionalAnswers);
@@ -547,6 +553,9 @@ ${struggleAnswer ? `## Let's talk about your main challenge
 Write like you're having a real conversation - no corporate speak, no filler. Just honest, helpful advice that sticks. Only add humor if it comes naturally - don't force it.`;
 
   try {
+    console.log('Starting OpenAI API call for archetype:', archetype);
+    const startTime = Date.now();
+    
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
@@ -562,6 +571,9 @@ Write like you're having a real conversation - no corporate speak, no filler. Ju
       max_tokens: 1500,
       temperature: 0.7,
     });
+
+    const duration = Date.now() - startTime;
+    console.log(`OpenAI API call completed in ${duration}ms`);
 
     return completion.choices[0]?.message?.content || generateStaticSpeakingPlan(archetype, answers, optionalAnswers);
   } catch (error) {
@@ -878,12 +890,17 @@ export async function POST(request: NextRequest) {
     );
 
     // Generate personalized speaking plan
+    console.log('Generating speaking plan for:', email);
+    const planStartTime = Date.now();
     const speakingPlan = await generateSpeakingPlan(archetype, answers, optionalAnswers);
+    const planDuration = Date.now() - planStartTime;
+    console.log(`Speaking plan generated in ${planDuration}ms`);
 
     // Add to email list (don't await to avoid blocking)
     addToMailerLite(email, firstName, archetype).catch(console.error);
 
     // Send email with plan (don't await to avoid blocking)
+    console.log('Initiating email send for:', email);
     sendEmail(email, firstName, archetype, speakingPlan, optionalAnswers).catch(console.error);
 
     return NextResponse.json({
