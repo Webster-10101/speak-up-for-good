@@ -183,6 +183,7 @@ export default function DrillSession({ drill, onComplete }: DrillSessionProps) {
 
         {/* Timer */}
         <DrillTimer
+          key={currentStep.id}
           duration={currentStep.duration}
           isActive={isStepActive}
           onComplete={handleStepComplete}
@@ -210,7 +211,7 @@ export default function DrillSession({ drill, onComplete }: DrillSessionProps) {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M12 3a9 9 0 110 18 9 9 0 010-18z" />
               </svg>
-              <span>{completedSteps.includes(currentStep.id) ? 'Restart' : 'Start'} {currentStep.title}</span>
+              <span>Start</span>
             </button>
           )}
 

@@ -138,3 +138,5 @@ Actions supported:
 5. **Content Preview**: See exactly what was/should be sent to each contact
 
 This system ensures no leads are lost due to email delivery issues and provides complete visibility into your email communication pipeline.
+
+

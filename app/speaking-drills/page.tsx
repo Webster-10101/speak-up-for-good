@@ -108,6 +108,133 @@ export default function SpeakingDrillsPage() {
                 </Link>
               </div>
 
+              {/* Second Drill - The 5-Minute Reset */}
+              <div className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-sm border border-gray-600/30 rounded-xl p-8 hover:border-blue-400/30 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2">The 5-Minute Reset</h3>
+                    <p className="text-gray-300 text-lg">A pre-speaking reset to regulate your nervous system and meet nervous energy with presence</p>
+                  </div>
+                  <div className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
+                    5 min
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="text-white font-semibold mb-3">What you&apos;ll practice:</h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-300">Physical activation and release</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-300">Breath and body awareness</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-300">Working with nervous energy</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-300">Clear intention before speaking</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="text-white font-semibold mb-3">Drill Structure:</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center py-2 px-4 bg-slate-700/30 rounded">
+                      <span className="text-gray-300">Step 1: Wake the Body</span>
+                      <span className="text-blue-300 text-sm">1.5 min</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 px-4 bg-slate-700/30 rounded">
+                      <span className="text-gray-300">Step 2: Breathe and Orient</span>
+                      <span className="text-blue-300 text-sm">1.25 min</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 px-4 bg-slate-700/30 rounded">
+                      <span className="text-gray-300">Step 3: Welcome the Energy</span>
+                      <span className="text-blue-300 text-sm">1 min</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 px-4 bg-slate-700/30 rounded">
+                      <span className="text-gray-300">Step 4: Clarify Intent</span>
+                      <span className="text-blue-300 text-sm">45 sec</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 px-4 bg-slate-700/30 rounded">
+                      <span className="text-gray-300">Step 5: Commit and Step Forward</span>
+                      <span className="text-blue-300 text-sm">30 sec</span>
+                    </div>
+                  </div>
+                </div>
+
+                <Link
+                  href="/speaking-drills/five-minute-reset"
+                  className="inline-flex items-center bg-blue-500 hover:bg-blue-400 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+                >
+                  Start Drill
+                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+
+              {/* Third Drill - Metaphor Practice */}
+              <div className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-sm border border-gray-600/30 rounded-xl p-8 hover:border-purple-400/30 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2">Metaphor Practice</h3>
+                    <p className="text-gray-300 text-lg">
+                      Train your brain to speak in vivid metaphors that make abstract ideas tangible
+                    </p>
+                  </div>
+                  <div className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm font-medium">
+                    6-12 min
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="text-white font-semibold mb-3">What you&apos;ll practice:</h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-300">Spontaneous metaphorical thinking</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-300">Exploring complex situations through imagery</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-300">Making abstract concepts concrete</span>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-300">Building metaphor fluency</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <div className="bg-purple-500/10 border border-purple-400/20 rounded-lg p-4">
+                    <p className="text-purple-200 text-sm">
+                      <strong>Customizable:</strong> Choose 5, 7, or 10 situations per session.
+                      Random selection from 28+ scenarios ensures fresh practice every time.
+                    </p>
+                  </div>
+                </div>
+
+                <Link
+                  href="/speaking-drills/metaphor-practice"
+                  className="inline-flex items-center bg-purple-500 hover:bg-purple-400 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+                >
+                  Start Drill
+                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+
               {/* Coming Soon Drills */}
               <div className="bg-gradient-to-r from-slate-800/30 to-slate-700/30 backdrop-blur-sm border border-gray-600/20 rounded-xl p-8 opacity-60">
                 <div className="flex items-start justify-between mb-6">
