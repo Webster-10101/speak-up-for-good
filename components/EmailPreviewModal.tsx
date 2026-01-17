@@ -35,6 +35,7 @@ export default function EmailPreviewModal({
   // Load email data on mount
   useEffect(() => {
     loadEmailData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadEmailData = async () => {

@@ -405,7 +405,7 @@ export default function MetaphorPracticePage() {
                       </li>
                       <li className="flex items-start space-x-2">
                         <span className="text-purple-400 mt-1">•</span>
-                        <span>There&apos;s no "right" answer - follow what feels true</span>
+                        <span>There&apos;s no &quot;right&quot; answer - follow what feels true</span>
                       </li>
                     </ul>
                   </div>
