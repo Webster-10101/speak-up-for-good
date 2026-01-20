@@ -848,6 +848,7 @@ async function sendEmail(email: string, firstName: string, archetype: Archetype,
     const { data, error } = await resend.emails.send({
       from: 'Alistair Webster <hello@speakupforgood.com>',
       to: [email],
+      bcc: ['mail@alistairwebster.com'],
       subject,
       html: htmlContent,
     });
