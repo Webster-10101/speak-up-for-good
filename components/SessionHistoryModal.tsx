@@ -13,7 +13,7 @@ interface SessionHistoryModalProps {
 const QUIZ_QUESTIONS = {
   q1: "If you put me on stage, my reaction will be to…",
   q2: "When I have to speak without preparation, I typically…",
-  q3: "On a scale of 1–10, how confident do you feel speaking in high-stakes situations?",
+  q3: "I feel confident speaking in high-stakes situations",
   q4: "When someone disagrees with me publicly, I tend to…",
   q5: "I can find words quickly when I'm put on the spot",
   q6: "I stay on one idea at a time rather than jumping around",

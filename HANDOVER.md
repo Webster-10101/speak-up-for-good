@@ -71,6 +71,26 @@ git push         # Deploys to Vercel automatically
 - No comedian-specific testimonials yet
 - Drills distribution model undecided (free/gated/paid)
 
+## 7. Quiz Code Quality Notes
+
+The speaker quiz works but has some technical debt worth addressing if time permits:
+
+**Duplicated logic:**
+- `calculateSlidingScales` exists in both `app/speaker-quiz/results/page.tsx` and `app/api/speaker-quiz/route.ts` — should be extracted to a shared util
+
+**Duplicated question text:**
+- Question labels defined in both `app/speaker-quiz/page.tsx` and `components/SessionHistoryModal.tsx` — changes require updating both files
+
+**Possible type bug:**
+- `results/page.tsx:87` treats `q4` as a number, but q4 is a single-select (string) question — may be legacy handling or a bug worth investigating
+
+**Minor cleanup:**
+- Debug `console.log` statements left in `results/page.tsx:23,26`
+- Uses `alert()` for error handling (`results/page.tsx:62,66`) — not great UX
+
+**Data passing:**
+- Answers passed via URL search params — could hit length limits with more data in future
+
 ---
 
 ## If I Had 60 Minutes

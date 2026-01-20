@@ -83,7 +83,7 @@ const QUESTIONS: Question[] = [
   },
   {
     id: 'q3',
-    prompt: 'On a scale of 1–10, how confident do you feel speaking in high-stakes situations?',
+    prompt: 'I feel confident speaking in high-stakes situations',
     type: 'rating',
     min: 1,
     max: 10,
