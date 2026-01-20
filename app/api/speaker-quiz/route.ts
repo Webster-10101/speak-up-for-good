@@ -954,9 +954,15 @@ export async function POST(request: NextRequest) {
     // Add to email list (don't await to avoid blocking)
     addToMailerLite(email, firstName, archetype).catch(console.error);
 
-    // Send email with plan (don't await to avoid blocking)
+    // Send email with plan
     console.log('Initiating email send for:', email);
-    sendEmail(email, firstName, archetype, speakingPlan, optionalAnswers).catch(console.error);
+    try {
+      await sendEmail(email, firstName, archetype, speakingPlan, optionalAnswers);
+      console.log('Email send completed for:', email);
+    } catch (emailError) {
+      console.error('Email send failed:', emailError);
+      // Don't fail the whole request if email fails - it's stored for retry
+    }
 
     return NextResponse.json({
       message: 'Success! Check your email for your personalized Speaking Growth Plan.',
