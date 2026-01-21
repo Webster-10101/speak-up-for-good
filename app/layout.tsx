@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import SessionWrapper from '@/components/SessionWrapper'
 import './globals.css'
 
@@ -35,6 +36,7 @@ export default function RootLayout({
           {children}
         </SessionWrapper>
         <Analytics />
+        <GoogleAnalytics gaId="G-SELT48HNN5" />
       </body>
     </html>
   )
