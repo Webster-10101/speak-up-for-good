@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   description: 'Your ideas can change the world — but only if people listen. I help you speak with confidence, clarity, and presence, so your mission is heard, shared, and acted upon.',
   keywords: 'speaking coach, public speaking, confidence, presentation skills, effective altruism',
   icons: {
-    icon: '/speak_up_icon_.svg',
-    shortcut: '/speak_up_icon_.svg',
-    apple: '/speak_up_icon_.svg',
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
   },
   openGraph: {
     title: 'Speak Up For Good - Speaking Coach',
