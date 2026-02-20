@@ -61,9 +61,10 @@ const rideTheSpikeDrill = {
       instructions: [
         'Say your first 3 sentences out loud — exactly as you\'ll deliver them',
         'Not improvised. Not paraphrased. The exact words',
+        'Say them LOUDLY and CLEARLY — project to the back of the room',
+        'Keep your body relaxed while you do it — shoulders down, jaw soft, breath low',
         'Repeat them 3 times. Make them automatic',
-        'Speak 20% slower than feels natural — adrenaline speeds you up',
-        'Your opening needs to survive the spike without thinking'
+        'Speak 20% slower than feels natural — adrenaline speeds you up'
       ],
       explanation: 'The shakiness hits hardest when you\'re also figuring out what to say. A locked opening means your mouth knows what to do while your body catches up. Autopilot for the first 30 seconds.'
     },
