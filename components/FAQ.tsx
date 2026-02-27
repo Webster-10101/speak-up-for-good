@@ -49,6 +49,11 @@ const FAQ = () => {
       answer: "I know the feeling! There's no time to waste — we'll do an intensive one-off session focused on your immediate need. I'll share tips, techniques, and targeted practice to help you feel ready for action, even if time is short. If you then want to build longer-term skills, we can talk about a package."
     },
     {
+      question: "Do you work with teams?",
+      answer: "Yes — I run interactive speaking workshops for teams of all sizes. It's one of the best investments a team can make: learning together, building confidence together, and raising the communication baseline across your organisation. Workshops are tailored to your team's needs and available as lunch & learns, half-day, or full-day formats.",
+      link: { text: "See team workshops", href: "/workshops" }
+    },
+    {
       question: "You're based in Edinburgh — do you work with comedians and performers?",
       answer: "Yes! I work with stand-up comedians and live performers on material, nerves, presence, and recovery. Whether you're prepping for the Fringe, working on a new set, or just want to feel more in the moment on stage.",
       link: { text: "See my coaching for comedians", href: "/comedians" }

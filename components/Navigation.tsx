@@ -77,6 +77,12 @@ const Navigation = () => {
             >
               Speaker Quiz
             </Link>
+            <Link
+              href="/workshops"
+              className="text-white hover:text-blue-300 transition-colors font-medium text-base"
+            >
+              Workshops
+            </Link>
             {/* Temporarily hidden - Speaking Drills not ready for promotion yet */}
             {/* <Link
               href="/speaking-drills"
