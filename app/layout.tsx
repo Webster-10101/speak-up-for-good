@@ -31,6 +31,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-GB">
+      <head>
+        <script src="https://cdn.usefathom.com/script.js" data-site="MPVEXNMB" defer></script>
+      </head>
       <body className={inter.className}>
         <SessionWrapper>
           {children}
