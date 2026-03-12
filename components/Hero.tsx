@@ -30,7 +30,7 @@ const Hero = () => {
             {/* Service Type */}
             <div className="mb-12 mt-8">
               <p className="text-lg md:text-xl text-blue-300 font-semibold tracking-wide uppercase">
-                Public Speaking & Self-Confidence Coaching
+                Speaking & Confidence Coaching
               </p>
             </div>
             
@@ -85,7 +85,7 @@ const Hero = () => {
               <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-blue-300/30 shadow-2xl">
                 <Image
                   src="/alistair webster circle-01.webp"
-                  alt="Alistair Webster - Speaking Coach"
+                  alt="Alistair Webster - Speaking & Confidence Coach"
                   width={320}
                   height={320}
                   className="w-full h-full object-cover"

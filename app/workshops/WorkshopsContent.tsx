@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import { CheckCircle, ChevronDown, ChevronUp, Users, Clock, Zap, MessageCircle, Target, Sparkles, Quote } from 'lucide-react'
 
@@ -444,6 +445,20 @@ export default function WorkshopsContent() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Continue Practising CTA */}
+      <section className="py-10">
+        <div className="container-max section-padding">
+          <div className="max-w-3xl mx-auto text-center">
+            <Link
+              href="/speaking-drills"
+              className="text-green-400 hover:text-green-300 transition-colors text-lg font-medium"
+            >
+              Continue your practice between sessions &rarr;
+            </Link>
           </div>
         </div>
       </section>

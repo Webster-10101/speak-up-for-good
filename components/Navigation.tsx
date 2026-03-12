@@ -83,13 +83,12 @@ const Navigation = () => {
             >
               Workshops
             </Link>
-            {/* Temporarily hidden - Speaking Drills not ready for promotion yet */}
-            {/* <Link
+            <Link
               href="/speaking-drills"
               className="text-white hover:text-blue-300 transition-colors font-medium text-base"
             >
               Speaking Drills
-            </Link> */}
+            </Link>
             <button
               onClick={() => scrollToSection('offers')}
               className="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:scale-105 ml-4"

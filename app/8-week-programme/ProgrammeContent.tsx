@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import { CheckCircle, ChevronDown, ChevronUp, Sparkles, Target, MessageCircle, Heart, Zap } from 'lucide-react'
 
@@ -137,10 +138,10 @@ export default function ProgrammeContent() {
             {/* Subheadline */}
             <div className="max-w-3xl mx-auto mb-10">
               <p className="text-xl md:text-2xl text-slate-300 leading-relaxed mb-6">
-                This isn&apos;t about fixing a skill problem. It&apos;s about reducing the performance load — the gap between who you are and who you feel you need to be professionally.
+                This isn&apos;t just about technique. It&apos;s about reducing the performance load — the gap between who you are and who you feel you need to be professionally — by working on both your speaking skills and the deeper patterns underneath.
               </p>
               <p className="text-lg text-slate-400 leading-relaxed">
-                Over 8 weeks, we&apos;ll work on presence, clarity, storytelling, and authenticity — adapted to what matters for you. Walk away speaking with ease, conviction, and confidence that feels natural.
+                Over 8 weeks, we&apos;ll build presence, clarity, storytelling, and authenticity — while addressing the root causes of what holds you back. Walk away speaking with ease, conviction, and confidence that feels natural.
               </p>
             </div>
 
@@ -166,7 +167,7 @@ export default function ProgrammeContent() {
 
             {/* Price & CTA */}
             <div className="mb-8">
-              <div className="text-4xl font-bold text-white mb-2">£800</div>
+              <div className="text-4xl font-bold text-white mb-2">£850</div>
               <p className="text-slate-400 mb-6">One-time payment for the full programme</p>
               <button
                 onClick={handleBookProgramme}
@@ -346,10 +347,13 @@ export default function ProgrammeContent() {
               How I Work
             </h2>
             <p className="text-lg text-slate-300 leading-relaxed mb-6">
-              The programme follows the fundamentals of the Ultraspeaking methodology — rep-based training that builds instinctive, confident speaking under pressure.
+              This programme works on two levels. On the surface, we build practical speaking skill — presence, clarity, storytelling, and delivery — through rep-based training rooted in the Ultraspeaking methodology.
             </p>
             <p className="text-lg text-slate-300 leading-relaxed mb-6">
-              I also bring in memory reconsolidation techniques for limiting beliefs and blockers. Sometimes the thing stopping someone from speaking freely isn&apos;t skill — it&apos;s an old story about who they are or what&apos;s safe to express.
+              But for many people, the real barrier isn&apos;t technique. It&apos;s deeper patterns — old stories about who they are, what&apos;s safe to express, or what happens when they&apos;re seen. That&apos;s where Memory Reconsolidation comes in. It&apos;s a targeted way of working with the root causes of speaking anxiety and limiting beliefs, so they stop running the show. Not therapy — just precise work on the specific blocks holding you back.
+            </p>
+            <p className="text-lg text-slate-300 leading-relaxed mb-6">
+              Most programmes only address one of these layers. We address both — so the shift is deeper and more lasting.
             </p>
             <p className="text-sm text-blue-300">Ultraspeaking-certified coach</p>
           </div>
@@ -374,7 +378,7 @@ export default function ProgrammeContent() {
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-white mb-2">Single Session</h3>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-white">£125</span>
+                  <span className="text-3xl font-bold text-white">£150</span>
                   <span className="text-slate-400 ml-2">/ 60 mins</span>
                 </div>
                 <p className="text-slate-400 leading-relaxed">Try a session and see how it feels. No commitment.</p>
@@ -411,7 +415,7 @@ export default function ProgrammeContent() {
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-white mb-2">8-Week Programme</h3>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-blue-300">£800</span>
+                  <span className="text-3xl font-bold text-blue-300">£850</span>
                   <span className="text-slate-400 ml-2">/ 8 sessions</span>
                 </div>
                 <p className="text-slate-300 leading-relaxed">Full transformation programme with satisfaction guarantee.</p>
@@ -435,7 +439,7 @@ export default function ProgrammeContent() {
                 </li>
                 <li className="flex items-center space-x-3">
                   <CheckCircle className="text-blue-400 w-5 h-5 flex-shrink-0" />
-                  <span className="text-slate-300">Save £200 vs booking individually</span>
+                  <span className="text-slate-300">Save £350 vs individual sessions</span>
                 </li>
               </ul>
               <button
@@ -517,6 +521,20 @@ export default function ProgrammeContent() {
         </div>
       </section>
 
+      {/* Continue Practising CTA */}
+      <section className="py-10">
+        <div className="container-max section-padding">
+          <div className="max-w-3xl mx-auto text-center">
+            <Link
+              href="/speaking-drills"
+              className="text-blue-400 hover:text-blue-300 transition-colors text-lg font-medium"
+            >
+              Continue your practice between sessions &rarr;
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="py-20 bg-gradient-to-r from-blue-500/10 to-blue-600/5">
         <div className="container-max section-padding">
@@ -535,7 +553,7 @@ export default function ProgrammeContent() {
                 onClick={handleBookProgramme}
                 className="bg-blue-500 hover:bg-blue-400 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-all duration-300 transform hover:scale-105"
               >
-                Book 8-Week Programme — £800
+                Book 8-Week Programme — £850
               </button>
               <button
                 onClick={handleBookIntro}
