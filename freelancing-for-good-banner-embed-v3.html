@@ -1,0 +1,128 @@
+<!-- Speak Up for Good Banner v3 - FFG Native Style -->
+<!-- Paste into FFG job board page (WordPress Custom HTML widget) -->
+
+<!-- Load FFG fonts if not already on page -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:wght@700&display=swap" rel="stylesheet">
+
+<div style="max-width: 1100px; margin: 0 auto; padding: 0 24px;">
+  <a
+    id="sufg-featured"
+    href="https://www.speakupforgood.com/speaker-quiz?utm_source=ffg&utm_medium=job_board&utm_campaign=speaker_quiz&utm_content=v3_native"
+    target="_blank"
+    rel="noopener"
+    style="
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-family: 'Inter', system-ui, sans-serif;
+      position: relative;
+      overflow: hidden;
+    "
+    onmouseover="this.style.borderColor='#93c5fd'; this.style.boxShadow='0 4px 20px rgba(65, 137, 211, 0.08)'; this.style.transform='translateY(-2px)'; this.querySelector('.accent-bar').style.transform='scaleY(1)'"
+    onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'; this.querySelector('.accent-bar').style.transform='scaleY(0)'"
+  >
+    <!-- Blue accent bar (same as ffg-card hover) -->
+    <span class="accent-bar" style="
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #4189D3;
+      transform: scaleY(0);
+      transition: transform 0.2s ease;
+      border-radius: 0 2px 2px 0;
+    "></span>
+
+    <!-- Badge -->
+    <span style="
+      display: inline-block;
+      background: #eff6ff;
+      color: #4189D3;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      white-space: nowrap;
+    ">Free Quiz</span>
+
+    <!-- Text -->
+    <span style="flex: 1; min-width: 0;">
+      <span style="
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: #1e293b;
+      ">What's your speaker type?</span>
+      <span style="
+        font-size: 0.875rem;
+        color: #64748b;
+        margin-left: 8px;
+        font-weight: 400;
+      ">Improve how you pitch and present</span>
+    </span>
+
+    <!-- Arrow -->
+    <span style="
+      flex-shrink: 0;
+      color: #4189D3;
+      display: flex;
+      align-items: center;
+    ">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 18 6-6-6-6"/>
+      </svg>
+    </span>
+  </a>
+
+  <!-- Subtle label -->
+  <div style="
+    text-align: right;
+    padding: 4px 8px 0 0;
+  ">
+    <span style="
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.6875rem;
+      color: #94a3b8;
+      letter-spacing: 0.02em;
+    ">Featured</span>
+  </div>
+</div>
+
+<!-- Fathom click tracking -->
+<script>
+  document.getElementById('sufg-featured').addEventListener('click', function() {
+    if (typeof fathom !== 'undefined') {
+      fathom.trackEvent('SUFG Quiz Click - FFG Job Board', { _site_id: 'SXIOTIHV' });
+    }
+  });
+</script>
+
+<!-- Responsive -->
+<style>
+  @media (max-width: 640px) {
+    #sufg-featured {
+      flex-wrap: wrap !important;
+      gap: 10px !important;
+      padding: 16px 18px !important;
+    }
+    #sufg-featured > span:nth-child(3) {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 4px !important;
+      width: 100% !important;
+    }
+    #sufg-featured > span:nth-child(3) > span:last-child {
+      margin-left: 0 !important;
+    }
+  }
+</style>

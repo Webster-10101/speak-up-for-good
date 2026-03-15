@@ -1,11 +1,20 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import SessionWrapper from '@/components/SessionWrapper'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: ['400', '500', '600'],
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://speakupforgood.com'),
@@ -34,7 +43,7 @@ export default function RootLayout({
       <head>
         <script src="https://cdn.usefathom.com/script.js" data-site="MPVEXNMB" defer></script>
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${playfair.variable} ${inter.className}`}>
         <SessionWrapper>
           {children}
         </SessionWrapper>
@@ -43,4 +52,4 @@ export default function RootLayout({
       </body>
     </html>
   )
-} 
+}
