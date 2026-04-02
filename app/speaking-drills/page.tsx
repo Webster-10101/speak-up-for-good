@@ -53,6 +53,65 @@ const coreDrills = [
   },
 ]
 
+const dailyPracticeDrills = [
+  {
+    name: 'Vocal Warmup',
+    slug: 'vocal-warmup',
+    duration: '5 min',
+    forWho: 'Everyone',
+    description: 'Wake up your voice with breathing, tongue twisters, and resonance exercises',
+    color: 'teal',
+  },
+  {
+    name: 'Story Reps',
+    slug: 'story-reps',
+    duration: '6 min',
+    forWho: 'Everyone',
+    description: 'Practise telling short, structured stories on random prompts',
+    color: 'emerald',
+  },
+  {
+    name: 'Joke Workshop',
+    slug: 'joke-workshop',
+    duration: '5 min',
+    forWho: 'Everyone',
+    description: 'Learn joke structure and practise writing and delivering jokes on random topics',
+    color: 'yellow',
+  },
+  {
+    name: 'Rapid Fire Improv',
+    slug: 'rapid-fire',
+    duration: '5 min',
+    forWho: 'Everyone',
+    description: 'Speak immediately on random topics with zero prep time',
+    color: 'rose',
+  },
+  {
+    name: 'Mini Set',
+    slug: 'mini-set',
+    duration: '7 min',
+    forWho: 'Everyone',
+    description: 'Deliver a short 2-minute set combining storytelling, humour, and presence',
+    color: 'violet',
+  },
+  {
+    name: 'Content Warmup',
+    slug: 'content-warmup',
+    duration: '10 min',
+    forWho: 'Content Creators',
+    description: 'Warm up, practise, then record — turn daily practice into content',
+    color: 'sky',
+  },
+  {
+    name: 'Camera Comfort',
+    slug: 'camera-comfort',
+    duration: '8 min',
+    forWho: 'Everyone',
+    description: 'Exposure therapy for camera cringe — record, watch, breathe, improve, repeat',
+    color: 'lime',
+  },
+]
+
 const targetedDrills = [
   {
     name: 'The Edit',
@@ -115,6 +174,13 @@ const colorMap: Record<string, { border: string; hoverBorder: string; bg: string
   pink:   { border: 'border-pink-400/30',   hoverBorder: 'hover:border-pink-400/50',   bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-pink-300',   dot: 'bg-pink-400',   btn: 'bg-pink-500',   btnHover: 'hover:bg-pink-400',   tag: 'bg-pink-500/20',   tagText: 'text-pink-300' },
   purple: { border: 'border-purple-400/30', hoverBorder: 'hover:border-purple-400/50', bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-purple-300', dot: 'bg-purple-400', btn: 'bg-purple-500', btnHover: 'hover:bg-purple-400', tag: 'bg-purple-500/20', tagText: 'text-purple-300' },
   amber:  { border: 'border-amber-400/30',  hoverBorder: 'hover:border-amber-400/50',  bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-amber-300',  dot: 'bg-amber-400',  btn: 'bg-amber-500',  btnHover: 'hover:bg-amber-400',  tag: 'bg-amber-500/20',  tagText: 'text-amber-300' },
+  teal:   { border: 'border-teal-400/30',   hoverBorder: 'hover:border-teal-400/50',   bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-teal-300',   dot: 'bg-teal-400',   btn: 'bg-teal-500',   btnHover: 'hover:bg-teal-400',   tag: 'bg-teal-500/20',   tagText: 'text-teal-300' },
+  emerald:{ border: 'border-emerald-400/30', hoverBorder: 'hover:border-emerald-400/50', bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-emerald-300', dot: 'bg-emerald-400', btn: 'bg-emerald-500', btnHover: 'hover:bg-emerald-400', tag: 'bg-emerald-500/20', tagText: 'text-emerald-300' },
+  yellow: { border: 'border-yellow-400/30',  hoverBorder: 'hover:border-yellow-400/50',  bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-yellow-300',  dot: 'bg-yellow-400',  btn: 'bg-yellow-500',  btnHover: 'hover:bg-yellow-400',  tag: 'bg-yellow-500/20',  tagText: 'text-yellow-300' },
+  rose:   { border: 'border-rose-400/30',   hoverBorder: 'hover:border-rose-400/50',   bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-rose-300',   dot: 'bg-rose-400',   btn: 'bg-rose-500',   btnHover: 'hover:bg-rose-400',   tag: 'bg-rose-500/20',   tagText: 'text-rose-300' },
+  violet: { border: 'border-violet-400/30', hoverBorder: 'hover:border-violet-400/50', bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-violet-300', dot: 'bg-violet-400', btn: 'bg-violet-500', btnHover: 'hover:bg-violet-400', tag: 'bg-violet-500/20', tagText: 'text-violet-300' },
+  sky:    { border: 'border-sky-400/30',    hoverBorder: 'hover:border-sky-400/50',    bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-sky-300',    dot: 'bg-sky-400',    btn: 'bg-sky-500',    btnHover: 'hover:bg-sky-400',    tag: 'bg-sky-500/20',    tagText: 'text-sky-300' },
+  lime:   { border: 'border-lime-400/30',   hoverBorder: 'hover:border-lime-400/50',   bg: 'from-slate-800/50 to-slate-700/50',   text: 'text-lime-300',   dot: 'bg-lime-400',   btn: 'bg-lime-500',   btnHover: 'hover:bg-lime-400',   tag: 'bg-lime-500/20',   tagText: 'text-lime-300' },
 }
 
 function DrillCard({ drill }: { drill: typeof coreDrills[0] }) {
@@ -235,6 +301,20 @@ export default function SpeakingDrillsPage() {
                 <p className="text-gray-400 mb-6 ml-5">Fundamental drills that work for any speaker.</p>
                 <div className="grid md:grid-cols-3 gap-4">
                   {coreDrills.map((drill) => (
+                    <DrillCard key={drill.slug} drill={drill} />
+                  ))}
+                </div>
+              </div>
+
+              {/* === DAILY PRACTICE === */}
+              <div className="mb-16">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-2 h-8 bg-teal-400 rounded-full"></div>
+                  <h2 className="text-2xl font-bold text-white">Daily Practice</h2>
+                </div>
+                <p className="text-gray-400 mb-6 ml-5">Creative drills to do every day. Build skill, confidence, and content.</p>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {dailyPracticeDrills.map((drill) => (
                     <DrillCard key={drill.slug} drill={drill} />
                   ))}
                 </div>
