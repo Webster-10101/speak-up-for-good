@@ -339,8 +339,51 @@ export default function ProgrammeContent() {
         </div>
       </section>
 
-      {/* Methodology Note */}
+      {/* Client Story */}
       <section className="py-20 bg-white/5 backdrop-blur-sm">
+        <div className="container-max section-padding">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="text-sm uppercase tracking-widest text-blue-400 mb-4 font-medium">
+                Client Story
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                &quot;It Honestly Changed My Life&quot;
+              </h2>
+            </div>
+
+            <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-xl p-8 md:p-10 border border-blue-400/20">
+              <blockquote className="space-y-4 text-slate-300 leading-relaxed text-lg">
+                <p>
+                  Before working with Alistair, I actually thought I was a good public speaker. I felt confident — I&apos;d done stand-up comedy and had a job where I spoke often. But I had a big weakness: if things went off-script, I&apos;d get destabilized fast.
+                </p>
+                <p>
+                  My default was always the same: write a script, learn it by heart, rely on structure and &quot;fail-proof&quot; TED Talk–style gimmicks. It worked… until it didn&apos;t. It killed my ability to improvise, made it hard to relax, and it was exhausting to prepare and rehearse all the time.
+                </p>
+                <p>
+                  Early on, Alistair spotted the real issue: I was using structure to avoid risk, not to express myself. Over a few months, he helped me shift from &quot;performing&quot; to speaking from feeling. Now when I speak, I&apos;m not even conscious of how I&apos;m speaking — I don&apos;t feel like I&apos;m performing. I feel like I&apos;m talking from vulnerability, from something real. And the crazy part is: people feel it.
+                </p>
+                <p>
+                  What surprised me most is how far beyond speaking this went. Alistair helped me see a bigger pattern in my life: over-preparing to avoid mistakes. That insight opened me up to new experiences, and honestly changed my life. The naturalness and fluidity we worked on in speaking started showing up everywhere — in how I work, how I approach projects, even in things like starting martial arts.
+                </p>
+                <p>
+                  My rhythm is better, my stories land more, I don&apos;t rush, and I don&apos;t speak from a script — I speak from connection.
+                </p>
+                <p>
+                  Alistair is an excellent coach: extremely patient, a great listener, and someone who creates real psychological safety. If you&apos;re an introvert who&apos;s terrified of public speaking, he&apos;s the right guy. And if you&apos;re like me — outwardly confident, but still afraid and craving real connection — he&apos;ll help you speak with an open heart.
+                </p>
+              </blockquote>
+              <div className="mt-8 pt-6 border-t border-white/10">
+                <p className="text-white font-semibold text-lg">Tom Gauthier</p>
+                <p className="text-slate-400">Coaching client</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Methodology Note */}
+      <section className="py-20">
         <div className="container-max section-padding">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">

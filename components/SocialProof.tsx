@@ -14,6 +14,11 @@ const SocialProof = () => {
       quote: "Through thoughtful questions and a very human approach, I've got a simple plan with steps for what I can do in my situation starting immediately.",
       author: "Nailya B",
       role: ""
+    },
+    {
+      quote: "Alistair helped me shift from 'performing' to speaking from feeling. What surprised me most is how far beyond speaking this went — he helped me see a bigger pattern in my life, and honestly changed it.",
+      author: "Tom Gauthier",
+      role: ""
     }
   ]
 
@@ -31,7 +36,7 @@ const SocialProof = () => {
           </h2>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-gradient-to-r from-blue-50 to-slate-50 p-8 rounded-xl shadow-sm border border-blue-100 hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer">
               <blockquote className="text-slate-700 leading-relaxed mb-6 text-lg">
