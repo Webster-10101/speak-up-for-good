@@ -34,6 +34,15 @@ const OPTIONAL_QUESTIONS = {
   curiosity: "Something I've always wondered about speaking is..."
 };
 
+// Consultation intake questions — keys match /consultation/intake form field names
+const INTAKE_QUESTIONS: Record<string, string> = {
+  prompting: "What's prompting you to book this call right now?",
+  example: "Can you remember a specific recent example?",
+  currentRating: "Current public speaking self-rating (0–10)",
+  strength: "Greatest strength when it comes to speaking",
+  oneThing: "If we could solve just one thing in the next 3 months…"
+};
+
 const ANSWER_OPTIONS = {
   q1: [
     'Fill the space with ideas and energy',
@@ -100,6 +109,9 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
   const [showAddForm, setShowAddForm] = useState(false);
   const [showInitialNotes, setShowInitialNotes] = useState(false);
   const [showQuizAnswers, setShowQuizAnswers] = useState(false);
+  const [showIntake, setShowIntake] = useState(false);
+  const hasIntake =
+    contact.intake_answers && Object.keys(contact.intake_answers).length > 0;
   const [newSession, setNewSession] = useState({
     session_date: new Date().toISOString().split('T')[0],
     session_focus: '',
@@ -220,6 +232,14 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
               >
                 {showQuizAnswers ? 'Hide' : 'View'} Quiz Answers
               </button>
+              {hasIntake && (
+                <button
+                  onClick={() => setShowIntake(!showIntake)}
+                  className="text-sm bg-emerald-100 text-emerald-800 px-3 py-1 rounded hover:bg-emerald-200"
+                >
+                  {showIntake ? 'Hide' : 'View'} Intake
+                </button>
+              )}
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
                 className="text-sm bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
@@ -385,6 +405,44 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
                 No quiz responses recorded. This contact may have been added manually.
               </p>
             )}
+          </div>
+        )}
+
+        {/* Consultation Intake Answers */}
+        {showIntake && hasIntake && (
+          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-medium text-emerald-900">Consultation Intake</h3>
+              {contact.intake_submitted_at && (
+                <span className="text-xs text-emerald-700">
+                  Submitted {new Date(contact.intake_submitted_at).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
+                </span>
+              )}
+            </div>
+            <div className="space-y-4">
+              {Object.entries(contact.intake_answers || {}).map(([key, value]) => {
+                const label = INTAKE_QUESTIONS[key] || key;
+                const answer = Array.isArray(value) ? value.join(', ') : String(value ?? '');
+                if (!answer || answer.trim() === '') return null;
+                return (
+                  <div
+                    key={key}
+                    className="bg-white rounded-lg p-4 border-l-4 border-emerald-500 shadow-sm"
+                  >
+                    <h4 className="font-medium text-emerald-900 text-sm mb-2 uppercase tracking-wide">
+                      {label}
+                    </h4>
+                    <p className="text-gray-800 leading-relaxed">
+                      {key === 'currentRating' ? `${answer}/10` : `"${answer}"`}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 

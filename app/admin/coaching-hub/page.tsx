@@ -556,12 +556,22 @@ export default function CoachingHub() {
                       />
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap">
-                      <button
-                        onClick={() => setSelectedContact(contact)}
-                        className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded hover:bg-blue-200 transition-colors"
-                      >
-                        View Sessions
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setSelectedContact(contact)}
+                          className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded hover:bg-blue-200 transition-colors"
+                        >
+                          View Sessions
+                        </button>
+                        {contact.intake_answers && Object.keys(contact.intake_answers).length > 0 && (
+                          <span
+                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800"
+                            title={`Intake submitted${contact.intake_submitted_at ? ' ' + new Date(contact.intake_submitted_at).toLocaleDateString('en-GB') : ''}`}
+                          >
+                            Intake
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                       {formatDate(contact.updated_at)}

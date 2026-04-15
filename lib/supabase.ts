@@ -39,6 +39,10 @@ export interface QuizResponse {
   email_sent_at?: string
   email_retry_count?: number
   resend_email_id?: string
+
+  // Consultation intake fields
+  intake_answers?: Record<string, string | number | string[]>
+  intake_submitted_at?: string
 }
 
 // Type for coaching sessions
