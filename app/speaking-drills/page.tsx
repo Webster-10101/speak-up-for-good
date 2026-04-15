@@ -16,6 +16,15 @@ const essentialDrills = [
     points: ['Shake out tension', 'Vocal warm-up', 'Ground posture', 'Breathe & commit'],
   },
   {
+    name: 'Enunciation',
+    slug: 'enunciation',
+    duration: '8 min',
+    tag: 'Sharpen your instrument',
+    tagColor: 'cyan',
+    description: 'Drill consonants, twisters, and record-and-review for daily clarity',
+    points: ['Wake the articulators', 'Drill target consonants', 'Twister ladder (slow → fast → slow)', 'Record + review on your phone'],
+  },
+  {
     name: 'Ride the Spike',
     slug: 'ride-the-spike',
     duration: '5 min',
@@ -54,6 +63,14 @@ const coreDrills = [
 ]
 
 const dailyPracticeDrills = [
+  {
+    name: 'Enunciation',
+    slug: 'enunciation',
+    duration: '8 min',
+    forWho: 'Everyone',
+    description: 'Sharpen articulation — drill consonants, twisters, and read-aloud with playback',
+    color: 'cyan',
+  },
   {
     name: 'Vocal Warmup',
     slug: 'vocal-warmup',
