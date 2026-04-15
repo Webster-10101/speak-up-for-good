@@ -24,8 +24,15 @@ const INITIAL_ANSWERS: IntakeAnswers = {
 
 function IntakeFormInner() {
   const searchParams = useSearchParams();
-  const initialEmail = searchParams.get('email') ?? '';
-  const initialName = searchParams.get('name') ?? '';
+  // Accept both the short param names we'd use manually and the param names
+  // Calendly sends when "Pass event details" is enabled on the event's redirect.
+  const initialEmail =
+    searchParams.get('invitee_email') ?? searchParams.get('email') ?? '';
+  const initialName =
+    searchParams.get('invitee_full_name') ??
+    searchParams.get('invitee_first_name') ??
+    searchParams.get('name') ??
+    '';
 
   const [email, setEmail] = useState(initialEmail);
   const [name, setName] = useState(initialName);
