@@ -949,9 +949,12 @@ export default function SpeakerQuizPage() {
                           {q.type === 'single' && q.options && (
                             <div className="space-y-2">
                               {q.options.map((opt) => (
-                                <label key={opt.id} className={`flex cursor-pointer items-start gap-3 p-3 rounded-xl transition-all duration-200 ${
-                                  currentAnswer === opt.id ? 'bg-blue-50 border border-blue-200' : 'hover:bg-gray-50 border border-transparent'
-                                }`}>
+                                <label
+                                  key={opt.id}
+                                  onClick={() => handleAnswerSelect(q.id, opt.id)}
+                                  className={`flex cursor-pointer items-start gap-3 p-3 rounded-xl transition-all duration-200 ${
+                                    currentAnswer === opt.id ? 'bg-blue-50 border border-blue-200' : 'hover:bg-gray-50 border border-transparent'
+                                  }`}>
                                   <div className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all duration-200 flex-shrink-0 ${
                                     currentAnswer === opt.id ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
                                   }`}>
@@ -974,11 +977,14 @@ export default function SpeakerQuizPage() {
                                 const isSelected = Array.isArray(currentAnswer) && currentAnswer.includes(opt.id);
                                 const canSelect = !Array.isArray(currentAnswer) || currentAnswer.length < (q.maxSelections || Infinity) || isSelected;
                                 return (
-                                  <label key={opt.id} className={`flex cursor-pointer items-start gap-3 p-3 rounded-xl transition-all duration-200 ${
-                                    isSelected ? 'bg-blue-50 border border-blue-200'
-                                    : canSelect ? 'hover:bg-gray-50 border border-transparent'
-                                    : 'opacity-40 cursor-not-allowed border border-transparent'
-                                  }`}>
+                                  <label
+                                    key={opt.id}
+                                    onClick={() => { if (canSelect) handleMultiSelect(q.id, opt.id, !isSelected); }}
+                                    className={`flex cursor-pointer items-start gap-3 p-3 rounded-xl transition-all duration-200 ${
+                                      isSelected ? 'bg-blue-50 border border-blue-200'
+                                      : canSelect ? 'hover:bg-gray-50 border border-transparent'
+                                      : 'opacity-40 cursor-not-allowed border border-transparent'
+                                    }`}>
                                     <div className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center transition-all duration-200 flex-shrink-0 border ${
                                       isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
                                     }`}>
