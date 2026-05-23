@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface DrillTimerProps {
   duration: number // duration in seconds
@@ -9,15 +9,54 @@ interface DrillTimerProps {
   onReset?: () => void
 }
 
+type WakeLockSentinel = { release: () => Promise<void> }
+
 export default function DrillTimer({ duration, isActive, onComplete, onReset }: DrillTimerProps) {
   const [timeLeft, setTimeLeft] = useState(duration)
   const [isRunning, setIsRunning] = useState(false)
+  const wakeLockRef = useRef<WakeLockSentinel | null>(null)
 
   // Reset timer when duration changes or reset is called
   useEffect(() => {
     setTimeLeft(duration)
     setIsRunning(false)
   }, [duration])
+
+  // Keep screen awake while running (iOS Safari 16.4+, modern browsers)
+  useEffect(() => {
+    const nav = navigator as Navigator & {
+      wakeLock?: { request: (type: 'screen') => Promise<WakeLockSentinel> }
+    }
+    if (!nav.wakeLock) return
+
+    const acquire = async () => {
+      try {
+        wakeLockRef.current = await nav.wakeLock!.request('screen')
+      } catch {
+        // Permission denied or unsupported — silently fall back
+      }
+    }
+
+    const release = () => {
+      wakeLockRef.current?.release().catch(() => {})
+      wakeLockRef.current = null
+    }
+
+    if (isRunning) {
+      acquire()
+      // Re-acquire if the tab is hidden then shown again (browsers auto-release)
+      const onVisibility = () => {
+        if (document.visibilityState === 'visible' && isRunning) acquire()
+      }
+      document.addEventListener('visibilitychange', onVisibility)
+      return () => {
+        document.removeEventListener('visibilitychange', onVisibility)
+        release()
+      }
+    } else {
+      release()
+    }
+  }, [isRunning])
 
   // Handle timer countdown
   useEffect(() => {

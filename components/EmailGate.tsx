@@ -16,6 +16,15 @@ export default function EmailGate({ children }: EmailGateProps) {
   const [error, setError] = useState('')
 
   useEffect(() => {
+    // Demo bypass: ?demo=1 grants access without touching localStorage
+    // (used for hallway demos at conferences — guaranteed clean URL)
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('demo') === '1') {
+      setHasAccess(true)
+      setIsLoading(false)
+      return
+    }
+
     // Check if user already has access via localStorage
     const drillsAccess = localStorage.getItem('sufg_drills_access')
     if (drillsAccess === 'true') {
