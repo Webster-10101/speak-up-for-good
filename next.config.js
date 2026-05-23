@@ -7,6 +7,11 @@ const nextConfig = {
         destination: '/comedians',
         permanent: true,
       },
+      {
+        source: '/eag',
+        destination: '/consultation?utm_source=eag&utm_medium=conference&utm_campaign=eag_london_may_2026',
+        permanent: false,
+      },
     ]
   },
 }
