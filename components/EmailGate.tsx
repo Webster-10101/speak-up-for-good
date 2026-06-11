@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase'
 
 interface EmailGateProps {
   children: React.ReactNode
@@ -52,29 +51,19 @@ export default function EmailGate({ children }: EmailGateProps) {
     setIsSubmitting(true)
 
     try {
-      // Check if email already exists
-      const { data: existing } = await supabase
-        .from('quiz_responses')
-        .select('id')
-        .eq('email', email.toLowerCase().trim())
-        .limit(1)
-
-      if (existing && existing.length > 0) {
-        // Update existing record to note they accessed drills
-        await supabase
-          .from('quiz_responses')
-          .update({
-            updated_at: new Date().toISOString(),
-          })
-          .eq('email', email.toLowerCase().trim())
-      } else {
-        // Insert new contact
-        await supabase.from('quiz_responses').insert({
+      const res = await fetch('/api/drills-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: firstName.trim(),
           email: email.toLowerCase().trim(),
-          first_name: firstName.trim(),
-          signup_source: 'Speaking Drills',
-          status: 'Lead',
-        })
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        setError(data?.error || 'Something went wrong. Please try again.')
+        return
       }
 
       // Grant access

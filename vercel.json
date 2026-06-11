@@ -1,11 +1,7 @@
 {
   "git": {
     "deploymentEnabled": {
-      "main": true,
-      "coaching-hub-development": false,
-      "fix/quiz-email-processing-feedback": true
+      "main": true
     }
   }
 }
-
-

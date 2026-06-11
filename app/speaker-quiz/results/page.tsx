@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function QuizResultsPage() {
+// Next 14.2+ requires useSearchParams() inside a Suspense boundary for
+// static generation — see default export at the bottom.
+function QuizResultsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
@@ -750,5 +752,13 @@ export default function QuizResultsPage() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function QuizResultsPage() {
+  return (
+    <Suspense fallback={null}>
+      <QuizResultsContent />
+    </Suspense>
   );
 }

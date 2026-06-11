@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/lib/supabase';
 import type { QuizResponse, CoachingSession } from '@/lib/supabase';
 
 interface SessionHistoryModalProps {
@@ -122,17 +121,14 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
 
   const fetchSessions = useCallback(async () => {
     try {
-      const { data, error } = await supabase
-        .from('coaching_sessions')
-        .select('*')
-        .eq('contact_id', contact.id)
-        .order('session_date', { ascending: false });
+      const res = await fetch(`/api/admin/sessions?contact_id=${encodeURIComponent(contact.id!)}`);
 
-      if (error) {
-        console.error('Error fetching sessions:', error);
+      if (!res.ok) {
+        console.error('Error fetching sessions:', res.status);
         return;
       }
 
+      const { sessions: data } = await res.json();
       setSessions(data || []);
     } catch (error) {
       console.error('Error:', error);
@@ -147,18 +143,19 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
 
   async function addSession() {
     try {
-      const { data, error } = await supabase
-        .from('coaching_sessions')
-        .insert([{ ...newSession, contact_id: contact.id }])
-        .select()
-        .single();
+      const res = await fetch('/api/admin/sessions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...newSession, contact_id: contact.id }),
+      });
 
-      if (error) {
-        console.error('Error adding session:', error);
+      if (!res.ok) {
+        console.error('Error adding session:', res.status);
         alert('Error adding session. Please try again.');
         return;
       }
 
+      const { session: data } = await res.json();
       setSessions(prev => [data, ...prev]);
       setNewSession({
         session_date: new Date().toISOString().split('T')[0],
@@ -178,13 +175,14 @@ export default function SessionHistoryModal({ contact, onClose }: SessionHistory
     if (!confirm('Are you sure you want to delete this session?')) return;
 
     try {
-      const { error } = await supabase
-        .from('coaching_sessions')
-        .delete()
-        .eq('id', sessionId);
+      const res = await fetch('/api/admin/sessions', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: sessionId }),
+      });
 
-      if (error) {
-        console.error('Error deleting session:', error);
+      if (!res.ok) {
+        console.error('Error deleting session:', res.status);
         return;
       }
 

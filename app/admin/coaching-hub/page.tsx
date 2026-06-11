@@ -3,7 +3,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
 import type { QuizResponse } from '@/lib/supabase';
 import AddContactForm from '@/components/AddContactForm';
 import SessionHistoryModal from '@/components/SessionHistoryModal';
@@ -29,35 +28,21 @@ export default function CoachingHub() {
 
   const fetchContacts = useCallback(async () => {
     try {
-      let query = supabase
-        .from('quiz_responses')
-        .select('*');
+      const params = new URLSearchParams({
+        archetype: filter,
+        status: statusFilter,
+        email_status: emailStatusFilter,
+        sort: sortBy,
+      });
 
-      // Apply archetype filter
-      if (filter !== 'all') {
-        query = query.eq('archetype', filter);
-      }
+      const res = await fetch(`/api/admin/contacts?${params}`);
 
-      // Apply status filter
-      if (statusFilter !== 'all') {
-        query = query.eq('status', statusFilter);
-      }
-
-      // Apply email status filter
-      if (emailStatusFilter !== 'all') {
-        query = query.eq('email_status', emailStatusFilter);
-      }
-
-      // Apply sorting
-      query = query.order(sortBy, { ascending: false });
-
-      const { data, error } = await query;
-
-      if (error) {
-        console.error('Error fetching contacts:', error);
+      if (!res.ok) {
+        console.error('Error fetching contacts:', res.status);
         return;
       }
 
+      const { contacts: data } = await res.json();
       setContacts(data || []);
     } catch (error) {
       console.error('Error:', error);
@@ -84,13 +69,14 @@ export default function CoachingHub() {
 
   async function updateContact(contactId: string, field: string, value: string) {
     try {
-      const { error } = await supabase
-        .from('quiz_responses')
-        .update({ [field]: value })
-        .eq('id', contactId);
+      const res = await fetch('/api/admin/contacts', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: contactId, field, value }),
+      });
 
-      if (error) {
-        console.error('Error updating contact:', error);
+      if (!res.ok) {
+        console.error('Error updating contact:', res.status);
         return;
       }
 
@@ -178,13 +164,14 @@ export default function CoachingHub() {
 
     setIsDeleting(true);
     try {
-      const { error } = await supabase
-        .from('quiz_responses')
-        .delete()
-        .in('id', Array.from(selectedContacts));
+      const res = await fetch('/api/admin/contacts', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: Array.from(selectedContacts) }),
+      });
 
-      if (error) {
-        console.error('Error deleting contacts:', error);
+      if (!res.ok) {
+        console.error('Error deleting contacts:', res.status);
         alert('Error deleting contacts. Please try again.');
         return;
       }
@@ -207,13 +194,14 @@ export default function CoachingHub() {
 
     setIsDeleting(true);
     try {
-      const { error } = await supabase
-        .from('quiz_responses')
-        .delete()
-        .eq('id', contactId);
+      const res = await fetch('/api/admin/contacts', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: [contactId] }),
+      });
 
-      if (error) {
-        console.error('Error deleting contact:', error);
+      if (!res.ok) {
+        console.error('Error deleting contact:', res.status);
         alert('Error deleting contact. Please try again.');
         return;
       }

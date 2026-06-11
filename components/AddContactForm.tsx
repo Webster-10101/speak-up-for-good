@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
 import type { QuizResponse } from '@/lib/supabase';
 
 interface AddContactFormProps {
@@ -26,19 +25,20 @@ export default function AddContactForm({ onClose, onAdd }: AddContactFormProps) 
     setLoading(true);
 
     try {
-      const { data, error } = await supabase
-        .from('quiz_responses')
-        .insert([formData])
-        .select()
-        .single();
+      const res = await fetch('/api/admin/contacts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-      if (error) {
-        console.error('Error adding contact:', error);
+      if (!res.ok) {
+        console.error('Error adding contact:', res.status);
         alert('Error adding contact. Please try again.');
         return;
       }
 
-      onAdd(data);
+      const { contact } = await res.json();
+      onAdd(contact);
       onClose();
     } catch (error) {
       console.error('Error adding contact:', error);

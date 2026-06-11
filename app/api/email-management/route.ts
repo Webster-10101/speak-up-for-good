@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { getAdminSession } from '@/lib/auth';
+import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import { Resend } from 'resend';
+import { escapeHtml } from '@/lib/escape-html';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Types for the archetype system
-type Archetype = 'Rambler' | 'Overthinker' | 'Self-Doubter' | 'People Pleaser' | 'Performer' | 'Intense Speaker' | 'Rationalist';
+type Archetype = 'Rambler' | 'Overthinker' | 'Self-Doubter' | 'People Pleaser' | 'Performer' | 'Intense Speaker' | 'Rationalist' | 'Minimalist';
 
 // Generate email HTML content (same as in speaker-quiz route)
 function generateEmailHTML(firstName: string, archetype: Archetype, plan: string, optionalAnswers?: Record<string, string | string[]>): string {
@@ -16,16 +18,16 @@ function generateEmailHTML(firstName: string, archetype: Archetype, plan: string
         <h1 style="color: #667eea; margin: 0; font-size: 24px;">Speak Up For Good</h1>
       </div>
       
-      <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Hi ${firstName},</p>
-      
+      <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Hi ${escapeHtml(firstName)},</p>
+
       <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">
-        Thanks for taking the speaker quiz! Based on your answers, you're a <strong>${archetype}</strong>. 
+        Thanks for taking the speaker quiz! Based on your answers, you're a <strong>${escapeHtml(archetype)}</strong>.
         ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? 'I\'ve personalized this plan based on what you shared.' : 'Here\'s your personalized growth plan.'}
       </p>
-      
+
       <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 15px; margin: 15px 0;">
         <div style="white-space: pre-wrap; font-size: 15px; line-height: 1.5; color: #2d3748;">
-          ${plan.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #667eea;">$1</strong>')
+          ${escapeHtml(plan).replace(/\*\*(.*?)\*\*/g, '<strong style="color: #667eea;">$1</strong>')
                 .replace(/^# (.*$)/gm, '<h2 style="color: #667eea; margin: 15px 0 10px 0; font-size: 18px;">$1</h2>')
                 .replace(/^## (.*$)/gm, '<h3 style="color: #4a5568; margin: 12px 0 8px 0; font-size: 16px;">$1</h3>')
                 .replace(/^\* (.*$)/gm, '<li style="margin: 5px 0;">$1</li>')
@@ -115,7 +117,7 @@ async function updateEmailStatus(
     updateData.email_error = error;
   }
 
-  await supabase
+  await getSupabaseAdmin()
     .from('quiz_responses')
     .update(updateData)
     .eq('id', contactId);
@@ -123,16 +125,21 @@ async function updateEmailStatus(
 
 // Get current retry count
 async function getRetryCount(contactId: string): Promise<number> {
-  const { data } = await supabase
+  const { data } = await getSupabaseAdmin()
     .from('quiz_responses')
     .select('email_retry_count')
     .eq('id', contactId)
     .single();
-  
+
   return data?.email_retry_count || 0;
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorised' }, { status: 401 });
+  }
+
   try {
     const { action, contactId } = await request.json();
 
@@ -141,7 +148,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get contact details
-    const { data: contact, error: fetchError } = await supabase
+    const { data: contact, error: fetchError } = await getSupabaseAdmin()
       .from('quiz_responses')
       .select('*')
       .eq('id', contactId)
@@ -218,7 +225,7 @@ export async function POST(request: NextRequest) {
 
       case 'reset': {
         // Reset email status to pending
-        await supabase
+        await getSupabaseAdmin()
           .from('quiz_responses')
           .update({
             email_status: 'pending',
@@ -247,12 +254,17 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorised' }, { status: 401 });
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
 
     // Get email status summary
-    let query = supabase
+    let query = getSupabaseAdmin()
       .from('quiz_responses')
       .select('id, email, first_name, email_status, email_sent_at, email_error, email_retry_count, created_at');
 

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { Resend } from 'resend';
-import { supabase } from '@/lib/supabase';
+import { getSupabaseAdmin } from '@/lib/supabase-admin';
+import { escapeHtml } from '@/lib/escape-html';
 import type { QuizResponse } from '@/lib/supabase';
 
 // Simple in-memory rate limiting
@@ -82,7 +83,7 @@ async function saveQuizResponse(
       status: 'Lead'
     };
 
-    const { data, error } = await supabase
+    const { data, error } = await getSupabaseAdmin()
       .from('quiz_responses')
       .insert(quizResponse)
       .select('id')
@@ -101,25 +102,45 @@ async function saveQuizResponse(
   }
 }
 
+// Find the id of the most recent quiz_responses row for an email.
+// (.order().limit() on UPDATE is unreliable in PostgREST — select the id
+// first, then update by id, same pattern as the intake route.)
+async function latestIdByEmail(email: string): Promise<string | null> {
+  const { data, error } = await getSupabaseAdmin()
+    .from('quiz_responses')
+    .select('id')
+    .eq('email', email)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Error looking up contact by email:', error);
+    return null;
+  }
+  return data?.id ?? null;
+}
+
 // Update database when email is sent
 async function markEmailSent(email: string, emailId?: string): Promise<void> {
   try {
-    const updateData: any = { 
+    const updateData: any = {
       email_sent: true,
       email_status: 'sent',
       email_sent_at: new Date().toISOString()
     };
-    
+
     if (emailId) {
       updateData.resend_email_id = emailId;
     }
 
-    await supabase
+    const id = await latestIdByEmail(email);
+    if (!id) return;
+
+    await getSupabaseAdmin()
       .from('quiz_responses')
       .update(updateData)
-      .eq('email', email)
-      .order('created_at', { ascending: false })
-      .limit(1);
+      .eq('id', id);
   } catch (error) {
     console.error('Error updating email_sent status:', error);
   }
@@ -128,16 +149,17 @@ async function markEmailSent(email: string, emailId?: string): Promise<void> {
 // Store email content in database
 async function storeEmailContent(email: string, subject: string, htmlContent: string, plan: string): Promise<void> {
   try {
-    await supabase
+    const id = await latestIdByEmail(email);
+    if (!id) return;
+
+    await getSupabaseAdmin()
       .from('quiz_responses')
-      .update({ 
+      .update({
         email_content: htmlContent,
         email_subject: subject,
         email_status: 'pending'
       })
-      .eq('email', email)
-      .order('created_at', { ascending: false })
-      .limit(1);
+      .eq('id', id);
   } catch (error) {
     console.error('Error storing email content:', error);
   }
@@ -146,16 +168,17 @@ async function storeEmailContent(email: string, subject: string, htmlContent: st
 // Mark email as failed
 async function markEmailFailed(email: string, error: string): Promise<void> {
   try {
-    await supabase
+    const id = await latestIdByEmail(email);
+    if (!id) return;
+
+    await getSupabaseAdmin()
       .from('quiz_responses')
-      .update({ 
+      .update({
         email_status: 'failed',
         email_error: error,
         email_retry_count: 1
       })
-      .eq('email', email)
-      .order('created_at', { ascending: false })
-      .limit(1);
+      .eq('id', id);
   } catch (error) {
     console.error('Error updating email failed status:', error);
   }
@@ -164,12 +187,13 @@ async function markEmailFailed(email: string, error: string): Promise<void> {
 // Update database when MailerLite is updated
 async function markMailerLiteAdded(email: string): Promise<void> {
   try {
-    await supabase
+    const id = await latestIdByEmail(email);
+    if (!id) return;
+
+    await getSupabaseAdmin()
       .from('quiz_responses')
       .update({ mailerlite_added: true })
-      .eq('email', email)
-      .order('created_at', { ascending: false })
-      .limit(1);
+      .eq('id', id);
   } catch (error) {
     console.error('Error updating mailerlite_added status:', error);
   }
@@ -494,10 +518,6 @@ async function generateSpeakingPlan(archetype: Archetype, answers: Record<string
     console.log('No OpenAI API key - using static content');
     return generateStaticSpeakingPlan(archetype, answers, optionalAnswers);
   }
-  if (!process.env.OPENAI_API_KEY) {
-    // Fallback to static content if OpenAI is not available
-    return generateStaticSpeakingPlan(archetype, answers, optionalAnswers);
-  }
 
   // Normalize archetype to capitalized version for lookup
   const normalizedArchetype = archetype.charAt(0).toUpperCase() + archetype.slice(1).toLowerCase();
@@ -795,16 +815,16 @@ async function sendEmail(email: string, firstName: string, archetype: Archetype,
         <h1 style="color: #667eea; margin: 0; font-size: 24px;">Speak Up For Good</h1>
       </div>
       
-      <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Hi ${firstName},</p>
-      
+      <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">Hi ${escapeHtml(firstName)},</p>
+
       <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">
-        Thanks for taking the speaker quiz! Based on your answers, you're a <strong>${archetype}</strong>. 
+        Thanks for taking the speaker quiz! Based on your answers, you're a <strong>${escapeHtml(archetype)}</strong>.
         ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? 'I\'ve personalized this plan based on what you shared.' : 'Here\'s your personalized growth plan.'}
       </p>
-      
+
       <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 15px; margin: 15px 0;">
         <div style="white-space: pre-wrap; font-size: 15px; line-height: 1.5; color: #2d3748;">
-          ${plan.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #667eea;">$1</strong>')
+          ${escapeHtml(plan).replace(/\*\*(.*?)\*\*/g, '<strong style="color: #667eea;">$1</strong>')
                 .replace(/^# (.*$)/gm, '<h2 style="color: #667eea; margin: 15px 0 10px 0; font-size: 18px;">$1</h2>')
                 .replace(/^## (.*$)/gm, '<h3 style="color: #4a5568; margin: 12px 0 8px 0; font-size: 16px; font-weight: 600;">$1</h3>')
                 .replace(/^- (.*$)/gm, '<div style="margin: 5px 0; padding-left: 15px;">• $1</div>')
@@ -913,6 +933,15 @@ export async function POST(request: NextRequest) {
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: 'Invalid email address' },
+        { status: 400 }
+      );
+    }
+
+    // Validate archetype against the known set — it feeds the AI prompt,
+    // MailerLite group lookup, and the email subject line.
+    if (!(archetype in ARCHETYPE_CONTEXTS)) {
+      return NextResponse.json(
+        { error: 'Invalid archetype' },
         { status: 400 }
       );
     }

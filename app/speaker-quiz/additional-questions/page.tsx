@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 type OptionalQuestion = {
@@ -56,7 +56,9 @@ const OPTIONAL_QUESTIONS: OptionalQuestion[] = [
   }
 ];
 
-export default function AdditionalQuestionsPage() {
+// Next 14.2+ requires useSearchParams() inside a Suspense boundary for
+// static generation — see default export at the bottom.
+function AdditionalQuestionsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [optionalAnswers, setOptionalAnswers] = useState<Record<string, string | string[]>>({});
@@ -250,5 +252,13 @@ export default function AdditionalQuestionsPage() {
 
       </div>
     </main>
+  );
+}
+
+export default function AdditionalQuestionsPage() {
+  return (
+    <Suspense fallback={null}>
+      <AdditionalQuestionsContent />
+    </Suspense>
   );
 }

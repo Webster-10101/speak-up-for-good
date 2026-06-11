@@ -1,9 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-
-export const supabase = createClient(supabaseUrl, supabaseKey)
+// Shared database types. The browser Supabase client that used to live here
+// has been retired — all database access now goes through API routes using
+// lib/supabase-admin.ts (service role, server-only). Do not re-add a client
+// here: the anon key has no database privileges since the RLS lockdown.
 
 // Database types
 export interface QuizResponse {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import type { QuizResponse } from '@/lib/supabase';
 
 // Simple in-memory rate limiting (same shape as speaker-quiz route)
@@ -80,8 +80,8 @@ export async function POST(request: NextRequest) {
     const normalisedEmail = email.trim().toLowerCase();
     const nowIso = new Date().toISOString();
 
-    // Find latest existing row by email (same pattern as markEmailSent in speaker-quiz)
-    const { data: existing, error: lookupError } = await supabase
+    // Find latest existing row by email, then update by id
+    const { data: existing, error: lookupError } = await getSupabaseAdmin()
       .from('quiz_responses')
       .select('id, signup_source, status')
       .eq('email', normalisedEmail)
@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
         updatePayload.status = 'Call Booked';
       }
 
-      const { error: updateError } = await supabase
+      const { error: updateError } = await getSupabaseAdmin()
         .from('quiz_responses')
         .update(updatePayload)
         .eq('id', existing.id);
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
       email_sent: false,
     };
 
-    const { error: insertError } = await supabase
+    const { error: insertError } = await getSupabaseAdmin()
       .from('quiz_responses')
       .insert(newContact);
 
