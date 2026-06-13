@@ -205,7 +205,6 @@ function calculateSlidingScales(answers: Record<string, any>): Record<string, nu
   const q1 = Array.isArray(answers.q1) ? answers.q1 : [];
   const q2 = answers.q2;
   const q3 = typeof answers.q3 === 'number' ? answers.q3 : 5;
-  const q4 = answers.q4;
   const q5 = typeof answers.q5 === 'number' ? answers.q5 : 5;
   const q6 = typeof answers.q6 === 'number' ? answers.q6 : 5;
   const q7 = typeof answers.q7 === 'number' ? answers.q7 : 5;

@@ -13,6 +13,7 @@ function QuizResultsContent() {
   const [loading, setLoading] = useState(false);
   const [processingStage, setProcessingStage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Get data from URL params
   const archetype = searchParams.get('archetype');
@@ -22,19 +23,17 @@ function QuizResultsContent() {
   useEffect(() => {
     // Redirect if missing required data
     if (!archetype || !mainAnswers) {
-      console.log('Missing data, redirecting to quiz:', { archetype, mainAnswers });
       router.push('/speaker-quiz');
-    } else {
-      console.log('Results page loaded with data:', { archetype, mainAnswers, optionalAnswers });
     }
-  }, [archetype, mainAnswers, optionalAnswers, router]);
+  }, [archetype, mainAnswers, router]);
 
   async function handleGetPlan() {
     if (!archetype || !email || !firstName) return;
 
     setLoading(true);
+    setErrorMessage('');
     setProcessingStage('Analyzing your responses...');
-    
+
     try {
       // Show processing stages to keep user engaged
       setTimeout(() => setProcessingStage('Generating your personalized plan with AI...'), 1000);
@@ -61,11 +60,11 @@ function QuizResultsContent() {
         }, 500);
       } else {
         console.error('Failed to submit answers');
-        alert('There was an error submitting your answers. Please try again.');
+        setErrorMessage(data?.error || 'There was an error submitting your answers. Please try again.');
       }
     } catch (error) {
       console.error('Error submitting answers:', error);
-      alert('There was an error submitting your answers. Please try again.');
+      setErrorMessage('There was an error submitting your answers. Please try again.');
     } finally {
       setTimeout(() => {
         setLoading(false);
@@ -86,7 +85,6 @@ function QuizResultsContent() {
     const q1 = Array.isArray(answers.q1) ? answers.q1 : [];
     const q2 = answers.q2;
     const q3 = typeof answers.q3 === 'number' ? answers.q3 : 5;
-    const q4 = typeof answers.q4 === 'number' ? answers.q4 : 5;
     const q5 = typeof answers.q5 === 'number' ? answers.q5 : 5;
     const q6 = typeof answers.q6 === 'number' ? answers.q6 : 5;
     const q7 = typeof answers.q7 === 'number' ? answers.q7 : 5;
@@ -687,6 +685,13 @@ function QuizResultsContent() {
                           </p>
                         </div>
                       </div>
+                    </div>
+                  )}
+
+                  {/* Error feedback */}
+                  {!loading && errorMessage && (
+                    <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg" role="alert">
+                      <p className="text-red-800 text-sm font-medium">{errorMessage}</p>
                     </div>
                   )}
                 </div>
