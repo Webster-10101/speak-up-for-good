@@ -857,7 +857,8 @@ export default function SpeakerQuizPage() {
                     </button>
                   </div>
                   <p className="text-xs text-center text-slate-500 mt-3">
-                    You&apos;ll also join the Speak Up For Good newsletter with weekly speaking tips. Unsubscribe anytime.
+                    We&apos;ll email you your growth plan. See our{' '}
+                    <a href="/privacy" className="underline hover:text-slate-700">privacy policy</a>.
                   </p>
 
                   {successMessage && (

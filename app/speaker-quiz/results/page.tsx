@@ -10,6 +10,7 @@ function QuizResultsContent() {
   const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
+  const [newsletterOptIn, setNewsletterOptIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [processingStage, setProcessingStage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -47,7 +48,8 @@ function QuizResultsContent() {
           email,
           firstName,
           answers: mainAnswers ? JSON.parse(mainAnswers) : {},
-          optionalAnswers: optionalAnswers ? JSON.parse(optionalAnswers) : {}
+          optionalAnswers: optionalAnswers ? JSON.parse(optionalAnswers) : {},
+          newsletterOptIn
         }),
       });
 
@@ -658,6 +660,17 @@ function QuizResultsContent() {
                       className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                     />
                   </div>
+                  <label className="flex items-start gap-3 text-left cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={newsletterOptIn}
+                      onChange={(e) => setNewsletterOptIn(e.target.checked)}
+                      className="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <span className="text-sm text-gray-600">
+                      Send me the Speak Up For Good newsletter — weekly speaking tips. Optional, and you can unsubscribe anytime.
+                    </span>
+                  </label>
                   <button
                     onClick={handleGetPlan}
                     disabled={!email || !firstName || loading}
@@ -697,7 +710,8 @@ function QuizResultsContent() {
                 </div>
 
                 <p className="text-xs text-center text-gray-500 mt-4">
-                  You&apos;ll also join the Speak Up For Good newsletter with weekly speaking tips. Unsubscribe anytime.
+                  We&apos;ll email you your growth plan. See our{' '}
+                  <a href="/privacy" className="underline hover:text-gray-700">privacy policy</a>.
                 </p>
 
                 {/* Secondary CTA - Subtle coaching option */}

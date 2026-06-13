@@ -26,6 +26,7 @@ interface QuizSubmission {
   archetype: Archetype;
   answers: Record<string, any>; // Updated to support new answer format
   optionalAnswers?: Record<string, string | string[]>;
+  newsletterOptIn?: boolean;
 }
 
 // Archetype descriptions for the AI prompt - normalize to lowercase for lookup
@@ -805,7 +806,7 @@ async function addToMailerLite(email: string, firstName: string, archetype: Arch
 }
 
 // Send email with the generated plan using Resend
-async function sendEmail(email: string, firstName: string, archetype: Archetype, plan: string, optionalAnswers?: Record<string, string | string[]>): Promise<void> {
+async function sendEmail(email: string, firstName: string, archetype: Archetype, plan: string, optionalAnswers?: Record<string, string | string[]>, newsletterOptIn?: boolean): Promise<void> {
   const subject = `Your Speaker Growth Plan - ${archetype}`;
   const htmlContent = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
@@ -847,10 +848,10 @@ async function sendEmail(email: string, firstName: string, archetype: Archetype,
         <strong>Alistair</strong>
       </p>
       
-      <p style="font-size: 12px; color: #999; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
-        You'll receive weekly speaking tips. Unsubscribe anytime.
-      </p>
-      
+      ${newsletterOptIn ? `<p style="font-size: 12px; color: #999; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+        You're subscribed to the Speak Up For Good newsletter for weekly speaking tips. Unsubscribe anytime.
+      </p>` : ''}
+
     </div>
   `;
 
@@ -917,7 +918,7 @@ export async function POST(request: NextRequest) {
     rateLimit.set(clientIP, recentRequests);
 
     const body: QuizSubmission = await request.json();
-    const { email, firstName, archetype, answers, optionalAnswers } = body;
+    const { email, firstName, archetype, answers, optionalAnswers, newsletterOptIn } = body;
 
     // Validate input
     if (!email || !firstName || !archetype || !answers) {
@@ -980,13 +981,16 @@ export async function POST(request: NextRequest) {
     const planDuration = Date.now() - planStartTime;
     console.log(`Speaking plan generated in ${planDuration}ms`);
 
-    // Add to email list (don't await to avoid blocking)
-    addToMailerLite(email, firstName, archetype).catch(console.error);
+    // Add to newsletter only with explicit consent (don't await to avoid blocking).
+    // Default is NOT to subscribe — the plan email itself is transactional.
+    if (newsletterOptIn === true) {
+      addToMailerLite(email, firstName, archetype).catch(console.error);
+    }
 
     // Send email with plan
     console.log('Initiating email send for:', email);
     try {
-      await sendEmail(email, firstName, archetype, speakingPlan, optionalAnswers);
+      await sendEmail(email, firstName, archetype, speakingPlan, optionalAnswers, newsletterOptIn);
       console.log('Email send completed for:', email);
     } catch (emailError) {
       console.error('Email send failed:', emailError);

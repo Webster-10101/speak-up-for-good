@@ -83,11 +83,17 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-slate-700 pt-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
           <p className="text-slate-400 text-sm">
-            © 2025 Speak Up For Good. All rights reserved.
+            © 2026 Speak Up For Good. All rights reserved.
           </p>
-          <p className="text-slate-400 text-sm">
-            Ultraspeaking-certified coach
-          </p>
+          <div className="flex items-center space-x-4 text-sm">
+            <a
+              href="/privacy"
+              className="text-slate-400 hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </a>
+            <span className="text-slate-400">Ultraspeaking-certified coach</span>
+          </div>
         </div>
       </div>
     </footer>
