@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import { CheckCircle, ChevronDown, ChevronUp, Mic, RefreshCcw, Zap, Target } from 'lucide-react'
 
@@ -68,7 +69,7 @@ export default function ComediansContent() {
       <header className="py-6 border-b border-white/10">
         <div className="container-max section-padding">
           <div className="flex items-center justify-between">
-            <a href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
               <Image
                 src="/speak_up_icon_.svg"
                 alt="Speak Up For Good"
@@ -79,7 +80,7 @@ export default function ComediansContent() {
               <span className="font-bold text-lg bg-gradient-to-r from-blue-400/90 via-blue-300/95 to-blue-400/90 bg-clip-text text-transparent">
                 Speak Up For Good
               </span>
-            </a>
+            </Link>
             <div className="text-sm text-blue-300 font-medium">
               For Comedians
             </div>

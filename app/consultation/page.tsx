@@ -74,7 +74,7 @@ export default function ConsultationPage() {
       <header className="py-6 border-b border-white/10">
         <div className="container-max section-padding">
           <div className="flex items-center justify-between">
-            <a
+            <Link
               href="/"
               className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
             >
@@ -88,7 +88,7 @@ export default function ConsultationPage() {
               <span className="font-bold text-lg bg-gradient-to-r from-blue-400/90 via-blue-300/95 to-blue-400/90 bg-clip-text text-transparent">
                 Speak Up For Good
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </header>
