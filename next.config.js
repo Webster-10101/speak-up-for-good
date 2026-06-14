@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Pin file-tracing to this project; a stray lockfile higher up the tree
+  // otherwise makes Next 15 infer the wrong workspace root.
+  outputFileTracingRoot: __dirname,
   async redirects() {
     return [
       {
