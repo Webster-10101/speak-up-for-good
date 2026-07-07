@@ -47,6 +47,24 @@ export default function PrivacyPage() {
           </section>
 
           <section>
+            <h2 className="text-xl font-bold text-slate-900 mb-3">
+              Using the Speak Up app?
+            </h2>
+            <p>
+              This page covers the Speak Up For Good website and coaching
+              practice. The Speak Up: Speaking Coach app has its own policy —
+              see the{' '}
+              <Link
+                href="/app/privacy"
+                className="text-blue-600 hover:text-blue-700 underline"
+              >
+                app privacy policy
+              </Link>
+              .
+            </p>
+          </section>
+
+          <section>
             <h2 className="text-xl font-bold text-slate-900 mb-3">Who we are</h2>
             <p>
               Speak Up For Good is the speaking and confidence coaching practice
