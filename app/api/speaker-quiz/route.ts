@@ -458,7 +458,7 @@ function generateCoachResponse(curiosityAnswer: string, archetype: Archetype): s
   const responses: Record<string, string> = {
     'Rambler': `That's such a thoughtful question: "${curiosityAnswer}" - and it shows you're already thinking deeply about speaking, which is great. Here's what I've learned from working with many speakers like you: often what we wonder about most is actually pointing us toward our biggest growth area. For Ramblers, this curiosity usually stems from wanting to harness all that energy and spontaneity more effectively. The answer often lies in learning to channel your natural momentum rather than fighting it.`,
     
-    'Overthinker': `I love that you're wondering about "${curiosityAnswer}" - that kind of thoughtful curiosity is exactly what makes you such a valuable speaker when you let yourself relax into it. What I've noticed with Overthinkers is that your questions often reveal how much you actually understand about speaking - you're not lacking knowledge, you're just being hard on yourself. The thing you're wondering about? You probably already have more insight into it than you realize.`,
+    'Overthinker': `I love that you're wondering about "${curiosityAnswer}" - that kind of thoughtful curiosity is exactly what makes you such a valuable speaker when you let yourself relax into it. What I've noticed with Overthinkers is that your questions often reveal how much you actually understand about speaking - you're not lacking knowledge, you're just being hard on yourself. The thing you're wondering about? You probably already have more insight into it than you realise.`,
     
     'Self-Doubter': `Thank you for sharing "${curiosityAnswer}" - that takes courage, and courage is exactly what great speaking is built on. Here's something I want you to know: the fact that you're wondering about this shows you care deeply about connecting with people, which is your superpower. Self-Doubters often ask the most important questions because you're tuned into what really matters to your audience. Trust that curiosity - it's leading you in the right direction.`,
     
@@ -536,13 +536,14 @@ async function generateSpeakingPlan(archetype: Archetype, answers: Record<string
   const curiosityAnswer = optionalAnswers?.curiosity as string || '';
   const struggleAnswer = optionalAnswers?.struggle as string || '';
   
-  const prompt = `You are Alistair Webster, a speaking coach writing a personalized growth plan. Write in Alistair's conversational, authentic style - like you're talking to an intelligent friend.
+  const prompt = `You are Alistair Webster, a speaking coach writing a personalised growth plan. Write in Alistair's conversational, authentic style - like you're talking to an intelligent friend.
 
 WRITING STYLE:
 - Use simple words, short varied sentences, natural flow
-- Include personal anecdotes, metaphors, or vivid examples  
+- Use metaphors or vivid everyday examples. Never invent personal stories, past clients, or facts about Alistair
+- Write in British English (realise, colour, practise as a verb)
 - Make advice actionable and memorable with clear takeaways
-- Add very subtle dry humor - just a touch of wit that feels natural, not forced
+- Add very subtle dry humour - just a touch of wit that feels natural, not forced
 - Avoid AI clichés, hype, or trying to sound smart
 - Be direct, honest, and human
 - End with a clear wrap-up or takeaway
@@ -634,7 +635,7 @@ Write like you're having a real conversation - no corporate speak, no filler. Ju
           content: prompt
         }
       ],
-      max_tokens: 1500,
+      max_tokens: 2500,
       temperature: 0.7,
     });
 
@@ -819,7 +820,7 @@ async function sendEmail(email: string, firstName: string, archetype: Archetype,
 
       <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">
         Thanks for taking the speaker quiz! Based on your answers, you're a <strong>${escapeHtml(archetype)}</strong>.
-        ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? 'I\'ve personalized this plan based on what you shared.' : 'Here\'s your personalized growth plan.'}
+        ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? 'I\'ve personalised this plan based on what you shared.' : 'Here\'s your personalised growth plan.'}
       </p>
 
       <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 15px; margin: 15px 0;">

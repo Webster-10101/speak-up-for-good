@@ -634,7 +634,7 @@ function QuizResultsContent() {
               {/* Email Collection */}
               <div className="bg-white rounded-xl shadow-lg p-8 text-center">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Get Your Personalized Growth Plan
+                  Get Your Personalised Growth Plan
                 </h3>
                 <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
                   I&apos;ll send you a detailed action plan with specific exercises and strategies 
@@ -682,7 +682,7 @@ function QuizResultsContent() {
                         <span>Creating Your Plan...</span>
                       </div>
                     ) : (
-                      'Get My Personalized Growth Plan'
+                      'Get My Personalised Growth Plan'
                     )}
                   </button>
                   
@@ -737,7 +737,7 @@ function QuizResultsContent() {
               <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
                 <p className="text-green-800 font-medium mb-2">{successMessage}</p>
                 <p className="text-green-700 text-sm">
-                  Your personalized growth plan should arrive within the next few minutes. 
+                  Your personalised growth plan should arrive within the next few minutes. 
                   <br />
                   <span className="font-medium">Email delivery can take 2-5 minutes.</span> If you don&apos;t see it, check your spam folder.
                 </p>
@@ -747,7 +747,7 @@ function QuizResultsContent() {
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <h3 className="font-semibold text-blue-900 mb-2">What&apos;s Next?</h3>
                   <p className="text-blue-800 text-sm">
-                    While you wait, consider booking a free call to discuss your results and get personalized coaching advice.
+                    While you wait, consider booking a free call to discuss your results and get personalised coaching advice.
                   </p>
                 </div>
                 
