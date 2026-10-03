@@ -168,9 +168,10 @@ export default function PrivacyPage() {
                 your speaker growth plan.
               </li>
               <li>
-                <strong>OpenAI</strong> — your quiz answers are sent to OpenAI&apos;s
-                API to generate your personalised plan. They are processed to
-                produce your plan and are not used by OpenAI to train its models.
+                <strong>Anthropic</strong> (with <strong>OpenAI</strong> as a
+                backup) — your quiz answers are sent to Anthropic&apos;s Claude API
+                to generate your personalised plan. They are processed to produce
+                your plan and are not used to train either company&apos;s models.
               </li>
               <li>
                 <strong>MailerLite</strong> and <strong>Substack</strong> — email

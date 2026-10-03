@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Anthropic from '@anthropic-ai/sdk';
 import OpenAI from 'openai';
 import { Resend } from 'resend';
 import { getSupabaseAdmin } from '@/lib/supabase-admin';
@@ -48,6 +49,13 @@ const ARCHETYPE_CONTEXTS: Record<string, string> = {
   'minimalist': 'doesn\'t say more than needed, gets to the point but holds back messy human details that would connect - needs to add one more layer and share more truth',
   'Minimalist': 'doesn\'t say more than needed, gets to the point but holds back messy human details that would connect - needs to add one more layer and share more truth'
 };
+
+// Claude writes the growth plan when ANTHROPIC_API_KEY is set; OpenAI is the backup
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+  timeout: 50000, // 50 second timeout
+  maxRetries: 1,
+});
 
 // Initialize OpenAI client with timeout
 const openai = new OpenAI({
@@ -261,7 +269,7 @@ function calculateSlidingScales(answers: Record<string, any>): Record<string, nu
   };
 }
 
-// Generate personalized speaking plan using OpenAI
+// Generate personalised speaking plan using Claude (OpenAI as backup)
 // Speaker type summaries based on the provided documentation
 const SPEAKER_SUMMARIES: Partial<Record<Archetype, {
   description: string;
@@ -513,9 +521,9 @@ function generateStruggleResponse(struggleAnswer: string, archetype: Archetype):
 }
 
 async function generateSpeakingPlan(archetype: Archetype, answers: Record<string, any>, optionalAnswers?: Record<string, string | string[]>): Promise<string> {
-  // If no OpenAI API key, use static content immediately
-  if (!process.env.OPENAI_API_KEY) {
-    console.log('No OpenAI API key - using static content');
+  // If no AI key at all, use static content immediately
+  if (!process.env.ANTHROPIC_API_KEY && !process.env.OPENAI_API_KEY) {
+    console.log('No AI API key - using static content');
     return generateStaticSpeakingPlan(archetype, answers, optionalAnswers);
   }
 
@@ -618,6 +626,41 @@ ${struggleAnswer ? `## Let's talk about your main challenge
 [Use the final thought but make it personal and memorable]
 
 Write like you're having a real conversation - no corporate speak, no filler. Just honest, helpful advice that sticks. Only add humor if it comes naturally - don't force it.`;
+
+  if (process.env.ANTHROPIC_API_KEY) {
+    try {
+      console.log('Starting Claude API call for archetype:', archetype);
+      const startTime = Date.now();
+
+      const response = await anthropic.beta.messages.create({
+        model: 'claude-sonnet-5-5',
+        max_tokens: 8000,
+        output_config: { effort: 'low' },
+        betas: ['server-side-fallback-2026-07-01'],
+        fallbacks: 'default',
+        system: 'You are an expert speaking coach who creates personalised, actionable growth plans by combining structured archetype content with personalised insights.',
+        messages: [{ role: 'user', content: prompt }],
+      });
+
+      console.log(`Claude API call completed in ${Date.now() - startTime}ms`);
+
+      if (response.stop_reason === 'refusal') {
+        console.error('Claude declined the request:', response.stop_details);
+      } else {
+        const text = response.content
+          .map(block => (block.type === 'text' ? block.text : ''))
+          .join('')
+          .trim();
+        if (text) return text;
+      }
+    } catch (error) {
+      console.error('Claude API error:', error);
+    }
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
+    return generateStaticSpeakingPlan(archetype, answers, optionalAnswers);
+  }
 
   try {
     console.log('Starting OpenAI API call for archetype:', archetype);
@@ -891,6 +934,9 @@ async function sendEmail(email: string, firstName: string, archetype: Archetype,
     console.log('Email content (fallback):', plan);
   }
 }
+
+// Claude can take a little longer than the default function limit
+export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
   try {

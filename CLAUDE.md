@@ -20,7 +20,7 @@ This is a Next.js 14 App Router application for a speaking coach platform. It co
 ### Tech Stack
 - **Framework**: Next.js 14 (App Router with server/client components)
 - **Database**: Supabase (PostgreSQL)
-- **AI**: OpenAI GPT-4o-mini for personalized growth plans
+- **AI**: Claude Sonnet 5.5 for personalised growth plans (OpenAI gpt-4o-mini as backup)
 - **Email**: Resend (transactional) + MailerLite (list management)
 - **Auth**: NextAuth.js with credentials provider (admin-only)
 - **Styling**: Tailwind CSS with custom colors (primary: `#0C6173`, accent: `#2A8CA3`)
@@ -43,7 +43,7 @@ This is a Next.js 14 App Router application for a speaking coach platform. It co
 **Quiz Submission** (`app/api/speaker-quiz/route.ts`):
 1. Form submission with 10 questions → scoring algorithm determines archetype
 2. Optional 6 additional personalization questions
-3. OpenAI generates personalized growth plan (falls back to static plan on failure)
+3. Claude generates the growth plan (falls back to OpenAI, then to a static plan)
 4. Resend sends email to user
 5. MailerLite adds subscriber to archetype-specific group
 6. Response stored in Supabase `quiz_responses` table
@@ -85,6 +85,7 @@ Interactive timed practice sessions at `/speaking-drills`. Each drill:
 ## Environment Variables Required
 
 ```
+ANTHROPIC_API_KEY
 OPENAI_API_KEY
 RESEND_API_KEY
 MAILERLITE_API_KEY
