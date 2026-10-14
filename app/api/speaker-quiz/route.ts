@@ -4,6 +4,7 @@ import OpenAI from 'openai';
 import { Resend } from 'resend';
 import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import { escapeHtml } from '@/lib/escape-html';
+import { planToHtml } from '@/lib/plan-to-html';
 import type { QuizResponse } from '@/lib/supabase';
 
 // Simple in-memory rate limiting
@@ -866,16 +867,8 @@ async function sendEmail(email: string, firstName: string, archetype: Archetype,
         ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? 'I\'ve personalised this plan based on what you shared.' : 'Here\'s your personalised growth plan.'}
       </p>
 
-      <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 15px; margin: 15px 0;">
-        <div style="white-space: pre-wrap; font-size: 15px; line-height: 1.5; color: #2d3748;">
-          ${escapeHtml(plan).replace(/\*\*(.*?)\*\*/g, '<strong style="color: #667eea;">$1</strong>')
-                .replace(/^# (.*$)/gm, '<h2 style="color: #667eea; margin: 15px 0 10px 0; font-size: 18px;">$1</h2>')
-                .replace(/^## (.*$)/gm, '<h3 style="color: #4a5568; margin: 12px 0 8px 0; font-size: 16px; font-weight: 600;">$1</h3>')
-                .replace(/^- (.*$)/gm, '<div style="margin: 5px 0; padding-left: 15px;">• $1</div>')
-                .replace(/^\d+\. (.*$)/gm, '<div style="margin: 5px 0; padding-left: 15px;">$1</div>')
-                .replace(/\n\n/g, '<br>')
-                .replace(/\n/g, '<br>')}
-        </div>
+      <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 5px 20px 10px 20px; margin: 15px 0;">
+        ${planToHtml(plan)}
       </div>
       
       <div style="border: 2px solid #667eea; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
