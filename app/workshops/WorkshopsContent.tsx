@@ -105,7 +105,7 @@ const faqs = [
   },
   {
     question: "What's your approach?",
-    answer: "I use Ultraspeaking methodology — rep-based training that builds instinctive confidence under pressure. It's active and practical, not lecture-based. People speak within the first 10 minutes. I also draw on memory reconsolidation techniques for deeper blockers."
+    answer: "I use Ultraspeaking methodology — rep-based training that builds instinctive confidence under pressure. It's active and practical, not lecture-based. People speak within the first 10 minutes. For deeper blockers, I draw on an approach informed by CBT and memory reconsolidation research."
   },
   {
     question: "Can participants follow up with 1:1 coaching?",

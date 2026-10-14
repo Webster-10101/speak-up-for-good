@@ -30,6 +30,12 @@ const Footer = () => {
             <p className="text-slate-300 leading-relaxed">
               Public speaking and confidence coaching to help you speak up, be heard, and make an impact.
             </p>
+            <a
+              href="https://alistairwebster.com"
+              className="inline-block mt-4 text-slate-300 hover:text-white transition-colors"
+            >
+              Coaching with Alistair Webster →
+            </a>
           </div>
           
           {/* Quick Links */}

@@ -29,6 +29,13 @@ const About = () => {
             </p>
           </div>
           
+          <p className="text-center text-slate-600 mb-12">
+            More about me and how I work at{' '}
+            <a href="https://alistairwebster.com" className="text-primary hover:text-primary/80 underline transition-colors">
+              alistairwebster.com
+            </a>
+          </p>
+
           <div className="bg-white/70 rounded-xl p-8 border border-slate-100">
             <h3 className="text-xl font-semibold text-slate-900 mb-6">Why Work With Me</h3>
             <div className="space-y-4">
