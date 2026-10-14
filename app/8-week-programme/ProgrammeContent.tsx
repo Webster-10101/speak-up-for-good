@@ -27,8 +27,8 @@ const faqs = [
     answer: "Sessions are online via Zoom, 60 minutes each, once a week. You'll also get access to speaking drills to practise between sessions. If you're in Edinburgh, in-person can be arranged."
   },
   {
-    question: "What are the 'memory reconsolidation techniques' you mention?",
-    answer: "Sometimes the thing stopping someone from speaking freely isn't skill — it's an old story about who they are or what's safe to express. Memory reconsolidation is a way of working with those limiting beliefs so they stop running the show. It's not therapy — it's targeted work on specific blockers."
+    question: "What do you mean by working on the root cause?",
+    answer: "Sometimes the thing stopping someone from speaking freely isn't skill — it's an old story about who they are or what's safe to express. My approach to that is informed by CBT and by memory reconsolidation research: we notice what your nerves predict will happen, test it in real situations, and drop the safety habits that keep the fear going. It's not therapy — it's targeted work on specific blockers."
   }
 ]
 
@@ -167,7 +167,7 @@ export default function ProgrammeContent() {
 
             {/* Price & CTA */}
             <div className="mb-8">
-              <div className="text-4xl font-bold text-white mb-2">£850</div>
+              <div className="text-4xl font-bold text-white mb-2">£1,400</div>
               <p className="text-slate-400 mb-6">One-time payment for the full programme</p>
               <button
                 onClick={handleBookProgramme}
@@ -393,10 +393,10 @@ export default function ProgrammeContent() {
               This programme works on two levels. On the surface, we build practical speaking skill — presence, clarity, storytelling, and delivery — through rep-based training rooted in the Ultraspeaking methodology.
             </p>
             <p className="text-lg text-slate-300 leading-relaxed mb-6">
-              But for many people, the real barrier isn&apos;t technique. It&apos;s deeper patterns — old stories about who they are, what&apos;s safe to express, or what happens when they&apos;re seen. That&apos;s where Memory Reconsolidation comes in. It&apos;s a targeted way of working with the root causes of speaking anxiety and limiting beliefs, so they stop running the show. Not therapy — just precise work on the specific blocks holding you back.
+              But for many people, the real barrier isn&apos;t technique. It&apos;s deeper patterns — old stories about who they are, what&apos;s safe to express, or what happens when they&apos;re seen. That&apos;s where the root-cause work comes in. It&apos;s informed by CBT and by memory reconsolidation research: we name what your nerves predict, test it in real speaking situations, and let go of the safety habits that keep the fear in place. Not therapy — just precise work on the specific blocks holding you back.
             </p>
             <p className="text-lg text-slate-300 leading-relaxed mb-6">
-              Most programmes only address one of these layers. We address both — so the shift is deeper and more lasting.
+              Most programmes only address one of these layers. We address both — so the shift carries over to the moments that matter.
             </p>
             <p className="text-sm text-blue-300">Ultraspeaking-certified coach</p>
           </div>
@@ -452,13 +452,13 @@ export default function ProgrammeContent() {
             <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-xl p-8 border-2 border-blue-400/40 relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <span className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">
-                  Best Value
+                  Recommended
                 </span>
               </div>
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-white mb-2">8-Week Programme</h3>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-blue-300">£850</span>
+                  <span className="text-3xl font-bold text-blue-300">£1,400</span>
                   <span className="text-slate-400 ml-2">/ 8 sessions</span>
                 </div>
                 <p className="text-slate-300 leading-relaxed">Full transformation programme with satisfaction guarantee.</p>
@@ -479,10 +479,6 @@ export default function ProgrammeContent() {
                 <li className="flex items-center space-x-3">
                   <CheckCircle className="text-blue-400 w-5 h-5 flex-shrink-0" />
                   <span className="text-slate-300">Satisfaction guarantee</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle className="text-blue-400 w-5 h-5 flex-shrink-0" />
-                  <span className="text-slate-300">Save £350 vs individual sessions</span>
                 </li>
               </ul>
               <button
@@ -596,7 +592,7 @@ export default function ProgrammeContent() {
                 onClick={handleBookProgramme}
                 className="bg-blue-500 hover:bg-blue-400 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-all duration-300 transform hover:scale-105"
               >
-                Book 8-Week Programme — £850
+                Book 8-Week Programme — £1,400
               </button>
               <button
                 onClick={handleBookIntro}

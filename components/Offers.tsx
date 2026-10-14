@@ -28,15 +28,14 @@ const Offers = () => {
     },
     {
       title: "8-Week Speaking Transformation",
-      price: "£850",
+      price: "£1,400",
       duration: "8 sessions",
       description: "Full programme to transform how you show up. Reduce performance load, build lasting confidence.",
       features: [
         "8 × 60-minute sessions",
         "Progress self-assessments",
         "Online speaking drills access",
-        "Satisfaction guarantee",
-        "Save £350 vs individual sessions"
+        "Satisfaction guarantee"
       ],
       buttonText: "Book Programme",
       calendlyUrl: "https://calendly.com/alistair-webster/speaking-transformation",

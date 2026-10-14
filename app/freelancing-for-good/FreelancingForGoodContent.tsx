@@ -39,7 +39,7 @@ const faqs = [
   },
   {
     question: "How much does coaching cost?",
-    answer: "Single sessions are £150. The 8-week programme (which includes deeper pattern work using Memory Reconsolidation) is £850. There's a free 20-minute intro call if you want to try the method first."
+    answer: "Single sessions are £150. The 8-week programme (which includes deeper root-cause work, informed by CBT and memory reconsolidation research) is £1,400. There's a free 20-minute intro call if you want to try the method first."
   },
   {
     question: "Online or in-person?",

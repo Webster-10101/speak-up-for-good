@@ -32,6 +32,12 @@ const Hero = () => {
               <p className="text-lg md:text-xl text-blue-300 font-semibold tracking-wide uppercase">
                 Speaking & Confidence Coaching
               </p>
+              <a
+                href="https://alistairwebster.com"
+                className="inline-block mt-2 text-slate-300 hover:text-white transition-colors"
+              >
+                with Alistair Webster →
+              </a>
             </div>
             
             {/* Main Headline */}
