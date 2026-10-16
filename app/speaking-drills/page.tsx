@@ -4,34 +4,35 @@ import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import EmailGate from '@/components/EmailGate'
+import { sharedDrills, drillDuration } from '@/lib/shared-drills'
 
 const essentialDrills = [
   {
-    name: 'Body Ready',
+    name: sharedDrills['body-ready'].name,
     slug: 'body-ready',
-    duration: '2 min',
+    duration: drillDuration(sharedDrills['body-ready']),
     tag: 'Start every session here',
     tagColor: 'green',
-    description: 'Wake up your body and voice before you practise',
-    points: ['Shake out tension', 'Vocal warm-up', 'Ground posture', 'Breathe & commit'],
+    description: sharedDrills['body-ready'].blurb,
+    points: sharedDrills['body-ready'].steps?.map(step => step.title) ?? [],
   },
   {
-    name: 'Enunciation',
+    name: sharedDrills['enunciation'].name,
     slug: 'enunciation',
-    duration: '8 min',
+    duration: drillDuration(sharedDrills['enunciation']),
     tag: 'Sharpen your instrument',
     tagColor: 'cyan',
-    description: 'Drill consonants, twisters, and record-and-review for daily clarity',
-    points: ['Wake the articulators', 'Drill target consonants', 'Twister ladder (slow → fast → slow)', 'Record + review on your phone'],
+    description: sharedDrills['enunciation'].blurb,
+    points: sharedDrills['enunciation'].steps?.map(step => step.title) ?? [],
   },
   {
-    name: 'Ride the Spike',
+    name: sharedDrills['ride-the-spike'].name,
     slug: 'ride-the-spike',
-    duration: '5 min',
+    duration: drillDuration(sharedDrills['ride-the-spike']),
     tag: 'Use before any talk',
     tagColor: 'orange',
-    description: 'Metabolise the adrenaline spike and own your first 90 seconds',
-    points: ['Physical adrenaline burn-off', 'Physiological sigh technique', 'Lock your opening on autopilot', 'Performing through elevated heart rate'],
+    description: sharedDrills['ride-the-spike'].blurb,
+    points: sharedDrills['ride-the-spike'].steps?.map(step => step.title) ?? [],
   },
 ]
 
@@ -53,38 +54,38 @@ const coreDrills = [
     color: 'blue',
   },
   {
-    name: 'Conviction Reps',
+    name: sharedDrills['conviction-reps'].name,
     slug: 'conviction-reps',
-    duration: '5 min',
+    duration: drillDuration(sharedDrills['conviction-reps']),
     forWho: 'Self-Doubters',
-    description: 'Stop hedging and speak with certainty',
+    description: sharedDrills['conviction-reps'].blurb,
     color: 'red',
   },
 ]
 
 const dailyPracticeDrills = [
   {
-    name: 'Enunciation',
+    name: sharedDrills['enunciation'].name,
     slug: 'enunciation',
-    duration: '8 min',
+    duration: drillDuration(sharedDrills['enunciation']),
     forWho: 'Everyone',
-    description: 'Sharpen articulation — drill consonants, twisters, and read-aloud with playback',
+    description: sharedDrills['enunciation'].blurb,
     color: 'cyan',
   },
   {
-    name: 'Vocal Warmup',
+    name: sharedDrills['vocal-warmup'].name,
     slug: 'vocal-warmup',
-    duration: '5 min',
+    duration: drillDuration(sharedDrills['vocal-warmup']),
     forWho: 'Everyone',
-    description: 'Wake up your voice with breathing, tongue twisters, and resonance exercises',
+    description: sharedDrills['vocal-warmup'].blurb,
     color: 'teal',
   },
   {
-    name: 'Story Reps',
+    name: sharedDrills['story-reps'].name,
     slug: 'story-reps',
-    duration: '6 min',
+    duration: drillDuration(sharedDrills['story-reps']),
     forWho: 'Everyone',
-    description: 'Practise telling short, structured stories on random prompts',
+    description: sharedDrills['story-reps'].blurb,
     color: 'emerald',
   },
   {
@@ -96,19 +97,19 @@ const dailyPracticeDrills = [
     color: 'yellow',
   },
   {
-    name: 'Rapid Fire Improv',
+    name: sharedDrills['rapid-fire'].name,
     slug: 'rapid-fire',
-    duration: '5 min',
+    duration: drillDuration(sharedDrills['rapid-fire']),
     forWho: 'Everyone',
-    description: 'Speak immediately on random topics with zero prep time',
+    description: sharedDrills['rapid-fire'].blurb,
     color: 'rose',
   },
   {
-    name: 'Mini Set',
+    name: sharedDrills['mini-set'].name,
     slug: 'mini-set',
-    duration: '7 min',
+    duration: drillDuration(sharedDrills['mini-set']),
     forWho: 'Everyone',
-    description: 'Deliver a short 2-minute set combining storytelling, humour, and presence',
+    description: sharedDrills['mini-set'].blurb,
     color: 'violet',
   },
   {
@@ -131,11 +132,11 @@ const dailyPracticeDrills = [
 
 const targetedDrills = [
   {
-    name: 'The Edit',
+    name: sharedDrills['the-edit'].name,
     slug: 'the-edit',
-    duration: '5 min',
+    duration: drillDuration(sharedDrills['the-edit']),
     forWho: 'Ramblers',
-    description: 'Say more with less — train yourself to land the point',
+    description: sharedDrills['the-edit'].blurb,
     color: 'cyan',
   },
   {
@@ -155,11 +156,11 @@ const targetedDrills = [
     color: 'stone',
   },
   {
-    name: 'Dial It Up',
+    name: sharedDrills['dial-it-up'].name,
     slug: 'dial-it-up',
-    duration: '4.5 min',
+    duration: drillDuration(sharedDrills['dial-it-up']),
     forWho: 'Minimalists',
-    description: 'Expand, add colour, and fill the space with energy',
+    description: sharedDrills['dial-it-up'].blurb,
     color: 'pink',
   },
   {

@@ -221,12 +221,13 @@ export default function DrillSession({ drill, onComplete }: DrillSessionProps) {
               disabled={currentStepIndex >= drill.steps.length - 1}
               className="bg-green-500 hover:bg-green-400 disabled:bg-gray-600 disabled:opacity-50 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2"
             >
-              <span>Next Step</span>
+              <span>{completedSteps.includes(currentStep.id) ? 'Next Step' : 'Move on early'}</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
           )}
+          {isLastStep && <button onClick={onComplete} className="bg-green-500 hover:bg-green-400 text-white px-6 py-2 rounded-lg font-semibold">Finish practice</button>}
         </div>
       </div>
 

@@ -1,0 +1,434 @@
+{
+  "body-ready": {
+    "slug": "body-ready",
+    "name": "Body Ready",
+    "blurb": "A 2-minute physical warm-up — release tension, wake your voice, ground your posture.",
+    "kind": "routine",
+    "steps": [
+      {
+        "id": "shake-out",
+        "title": "Shake It Out",
+        "durationSec": 30,
+        "type": "warmup",
+        "instructions": [
+          "Shake out your hands rapidly for 10 seconds",
+          "Let the shake travel up your arms to your shoulders",
+          "Bounce lightly on your feet",
+          "Let your whole body loosen — nothing held tight",
+          "Make some noise if it helps — sighs, groans, whatever comes"
+        ],
+        "why": "Take a moment to get moving. Explore what feels comfortable in your hands, arms and shoulders."
+      },
+      {
+        "id": "vocal-warmup",
+        "title": "Wake Your Voice",
+        "durationSec": 45,
+        "type": "warmup",
+        "instructions": [
+          "Hum gently, feeling the vibration in your lips and chest",
+          "Do a few lip trills (like a motorboat sound)",
+          "Slide your voice from low to high and back down (vocal sirens)",
+          "Say \"mah mah mah\" and \"bee bee bee\" to wake up your articulators",
+          "Yawn-sigh a few times to open your throat"
+        ],
+        "why": "Make some gentle sound before you begin speaking. Explore humming and playful changes in pitch."
+      },
+      {
+        "id": "posture-reset",
+        "title": "Stand Ready",
+        "durationSec": 30,
+        "type": "warmup",
+        "instructions": [
+          "Feel your feet firmly on the ground — weight even",
+          "Let your spine lengthen — imagine a string pulling you up from the crown",
+          "Roll your shoulders back and let them drop",
+          "Soften your jaw. Unclench your teeth.",
+          "Find a stance that feels grounded but not stiff"
+        ],
+        "why": "Find a comfortable position, sitting or standing, with room to move and breathe."
+      },
+      {
+        "id": "breath-commit",
+        "title": "Breathe and Commit",
+        "durationSec": 15,
+        "type": "reflection",
+        "instructions": [
+          "Take one easy breath",
+          "Notice how you feel",
+          "Say your first line aloud",
+          "You can begin without feeling perfectly relaxed or ready."
+        ],
+        "why": "Bring your attention to the first thing you want to say."
+      }
+    ]
+  },
+  "enunciation": {
+    "slug": "enunciation",
+    "name": "Enunciation",
+    "blurb": "Sharpen articulation — articulators, consonant drills, twisters, and a read-aloud.",
+    "kind": "routine",
+    "steps": [
+      {
+        "id": "articulator-activation",
+        "title": "Articulator Activation",
+        "durationSec": 60,
+        "type": "warmup",
+        "instructions": [
+          "Lip trill for 10 seconds — blow air through closed lips, let them buzz",
+          "Tongue stretch for 10 seconds — stick it out, down, up, side to side",
+          "Jaw roll for 10 seconds — drop the jaw, circle it gently both ways",
+          "Face wake-up for 10 seconds — big exaggerated O, E, A shapes with the mouth",
+          "Final 20 seconds — free-mix lip trills, tongue stretches, and jaw drops"
+        ],
+        "why": "Daily articulation practice gives you time to explore how your lips, tongue and jaw shape the sounds you use in speech."
+      },
+      {
+        "id": "consonant-drills",
+        "title": "Consonant Drills",
+        "durationSec": 120,
+        "type": "challenge",
+        "instructions": [
+          "P / B (lips): \"puh-puh-buh-buh\" — sharp release. Then: \"Perfect pink pebbles bobbed past Brenda's boat\"",
+          "T / D (tongue tip): \"tuh-tuh-duh-duh\" — clean taps. Then: \"Ted told Todd that Dan's dog dug daintily\"",
+          "K / G (back of tongue): \"kuh-kuh-guh-guh\" — snappy release. Then: \"Kate kicked Greg's good grey cricket cap\"",
+          "S / Z (sibilants): \"sa-za-sa-za\" — no sloppiness. Then: \"Seven zebras zigzagged past the silent sea\"",
+          "Exaggerate each sound, then try it in a whole sentence."
+        ],
+        "why": "Explore the differences between consonant pairs. Aim for clear, easy-to-follow words while keeping your own accent and character."
+      },
+      {
+        "id": "twister-ladder",
+        "title": "Twister Ladder",
+        "durationSec": 90,
+        "type": "challenge",
+        "instructions": [
+          "\"The lips, the teeth, the tip of the tongue\"",
+          "\"Red leather, yellow leather, red leather, yellow leather\"",
+          "\"Which witch wished which wicked wish\"",
+          "Start each one slowly — get every sound right",
+          "Then speed up until you trip, then slow down and go again"
+        ],
+        "why": "Build up speed, notice where you stumble, then slow down and try again."
+      },
+      {
+        "id": "read-aloud",
+        "title": "Read & Review",
+        "durationSec": 75,
+        "type": "challenge",
+        "instructions": [
+          "Read this aloud, landing every word ending:",
+          "\"Take a moment to look around. The bright morning light falls across the desk. A cup of tea stands beside a book. Outside, people walk past, talking about their plans for the day. Pick one detail and describe it clearly. Let each sentence reach its end.\"",
+          "Read it once at a comfortable pace, then again a little slower and crisper",
+          "Keep word endings easy to follow without forcing every sound"
+        ],
+        "why": "Bring the precision you have been exploring into whole sentences."
+      },
+      {
+        "id": "check-in",
+        "title": "Check In",
+        "durationSec": 15,
+        "type": "reflection",
+        "instructions": [
+          "Say a normal sentence out loud — anything",
+          "What, if anything, feels different?",
+          "What would you like to carry into your next conversation?"
+        ],
+        "why": "Make this part of your regular speaking practice. Notice what changes over time."
+      }
+    ]
+  },
+  "ride-the-spike": {
+    "slug": "ride-the-spike",
+    "name": "Ride the Spike",
+    "blurb": "Practise starting and carrying on while the nerves are still there.",
+    "kind": "routine",
+    "steps": [
+      {
+        "id": "notice-and-allow",
+        "title": "Make Room for the Nerves",
+        "durationSec": 45,
+        "type": "warmup",
+        "instructions": [
+          "Feel your feet on the floor and notice what is happening in your body.",
+          "Let your next breath come and go at a comfortable pace.",
+          "You do not have to feel calm to start speaking. Let the sensations be there.",
+          "If you feel calm already, that is fine too. You can still practise beginning."
+        ],
+        "why": "The task is to speak with whatever is here, rather than making calmness a condition for starting."
+      },
+      {
+        "id": "choose-your-opening",
+        "title": "Find Your Starting Point",
+        "durationSec": 45,
+        "type": "warmup",
+        "instructions": [
+          "Choose something you want to say: the start of a meeting, an introduction, or an idea you care about.",
+          "Find one simple sentence that gets you started.",
+          "Say it aloud once. It does not need to be memorised or word-perfect."
+        ],
+        "why": "A familiar starting point gives you somewhere to begin without having to script the whole conversation."
+      },
+      {
+        "id": "begin-with-nerves",
+        "title": "Begin Before You Feel Ready",
+        "durationSec": 90,
+        "type": "challenge",
+        "instructions": [
+          "Say your opening, then follow the thought. This is spoken practice, without recording.",
+          "Let your heart race if it is racing. Take your time and stay curious about what you want to say.",
+          "Pause when you need to. Let a breath come and go, then continue.",
+          "If you stumble, pick up the thought and carry on. Recovery is part of speaking."
+        ],
+        "why": "Starting and continuing is the practice. The nerves do not have to disappear for the rep to count."
+      },
+      {
+        "id": "simulated-spike",
+        "title": "Try It with a Faster Heartbeat",
+        "durationSec": 90,
+        "type": "challenge",
+        "instructions": [
+          "Optional: if comfortable for you, jog gently on the spot or do a few push-ups for 10–20 seconds.",
+          "Skip the movement if you prefer, or if you are already feeling activated. You do not need to push yourself.",
+          "Then say your opening again and keep speaking for the rest of the round.",
+          "Exercise can give you a faster heartbeat to practise with; it does not have to feel exactly like speaking nerves."
+        ],
+        "why": "Explore speaking while your body feels more active. Put your attention on the thought you want to express."
+      },
+      {
+        "id": "check-in",
+        "title": "Notice What You Did",
+        "durationSec": 30,
+        "type": "reflection",
+        "instructions": [
+          "What did you manage to say or do while the sensations were there?",
+          "If the feeling eased, great. If it stayed, you still practised speaking with it.",
+          "Choose one thing to carry into your next conversation: beginning, pausing, recovering, or following your curiosity."
+        ],
+        "why": "Look at what happened, without requiring yourself to feel better or perform perfectly."
+      }
+    ]
+  },
+  "vocal-warmup": {
+    "slug": "vocal-warmup",
+    "name": "Vocal Warmup",
+    "blurb": "Wake your voice — breathing, twisters, resonance, and range.",
+    "kind": "routine",
+    "steps": [
+      {
+        "id": "breathing",
+        "title": "Easy Breath and Sound",
+        "durationSec": 60,
+        "type": "warmup",
+        "instructions": [
+          "Begin with an easy, comfortable breath",
+          "Let the breath out on a gentle \"sssss\" sound",
+          "Let the next breath come naturally",
+          "Keep the sound comfortable rather than forcing it",
+          "Repeat at your own pace for the remaining time"
+        ],
+        "why": "Make time for your voice every day. Begin by exploring an easy breath and a gentle sound."
+      },
+      {
+        "id": "tongue-twisters",
+        "title": "Tongue Twisters",
+        "durationSec": 90,
+        "type": "challenge",
+        "instructions": [
+          "\"Red lorry, yellow lorry, red lorry, yellow lorry\"",
+          "\"She sells seashells by the seashore\"",
+          "\"A proper copper coffee pot\"",
+          "Start each one slowly — get every sound right",
+          "Then speed up gradually until you trip, then slow down and go again"
+        ],
+        "why": "Practise clear articulation slowly, then experiment with speed. Slow down again when you stumble."
+      },
+      {
+        "id": "resonance",
+        "title": "Resonance & Projection",
+        "durationSec": 60,
+        "type": "challenge",
+        "instructions": [
+          "Hum \"mmmm\" gently — feel the vibration in your lips and chest",
+          "Gradually open to \"mmmm-ahhh\" — keep the vibration going",
+          "Try placing the sound in different parts of your face — nose, cheeks, forehead",
+          "Project your voice to the far wall — don't shout, just aim the sound further",
+          "Notice the difference between pushing volume and projecting resonance"
+        ],
+        "why": "Explore how humming and open sounds feel, then try speaking as if to someone across the room."
+      },
+      {
+        "id": "range",
+        "title": "Vocal Range Slides",
+        "durationSec": 45,
+        "type": "warmup",
+        "instructions": [
+          "Slide your voice from your lowest comfortable note to your highest and back — vocal sirens",
+          "Try \"wee-ooo-wee-ooo\" like a siren — smooth, not jumpy",
+          "Do staccato \"ha-ha-ha\" at different pitches — low, mid, high",
+          "End with 3 big yawn-sighs to release any remaining tension"
+        ],
+        "why": "Explore your comfortable range with curiosity and playfulness."
+      },
+      {
+        "id": "check-in",
+        "title": "Check In",
+        "durationSec": 15,
+        "type": "reflection",
+        "instructions": [
+          "What do you notice about how your voice feels and sounds?",
+          "Say a sentence out loud — anything — and hear how it sounds now",
+          "You're ready to speak"
+        ],
+        "why": "Work gently and consistently. Make this part of your daily speaking routine, as well as a warm-up before a meeting or presentation."
+      }
+    ]
+  },
+  "mini-set": {
+    "slug": "mini-set",
+    "name": "Three-Round Practice",
+    "blurb": "Three one-minute exercises: tell a story, find a playful angle, land the point. Unrecorded.",
+    "kind": "routine",
+    "steps": [
+      {
+        "id": "tell-the-story",
+        "title": "Round 1 · Tell the Story",
+        "durationSec": 60,
+        "type": "challenge",
+        "instructions": [
+          "Choose a small everyday moment: a mix-up, a surprise, or something that did not go to plan.",
+          "Start where something happens. Tell us what happened next and how it ended.",
+          "Speak out loud for a minute. No recording or score here—just practice.",
+          "Read each round first, then tap Start when you are ready."
+        ],
+        "why": "Start with something concrete. A small, specific moment gives you material to explore in the next two rounds."
+      },
+      {
+        "id": "playful-angle",
+        "title": "Round 2 · Find the Playful Angle",
+        "durationSec": 60,
+        "type": "challenge",
+        "instructions": [
+          "Stay with the same moment. What was odd, surprising or slightly ridiculous about it?",
+          "Exaggerate one detail, try an unexpected comparison, or tell it from another point of view.",
+          "Have fun with it. You do not need a punchline or a laugh.",
+          "If you get stuck, describe one detail and see where it takes you."
+        ],
+        "why": "Practise changing perspective and giving yourself room to play, without needing to be funny on demand."
+      },
+      {
+        "id": "land-the-point",
+        "title": "Round 3 · Land the Point",
+        "durationSec": 60,
+        "type": "challenge",
+        "instructions": [
+          "What is one thing you want us to take away from that moment? It can be a small observation.",
+          "Tell a shorter version of the story, keeping only what helps that point.",
+          "Finish with one clear sentence. Let it land, then stop—even if there is time left.",
+          "Before you finish the drill, notice one thing you would like to try again."
+        ],
+        "why": "Bring the story and playfulness into a clear ending. You are practising a choice about what matters, not searching for a grand lesson."
+      }
+    ]
+  },
+  "rapid-fire": {
+    "slug": "rapid-fire",
+    "name": "See Where It Goes",
+    "blurb": "Start with an idea and discover where it takes you.",
+    "kind": "speaking",
+    "cue": "Start speaking before you have the whole answer worked out. Pick an idea and follow it without worrying about what comes next—you might surprise yourself with where it goes. If you get stuck, say what comes next and keep exploring. It doesn’t need to be clever or polished. Have fun finding out what you have to say beyond the obvious.",
+    "prompts": [
+      "The best invention of all time",
+      "What I'd do with a million pounds",
+      "Why everyone should learn to cook",
+      "The most overrated thing in life",
+      "What I'd tell my 18-year-old self",
+      "The future of work",
+      "My hot take on social media",
+      "The perfect weekend",
+      "Something I'm unreasonably passionate about",
+      "Why boredom is underrated",
+      "The one rule I'd add to society",
+      "The thing nobody tells you about growing up",
+      "Why being wrong is underrated",
+      "Something that works but shouldn't",
+      "Why silence makes people uncomfortable",
+      "If I ran a school, the first thing I'd teach"
+    ]
+  },
+  "conviction-reps": {
+    "slug": "conviction-reps",
+    "name": "Conviction Reps",
+    "blurb": "Stop hedging. Speak with certainty — no \"I think\", no \"maybe\".",
+    "kind": "speaking",
+    "cue": "Speak about a topic with complete, unwavering conviction—even if you’re not actually feeling certain. For this drill, leave out “I think” and “maybe”. Have fun with it. You’re practising a different gear, not making a rule for every conversation.",
+    "prompts": [
+      "Why your work matters",
+      "Something you believe that others might disagree with",
+      "Why someone should hire you",
+      "A change you think needs to happen in your industry",
+      "Why your approach is the right one",
+      "Something you've learned that everyone should know",
+      "A decision you made that you stand behind",
+      "Why your perspective is valuable",
+      "Something you're certain about",
+      "A hill you're willing to die on"
+    ]
+  },
+  "the-edit": {
+    "slug": "the-edit",
+    "name": "The Edit",
+    "blurb": "Say more with less. Find the point and land it.",
+    "kind": "speaking",
+    "cue": "What’s the one thing you want your listener to take away? Say it clearly, give them enough detail to understand it, then stop. Resist the urge to add another explanation just in case. Practise letting your point stand on its own.",
+    "prompts": [
+      "Why you chose your current job or career",
+      "What you did last weekend",
+      "A project you're working on right now",
+      "Why a book or film you like is worth experiencing",
+      "How to make your favourite meal",
+      "What your company or team does",
+      "A decision you're currently weighing",
+      "Why you live where you live",
+      "What you're most excited about right now",
+      "A skill you've been learning lately",
+      "What makes a good leader",
+      "A challenge you recently overcame"
+    ]
+  },
+  "story-reps": {
+    "slug": "story-reps",
+    "name": "Story Reps",
+    "blurb": "Start in the action. Tell a moment that stayed with you.",
+    "kind": "speaking",
+    "cue": "Start right in the action of one specific moment. What was happening? Give us just enough context to follow along, then take us through what happened and what changed. Finish with why that moment has stayed with you.\n\nSmall stories count—you don’t need a dramatic adventure to give someone something worth hearing. Resist explaining all the background before anything happens. Let us discover it as the story unfolds.",
+    "prompts": [
+      "A time you were completely wrong about someone",
+      "The worst advice you ever followed",
+      "A moment that changed how you think about work",
+      "Something you almost didn't do but are glad you did",
+      "A conversation that stuck with you for years",
+      "A time you had to improvise because your plan failed",
+      "Something small that turned out to matter a lot",
+      "A moment you surprised yourself",
+      "The hardest \"no\" you ever had to say",
+      "A risk that paid off in a way you didn't expect",
+      "A time you chose the harder path",
+      "A moment when silence said more than words"
+    ]
+  },
+  "dial-it-up": {
+    "slug": "dial-it-up",
+    "name": "Dial It Up",
+    "blurb": "Add colour, range, and energy. Make them see it.",
+    "kind": "speaking",
+    "cue": "Turn your expression up further than you normally would. Let your voice rise and fall, stretch a word, change your pace, and give the important moments some emphasis. Use your face and hands too. It might feel over the top—have fun with that. You’re exploring your range, so give yourself permission to be theatrical and over the top. Go bigger with expression, while keeping your voice comfortable.",
+    "prompts": [
+      "Describe the best meal you've ever had — make me taste it",
+      "Tell me about a place so vividly I can picture it",
+      "Describe your ideal day from start to finish",
+      "Talk about something you love, with all the colour turned up",
+      "Recount a small moment as if it were a big one",
+      "Describe a sound, a smell, and a feeling from a memory"
+    ]
+  }
+}
