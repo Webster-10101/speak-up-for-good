@@ -13,7 +13,7 @@ const Offers = () => {
   const offers = [
     {
       title: "Single Session",
-      price: "£150",
+      price: "£195",
       duration: "60 minutes",
       description: "Try a session and see how it feels. Practical exercises, real-time feedback, no commitment.",
       features: [
@@ -28,15 +28,15 @@ const Offers = () => {
     },
     {
       title: "8-Week Speaking Transformation",
-      price: "£850",
+      price: "£1,400",
       duration: "8 sessions",
-      description: "Full programme to transform how you show up. Reduce performance load, build lasting confidence.",
+      description: "Eight weekly sessions and a year of Speak Up. If the approach is not right after four sessions, request a full refund within seven days of session four, before session five.",
       features: [
         "8 × 60-minute sessions",
         "Progress self-assessments",
-        "Online speaking drills access",
-        "Satisfaction guarantee",
-        "Save £350 vs individual sessions"
+        "A year of Speak Up",
+        "Four-session fit guarantee",
+        "Online or in person in Edinburgh"
       ],
       buttonText: "Book Programme",
       calendlyUrl: "https://calendly.com/alistair-webster/speaking-transformation",
@@ -59,7 +59,7 @@ const Offers = () => {
             </span>
           </h2>
           <p className="text-slate-600 text-lg mb-12 max-w-2xl mx-auto">
-            Sessions are generally conducted online via Zoom to suit your schedule
+            Sessions are online via Zoom or in person in Edinburgh
           </p>
           
           {/* Free Intro Call CTA */}
@@ -67,13 +67,13 @@ const Offers = () => {
             <div className="text-center">
               <h3 className="text-2xl font-bold text-slate-900 mb-4">Let&apos;s chat and see if coaching&apos;s right for you</h3>
               <p className="text-slate-600 mb-6 leading-relaxed">
-                Start with a free 20-minute intro call. Get a feel for my coaching style, talk through what you&apos;re working on, and see if it&apos;s the right fit — with no pressure.
+                Start with a free 45-minute intro call. Get a feel for my coaching style, talk through what you&apos;re working on, and see if it&apos;s the right fit — with no pressure.
               </p>
               <button
                 onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
                 className="bg-blue-500 hover:bg-blue-400 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105"
               >
-                Book Free 20-Minute Intro Call
+                Book Free 45-Minute Intro Call
               </button>
             </div>
           </div>

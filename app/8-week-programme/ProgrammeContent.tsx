@@ -8,7 +8,7 @@ import { CheckCircle, ChevronDown, ChevronUp, Sparkles, Target, MessageCircle, H
 const faqs = [
   {
     question: "What if I'm not sure this is right for me?",
-    answer: "That's what the satisfaction guarantee is for. After two sessions, if you're not feeling it, you get a full refund. No awkwardness, no questions. I only want to work with people who are genuinely benefiting."
+    answer: "After attending the first four sessions, if the approach is not right for you, request a full refund within seven days of session four, before session five. There are no practice or self-assessment conditions."
   },
   {
     question: "How is this different from other public speaking courses?",
@@ -24,11 +24,11 @@ const faqs = [
   },
   {
     question: "What's the format?",
-    answer: "Sessions are online via Zoom, 60 minutes each, once a week. You'll also get access to speaking drills to practise between sessions. If you're in Edinburgh, in-person can be arranged."
+    answer: "Sessions are online via Zoom, 60 minutes each, once a week. You'll also get a year of Speak Up for daily practice, about ten minutes a day. If you're in Edinburgh, in-person can be arranged."
   },
   {
-    question: "What are the 'memory reconsolidation techniques' you mention?",
-    answer: "Sometimes the thing stopping someone from speaking freely isn't skill — it's an old story about who they are or what's safe to express. Memory reconsolidation is a way of working with those limiting beliefs so they stop running the show. It's not therapy — it's targeted work on specific blockers."
+    question: "What informs the psychological side of your coaching?",
+    answer: "My approach is CBT-informed, shaped by counselling-skills training and memory reconsolidation research. We work on the patterns that make speaking harder. This is coaching, not therapy."
   }
 ]
 
@@ -161,13 +161,13 @@ export default function ProgrammeContent() {
               </span>
               <span className="flex items-center">
                 <CheckCircle className="w-4 h-4 mr-2 text-blue-400" />
-                Satisfaction guarantee
+                Four-session fit guarantee
               </span>
             </div>
 
             {/* Price & CTA */}
             <div className="mb-8">
-              <div className="text-4xl font-bold text-white mb-2">£850</div>
+              <div className="text-4xl font-bold text-white mb-2">£1,400</div>
               <p className="text-slate-400 mb-6">One-time payment for the full programme</p>
               <button
                 onClick={handleBookProgramme}
@@ -176,7 +176,7 @@ export default function ProgrammeContent() {
                 Book Your Programme
               </button>
               <p className="text-sm text-slate-500 mt-4">
-                or <button onClick={handleBookIntro} className="text-blue-400 hover:text-blue-300 underline">book a free 20-min intro call</button> first
+                or <button onClick={handleBookIntro} className="text-blue-400 hover:text-blue-300 underline">book a free 45-minute intro call</button> first
               </p>
             </div>
           </div>
@@ -229,7 +229,7 @@ export default function ProgrammeContent() {
               </div>
               <h3 className="text-xl font-bold text-white mb-4">Progress Self-Assessments</h3>
               <p className="text-slate-300 leading-relaxed">
-                Start and end assessments so you can see real, measurable progress. Previous clients have gone from 5/10 to 9/10 on clarity over similar programmes.
+                Self-assessments at the start and end help you reflect on what has changed and where you want to go next.
               </p>
             </div>
 
@@ -237,9 +237,9 @@ export default function ProgrammeContent() {
               <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-6">
                 <Zap className="w-6 h-6 text-purple-400" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">Online Speaking Drills</h3>
+              <h3 className="text-xl font-bold text-white mb-4">A Year of Speak Up</h3>
               <p className="text-slate-300 leading-relaxed">
-                Access to practical drills you can use between sessions to build lasting habits. Small reps that make a big difference.
+                A year of Speak Up for daily practice — about ten minutes a day to build on what we work on together. After year one, the app is available at its standard price.
               </p>
             </div>
 
@@ -247,9 +247,9 @@ export default function ProgrammeContent() {
               <div className="w-12 h-12 bg-amber-500/20 rounded-lg flex items-center justify-center mb-6">
                 <Heart className="w-6 h-6 text-amber-400" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">Satisfaction Guarantee</h3>
+              <h3 className="text-xl font-bold text-white mb-4">Four-Session Fit Guarantee</h3>
               <p className="text-slate-300 leading-relaxed">
-                After the first two sessions, if you&apos;re not feeling it, you get a full refund. No questions, no awkwardness. I only want clients who are genuinely benefiting.
+                After attending the first four sessions, if the approach is not right for you, request a full refund within seven days of session four, before session five. There are no practice or self-assessment conditions.
               </p>
             </div>
           </div>
@@ -393,7 +393,7 @@ export default function ProgrammeContent() {
               This programme works on two levels. On the surface, we build practical speaking skill — presence, clarity, storytelling, and delivery — through rep-based training rooted in the Ultraspeaking methodology.
             </p>
             <p className="text-lg text-slate-300 leading-relaxed mb-6">
-              But for many people, the real barrier isn&apos;t technique. It&apos;s deeper patterns — old stories about who they are, what&apos;s safe to express, or what happens when they&apos;re seen. That&apos;s where Memory Reconsolidation comes in. It&apos;s a targeted way of working with the root causes of speaking anxiety and limiting beliefs, so they stop running the show. Not therapy — just precise work on the specific blocks holding you back.
+              But for many people, the real barrier isn&apos;t technique. It&apos;s deeper patterns — old stories about who they are, what&apos;s safe to express, or what happens when they&apos;re seen. My approach is CBT-informed, shaped by counselling-skills training and memory reconsolidation research. It isn&apos;t therapy, just focused work on what&apos;s holding you back.
             </p>
             <p className="text-lg text-slate-300 leading-relaxed mb-6">
               Most programmes only address one of these layers. We address both — so the shift is deeper and more lasting.
@@ -421,7 +421,7 @@ export default function ProgrammeContent() {
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-white mb-2">Single Session</h3>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-white">£150</span>
+                  <span className="text-3xl font-bold text-white">£195</span>
                   <span className="text-slate-400 ml-2">/ 60 mins</span>
                 </div>
                 <p className="text-slate-400 leading-relaxed">Try a session and see how it feels. No commitment.</p>
@@ -437,7 +437,7 @@ export default function ProgrammeContent() {
                 </li>
                 <li className="flex items-center space-x-3">
                   <CheckCircle className="text-slate-400 w-5 h-5 flex-shrink-0" />
-                  <span className="text-slate-300">Can apply to 8-week programme</span>
+                  <span className="text-slate-300">Counts towards the programme within a month</span>
                 </li>
               </ul>
               <button
@@ -458,10 +458,10 @@ export default function ProgrammeContent() {
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-white mb-2">8-Week Programme</h3>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-blue-300">£850</span>
+                  <span className="text-3xl font-bold text-blue-300">£1,400</span>
                   <span className="text-slate-400 ml-2">/ 8 sessions</span>
                 </div>
-                <p className="text-slate-300 leading-relaxed">Full transformation programme with satisfaction guarantee.</p>
+                <p className="text-slate-300 leading-relaxed">Full transformation programme with four-session fit guarantee.</p>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center space-x-3">
@@ -474,15 +474,15 @@ export default function ProgrammeContent() {
                 </li>
                 <li className="flex items-center space-x-3">
                   <CheckCircle className="text-blue-400 w-5 h-5 flex-shrink-0" />
-                  <span className="text-slate-300">Online speaking drills access</span>
+                  <span className="text-slate-300">A year of Speak Up</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <CheckCircle className="text-blue-400 w-5 h-5 flex-shrink-0" />
-                  <span className="text-slate-300">Satisfaction guarantee</span>
+                  <span className="text-slate-300">Four-session fit guarantee</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <CheckCircle className="text-blue-400 w-5 h-5 flex-shrink-0" />
-                  <span className="text-slate-300">Save £350 vs individual sessions</span>
+                  <span className="text-slate-300">Online or in person in Edinburgh</span>
                 </li>
               </ul>
               <button
@@ -586,17 +586,17 @@ export default function ProgrammeContent() {
               Ready to Transform How You Show Up?
             </h2>
             <p className="text-lg text-slate-300 mb-4 leading-relaxed">
-              8 weeks. Real progress. Satisfaction guaranteed.
+              8 weeks. Real progress. Four-session fit guarantee.
             </p>
             <p className="text-slate-400 mb-8">
-              Not sure yet? Book a free 20-minute intro call to see if it&apos;s right for you.
+              Not sure yet? Book a free 45-minute intro call to see if it&apos;s right for you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={handleBookProgramme}
                 className="bg-blue-500 hover:bg-blue-400 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-all duration-300 transform hover:scale-105"
               >
-                Book 8-Week Programme — £850
+                Book 8-Week Programme — £1,400
               </button>
               <button
                 onClick={handleBookIntro}

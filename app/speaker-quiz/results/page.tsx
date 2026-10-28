@@ -720,10 +720,10 @@ function QuizResultsContent() {
                     Want to discuss your results personally?
                   </p>
                   <button
-                    onClick={() => window.open('https://calendly.com/alistair-webster/speaker-type-chat', '_blank')}
+                    onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
                     className="text-indigo-600 hover:text-indigo-700 font-medium text-sm underline transition-colors duration-200"
                   >
-                    Book a free consultation call to discuss your results
+                    Book a free 45-minute intro call to discuss your results
                   </button>
                 </div>
               </div>
@@ -753,10 +753,10 @@ function QuizResultsContent() {
                 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <button
-                    onClick={() => window.open('https://calendly.com/alistair-webster/speaker-type-chat', '_blank')}
+                    onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
                     className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
                   >
-                    Book Free Consultation
+                    Book a Free 45-Minute Intro Call
                   </button>
                   <button
                     onClick={() => router.push('/')}

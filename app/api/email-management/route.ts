@@ -37,10 +37,10 @@ function generateEmailHTML(firstName: string, archetype: Archetype, plan: string
       
       <div style="border: 2px solid #667eea; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
         <h3 style="margin: 0 0 10px 0; font-size: 18px; color: #667eea;">Want to dive deeper?</h3>
-        <p style="margin: 10px 0; color: #4a5568; font-size: 15px;">I offer free 30-minute calls to discuss your results and create a roadmap for your specific goals.</p>
-        <a href="https://calendly.com/alistair-webster/speaker-type-chat" 
+        <p style="margin: 10px 0; color: #4a5568; font-size: 15px;">I offer free 45-minute intro calls to discuss your results and create a roadmap for your specific goals.</p>
+        <a href="https://calendly.com/alistair-webster/intro-call"
            style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 10px 0;">
-          Book a free call
+          Book a free 45-minute intro call
         </a>
       </div>
       

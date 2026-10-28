@@ -102,7 +102,7 @@ function IntakeFormInner() {
               Thanks — you&rsquo;re all set
             </h1>
             <p className="text-lg text-slate-300 mb-4">
-              Your answers are in. I&rsquo;ll read them before we meet so we can make the most of our 30 minutes together.
+              Your answers are in. I&rsquo;ll read them before we meet so we can make the most of our 45 minutes together.
             </p>
             <p className="text-slate-400">
               You&rsquo;ll receive a calendar confirmation from Calendly shortly if you haven&rsquo;t already.

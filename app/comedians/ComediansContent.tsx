@@ -142,7 +142,7 @@ export default function ComediansContent() {
               onClick={handleBooking}
               className="bg-blue-500 hover:bg-blue-400 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105"
             >
-              Book a Free 20-Minute Taster
+              Book a Free 45-Minute Taster
             </button>
           </div>
         </div>
@@ -235,13 +235,13 @@ export default function ComediansContent() {
         </div>
       </section>
 
-      {/* What the Free 20 Minutes Is For */}
+      {/* What the Free 45 Minutes Is For */}
       <section className="py-20 bg-white/5 backdrop-blur-sm">
         <div className="container-max section-padding">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                What the Free 20 Minutes Is For
+                What the Free 45 Minutes Is For
               </h2>
               <p className="text-slate-400 text-lg">
                 Not a sales call. A useful conversation.
@@ -282,7 +282,7 @@ export default function ComediansContent() {
                   <span className="text-2xl font-bold text-blue-400">1</span>
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-4">Book the Taster</h3>
-                <p className="text-slate-400">20 minutes. Bring something real you&apos;re working on. Free, no strings.</p>
+                <p className="text-slate-400">45 minutes. Bring something real you&apos;re working on. Free, no strings.</p>
               </div>
 
               <div className="text-center">
@@ -390,13 +390,13 @@ export default function ComediansContent() {
               Ready to Get Out of Your Head?
             </h2>
             <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-              Free 20-minute taster. Bring an idea, a set, or just a question. Online from anywhere - Edinburgh in-person if you prefer.
+              Free 45-minute taster. Bring an idea, a set, or just a question. Online from anywhere - Edinburgh in-person if you prefer.
             </p>
             <button
               onClick={handleBooking}
               className="bg-blue-500 hover:bg-blue-400 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-all duration-300 transform hover:scale-105"
             >
-              Book a Free 20-Minute Taster
+              Book a Free 45-Minute Taster
             </button>
             <p className="text-sm text-slate-400 mt-4">
               No pressure. No sales pitch. Just a conversation.

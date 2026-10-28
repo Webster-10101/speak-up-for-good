@@ -39,7 +39,7 @@ const faqs = [
   },
   {
     question: "How much does coaching cost?",
-    answer: "Single sessions are £150. The 8-week programme (which includes deeper pattern work using Memory Reconsolidation) is £850. There's a free 20-minute intro call if you want to try the method first."
+    answer: "Single sessions are £195. The 8-week programme is £1,400, including eight 60-minute sessions and a year of Speak Up. It includes a four-session fit guarantee: request a full refund within seven days of session four, before session five, if the approach is not right for you. There's a free 45-minute intro call if you want to try the method first."
   },
   {
     question: "Online or in-person?",
@@ -208,7 +208,7 @@ export default function FreelancingForGoodContent() {
               <p className="text-slate-300 leading-relaxed mb-4">
                 Work on your specific situations — an upcoming pitch, a tricky client, a presentation. Sessions are practical: you leave with a plan and drills, not just encouragement.
               </p>
-              <p className="text-sm text-purple-300">£150/session • Free intro call</p>
+              <p className="text-sm text-purple-300">£195/session • Free intro call</p>
             </div>
           </div>
         </div>

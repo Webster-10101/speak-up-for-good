@@ -207,7 +207,7 @@ export default function WorkshopsContent() {
                 Discuss a Workshop
               </button>
               <p className="text-sm text-slate-500 mt-4">
-                Free 20-minute call to discuss your team&apos;s needs
+                Free 45-minute call to discuss your team&apos;s needs
               </p>
             </div>
           </div>
@@ -474,7 +474,7 @@ export default function WorkshopsContent() {
               Every workshop is tailored. Book a free call and let&apos;s figure out the right format for your team.
             </p>
             <p className="text-slate-400 mb-8">
-              20 minutes. No pitch. Just a conversation about what your team needs.
+              45 minutes. No pitch. Just a conversation about what your team needs.
             </p>
             <button
               onClick={handleGetInTouch}

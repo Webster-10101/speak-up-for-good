@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp, Target, MessageCircle, Compass } from 'lucide-react';
 
 // PLACEHOLDER: replace with the actual free consultation Calendly URL
-const calendlyUrl = 'https://calendly.com/alistair-webster/free-consultation';
+const calendlyUrl = 'https://calendly.com/alistair-webster/intro-call';
 
 const painPoints = [
   'You know something\u2019s holding your speaking back but can\u2019t quite name what it is.',
@@ -49,7 +49,7 @@ const testimonials = [
 const faqs = [
   {
     q: 'Is this a sales call?',
-    a: 'No. The 30 minutes are yours. We use them to get a clear read on what\u2019s going on and what useful next steps look like. If coaching fits, I\u2019ll say so at the end \u2014 but the clarity you leave with is the same either way.',
+    a: 'No. The 45 minutes are yours. We use them to get a clear read on what\u2019s going on and what useful next steps look like. If coaching fits, I\u2019ll say so at the end \u2014 but the clarity you leave with is the same either way.',
   },
   {
     q: 'Who is this for?',
@@ -100,7 +100,7 @@ export default function ConsultationPage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center space-x-2 bg-blue-500/20 text-blue-300 px-6 py-3 rounded-full text-sm font-medium mb-8 border border-blue-400/30">
               <Compass className="w-4 h-4" />
-              <span>Free 30-minute consultation</span>
+              <span>Free 45-minute consultation</span>
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight tracking-tight mb-8">
@@ -111,7 +111,7 @@ export default function ConsultationPage() {
 
             <div className="max-w-3xl mx-auto mb-10">
               <p className="text-xl md:text-2xl text-slate-300 leading-relaxed mb-6">
-                A free 30-minute call. Bring a specific situation or a pattern you&rsquo;re tired of.
+                A free 45-minute call. Bring a specific situation or a pattern you&rsquo;re tired of.
               </p>
               <p className="text-lg text-slate-400 leading-relaxed">
                 You&rsquo;ll leave with clarity on what&rsquo;s actually going on and concrete steps you can take to improve and feel more confident &mdash; whether that&rsquo;s working with me or not.
@@ -124,7 +124,7 @@ export default function ConsultationPage() {
             >
               Book a free consultation &rarr;
             </Link>
-            <p className="text-sm text-slate-500 mt-4">Free &bull; 30 minutes &bull; No pitch, no pressure</p>
+            <p className="text-sm text-slate-500 mt-4">Free &bull; 45 minutes &bull; No pitch, no pressure</p>
           </div>
         </div>
       </section>

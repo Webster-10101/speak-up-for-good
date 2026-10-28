@@ -877,9 +877,9 @@ export default function SpeakerQuizPage() {
                 {/* Secondary CTA */}
                 <div className="text-center">
                   <p className="text-sm text-slate-500 mb-2">Want to discuss your results personally?</p>
-                  <button onClick={() => window.open('https://calendly.com/alistair-webster/speaker-type-chat', '_blank')}
+                  <button onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
                     className="text-blue-600 hover:text-blue-700 font-medium text-sm underline transition-colors duration-200">
-                    Book a consultation call to discuss my results
+                    Book a free 45-minute intro call to discuss my results
                   </button>
                 </div>
               </div>

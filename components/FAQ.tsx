@@ -38,7 +38,7 @@ const FAQ = () => {
     },
     {
       question: "Do you offer free sessions?",
-      answer: "Yes — I offer a free 20-minute intro session. This gives us both a chance to see if we're a good fit before you commit. You'll get a taste of the method, and we'll decide together on next steps."
+      answer: "Yes — I offer a free 45-minute intro session. This gives us both a chance to see if we're a good fit before you commit. You'll get a taste of the method, and we'll decide together on next steps."
     },
     {
       question: "How do I book?",
