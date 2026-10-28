@@ -1,11 +1,14 @@
 'use client';
 
+import { getQuizAttribution, quizBookingUrl } from '@/lib/quiz-attribution';
+
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 // Next 14.2+ requires useSearchParams() inside a Suspense boundary for
 // static generation — see default export at the bottom.
 function QuizResultsContent() {
+  useEffect(() => { getQuizAttribution(); }, []);
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
@@ -49,7 +52,8 @@ function QuizResultsContent() {
           firstName,
           answers: mainAnswers ? JSON.parse(mainAnswers) : {},
           optionalAnswers: optionalAnswers ? JSON.parse(optionalAnswers) : {},
-          newsletterOptIn
+          newsletterOptIn,
+          attribution: getQuizAttribution()
         }),
       });
 
@@ -720,7 +724,7 @@ function QuizResultsContent() {
                     Want to discuss your results personally?
                   </p>
                   <button
-                    onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
+                    onClick={() => window.open(quizBookingUrl(), '_blank', 'noopener,noreferrer')}
                     className="text-indigo-600 hover:text-indigo-700 font-medium text-sm underline transition-colors duration-200"
                   >
                     Book a free 45-minute intro call to discuss your results
@@ -753,7 +757,7 @@ function QuizResultsContent() {
                 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <button
-                    onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
+                    onClick={() => window.open(quizBookingUrl(), '_blank', 'noopener,noreferrer')}
                     className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
                   >
                     Book a Free 45-Minute Intro Call

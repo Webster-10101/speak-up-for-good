@@ -1,3 +1,4 @@
+import { sanitizeAttribution, addAttribution, type Attribution } from '@/lib/quiz-attribution';
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import OpenAI from 'openai';
@@ -29,6 +30,7 @@ interface QuizSubmission {
   answers: Record<string, any>; // Updated to support new answer format
   optionalAnswers?: Record<string, string | string[]>;
   newsletterOptIn?: boolean;
+  attribution?: Attribution;
 }
 
 // Archetype descriptions for the AI prompt - normalize to lowercase for lookup
@@ -851,7 +853,7 @@ async function addToMailerLite(email: string, firstName: string, archetype: Arch
 }
 
 // Send email with the generated plan using Resend
-async function sendEmail(email: string, firstName: string, archetype: Archetype, plan: string, optionalAnswers?: Record<string, string | string[]>, newsletterOptIn?: boolean): Promise<void> {
+async function sendEmail(email: string, firstName: string, archetype: Archetype, plan: string, optionalAnswers?: Record<string, string | string[]>, newsletterOptIn?: boolean, attribution: Attribution = {}): Promise<void> {
   const subject = `Your Speaker Growth Plan - ${archetype}`;
   const htmlContent = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
@@ -874,7 +876,7 @@ async function sendEmail(email: string, firstName: string, archetype: Archetype,
       <div style="border: 2px solid #667eea; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
         <h3 style="margin: 0 0 10px 0; font-size: 18px; color: #667eea;">Want to dive deeper?</h3>
         <p style="margin: 10px 0; color: #4a5568; font-size: 15px;">I offer free 45-minute intro calls to discuss your results and create a roadmap for your specific goals.</p>
-        <a href="https://calendly.com/alistair-webster/intro-call"
+        <a href="${escapeHtml(addAttribution('https://calendly.com/alistair-webster/intro-call', attribution))}"
            style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 10px 0;">
           Book a free 45-minute intro call
         </a>
@@ -1004,13 +1006,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const attribution = sanitizeAttribution(body.attribution);
+    const savedOptionalAnswers = { ...optionalAnswers, _attribution: JSON.stringify(attribution) };
+
     // Save quiz response to database first
     const responseId = await saveQuizResponse(
       email, 
       firstName, 
       archetype, 
       answers, 
-      optionalAnswers,
+      savedOptionalAnswers,
       clientIP
     );
 
@@ -1030,7 +1035,7 @@ export async function POST(request: NextRequest) {
     // Send email with plan
     console.log('Initiating email send for:', email);
     try {
-      await sendEmail(email, firstName, archetype, speakingPlan, optionalAnswers, newsletterOptIn);
+      await sendEmail(email, firstName, archetype, speakingPlan, optionalAnswers, newsletterOptIn, attribution);
       console.log('Email send completed for:', email);
     } catch (emailError) {
       console.error('Email send failed:', emailError);

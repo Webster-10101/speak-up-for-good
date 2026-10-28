@@ -1,5 +1,7 @@
 'use client';
 
+import { getQuizAttribution, addAttribution, quizBookingUrl } from '@/lib/quiz-attribution';
+
 import { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -447,7 +449,7 @@ function QuizNavigation() {
             <Link href="/#offers" className="text-white hover:text-blue-300 transition-colors font-medium text-sm">Coaching</Link>
             <span className="text-blue-300 font-medium text-sm">Speaker Quiz</span>
             <button
-              onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
+              onClick={() => window.open(quizBookingUrl(), '_blank', 'noopener,noreferrer')}
               className="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:scale-105"
             >
               Book Call
@@ -499,6 +501,7 @@ function AnalysisLoadingScreen() {
 }
 
 export default function SpeakerQuizPage() {
+  useEffect(() => { getQuizAttribution(); }, []);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -534,7 +537,7 @@ export default function SpeakerQuizPage() {
     params.set('scores', JSON.stringify(result.scores));
     params.set('metrics', JSON.stringify(result.metrics));
     params.set('confidence', result.confidence.toString());
-    window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
+    window.location.href = addAttribution(`/speaker-quiz/additional-questions?${params.toString()}`, getQuizAttribution());
   }
 
   async function handleAnalyzeAnswers() {
@@ -550,20 +553,20 @@ export default function SpeakerQuizPage() {
     params.set('metrics', JSON.stringify(result.metrics));
     params.set('confidence', result.confidence.toString());
     params.set('mainAnswers', JSON.stringify(answers));
-    window.location.href = `/speaker-quiz/results?${params.toString()}`;
+    window.location.href = addAttribution(`/speaker-quiz/results?${params.toString()}`, getQuizAttribution());
   }
 
   function handleGetPersonalizedResults() {
     if (!archetype) return;
     const params = new URLSearchParams({ archetype, answers: JSON.stringify(answers) });
-    window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
+    window.location.href = addAttribution(`/speaker-quiz/additional-questions?${params.toString()}`, getQuizAttribution());
   }
 
   async function handleSkipToBasic() {
     if (!archetype || !email || !firstName) return;
     setLoading(true);
     try {
-      const res = await fetch('/api/speaker-quiz', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, firstName, archetype, answers, optionalAnswers: {} }) });
+      const res = await fetch('/api/speaker-quiz', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, firstName, archetype, answers, optionalAnswers: {}, attribution: getQuizAttribution() }) });
       const data = await res.json();
       if (res.ok) { setSuccessMessage(data.message || 'Check your email for your personalised Speaker Growth Plan!'); }
       else { alert(data?.error ?? 'Something went wrong. Please try again.'); }
@@ -574,7 +577,7 @@ export default function SpeakerQuizPage() {
   function handleGetPlan() {
     if (!archetype || !email || !firstName) return;
     const params = new URLSearchParams({ archetype, email, firstName, answers: JSON.stringify(answers) });
-    window.location.href = `/speaker-quiz/additional-questions?${params.toString()}`;
+    window.location.href = addAttribution(`/speaker-quiz/additional-questions?${params.toString()}`, getQuizAttribution());
   }
 
   const handleEmailKeyPress = (e: React.KeyboardEvent) => {
@@ -877,7 +880,7 @@ export default function SpeakerQuizPage() {
                 {/* Secondary CTA */}
                 <div className="text-center">
                   <p className="text-sm text-slate-500 mb-2">Want to discuss your results personally?</p>
-                  <button onClick={() => window.open('https://calendly.com/alistair-webster/intro-call', '_blank')}
+                  <button onClick={() => window.open(quizBookingUrl(), '_blank', 'noopener,noreferrer')}
                     className="text-blue-600 hover:text-blue-700 font-medium text-sm underline transition-colors duration-200">
                     Book a free 45-minute intro call to discuss my results
                   </button>

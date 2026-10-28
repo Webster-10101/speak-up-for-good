@@ -1,3 +1,4 @@
+import { addAttribution, storedAttribution } from '@/lib/quiz-attribution';
 import { NextRequest, NextResponse } from 'next/server';
 import { getAdminSession } from '@/lib/auth';
 import { getSupabaseAdmin } from '@/lib/supabase-admin';
@@ -22,7 +23,7 @@ function generateEmailHTML(firstName: string, archetype: Archetype, plan: string
 
       <p style="font-size: 16px; line-height: 1.5; margin-bottom: 15px;">
         Thanks for taking the speaker quiz! Based on your answers, you're a <strong>${escapeHtml(archetype)}</strong>.
-        ${optionalAnswers && Object.keys(optionalAnswers).length > 0 ? 'I\'ve personalized this plan based on what you shared.' : 'Here\'s your personalized growth plan.'}
+        ${optionalAnswers && Object.keys(optionalAnswers).some(key => key !== '_attribution') ? 'I\'ve personalized this plan based on what you shared.' : 'Here\'s your personalized growth plan.'}
       </p>
 
       <div style="background: #f8fafc; border-left: 4px solid #667eea; padding: 15px; margin: 15px 0;">
@@ -38,7 +39,7 @@ function generateEmailHTML(firstName: string, archetype: Archetype, plan: string
       <div style="border: 2px solid #667eea; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
         <h3 style="margin: 0 0 10px 0; font-size: 18px; color: #667eea;">Want to dive deeper?</h3>
         <p style="margin: 10px 0; color: #4a5568; font-size: 15px;">I offer free 45-minute intro calls to discuss your results and create a roadmap for your specific goals.</p>
-        <a href="https://calendly.com/alistair-webster/intro-call"
+        <a href="${escapeHtml(addAttribution('https://calendly.com/alistair-webster/intro-call', storedAttribution(optionalAnswers)))}"
            style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 10px 0;">
           Book a free 45-minute intro call
         </a>

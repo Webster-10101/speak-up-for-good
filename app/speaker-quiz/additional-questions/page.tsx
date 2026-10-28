@@ -1,5 +1,7 @@
 'use client';
 
+import { getQuizAttribution, addAttribution } from '@/lib/quiz-attribution';
+
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -89,7 +91,7 @@ function AdditionalQuestionsContent() {
       optionalAnswers: JSON.stringify(optionalAnswers)
     });
     
-    router.push(`/speaker-quiz/results?${params.toString()}`);
+    router.push(addAttribution(`/speaker-quiz/results?${params.toString()}`, getQuizAttribution()));
   }
 
 
