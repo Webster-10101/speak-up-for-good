@@ -167,8 +167,8 @@ export default function ProgrammeContent() {
 
             {/* Price & CTA */}
             <div className="mb-8">
-              <div className="text-4xl font-bold text-white mb-2">£1,400</div>
-              <p className="text-slate-400 mb-6">One-time payment for the full programme</p>
+              <div className="text-4xl font-bold text-white mb-2">£850</div>
+              <p className="text-slate-400 mb-6">Pay in full or <a href="https://calendly.com/alistair-webster/speaking-transformation-two-payments" className="underline">two payments of £425</a>: first at booking, second before session five. The second payment is collected separately, not charged automatically.</p>
               <button
                 onClick={handleBookProgramme}
                 className="bg-blue-500 hover:bg-blue-400 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-all duration-300 transform hover:scale-105"
@@ -421,7 +421,7 @@ export default function ProgrammeContent() {
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-white mb-2">Single Session</h3>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-white">£195</span>
+                  <span className="text-3xl font-bold text-white">£150</span>
                   <span className="text-slate-400 ml-2">/ 60 mins</span>
                 </div>
                 <p className="text-slate-400 leading-relaxed">Try a session and see how it feels. No commitment.</p>
@@ -458,10 +458,10 @@ export default function ProgrammeContent() {
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold text-white mb-2">8-Week Programme</h3>
                 <div className="mb-4">
-                  <span className="text-3xl font-bold text-blue-300">£1,400</span>
+                  <span className="text-3xl font-bold text-blue-300">£850</span>
                   <span className="text-slate-400 ml-2">/ 8 sessions</span>
                 </div>
-                <p className="text-slate-300 leading-relaxed">Full transformation programme with four-session fit guarantee.</p>
+                <p className="text-slate-300 leading-relaxed">£850 in full or <a href="https://calendly.com/alistair-webster/speaking-transformation-two-payments" className="underline">two payments of £425</a>, with a four-session fit guarantee.</p>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center space-x-3">
@@ -596,7 +596,7 @@ export default function ProgrammeContent() {
                 onClick={handleBookProgramme}
                 className="bg-blue-500 hover:bg-blue-400 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-all duration-300 transform hover:scale-105"
               >
-                Book 8-Week Programme — £1,400
+                Pay in full — £850
               </button>
               <button
                 onClick={handleBookIntro}

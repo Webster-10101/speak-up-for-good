@@ -13,7 +13,7 @@ const Offers = () => {
   const offers = [
     {
       title: "Single Session",
-      price: "£195",
+      price: "£150",
       duration: "60 minutes",
       description: "Try a session and see how it feels. Practical exercises, real-time feedback, no commitment.",
       features: [
@@ -28,9 +28,9 @@ const Offers = () => {
     },
     {
       title: "8-Week Speaking Transformation",
-      price: "£1,400",
+      price: "£850",
       duration: "8 sessions",
-      description: "Eight weekly sessions and a year of Speak Up. If the approach is not right after four sessions, request a full refund within seven days of session four, before session five.",
+      description: "Pay £850 in full or two payments of £425. Eight weekly sessions and a year of Speak Up. If the approach is not right after four sessions, request a full refund within seven days of session four, before session five.",
       features: [
         "8 × 60-minute sessions",
         "Progress self-assessments",
@@ -38,7 +38,7 @@ const Offers = () => {
         "Four-session fit guarantee",
         "Online or in person in Edinburgh"
       ],
-      buttonText: "Book Programme",
+      buttonText: "Pay in full — £850",
       calendlyUrl: "https://calendly.com/alistair-webster/speaking-transformation",
       popular: true,
       subdued: false,
@@ -129,6 +129,11 @@ const Offers = () => {
               >
                 {offer.buttonText}
               </button>
+              {offer.popular && (
+                <p className="text-center text-sm text-slate-600 mt-4">
+                  <a href="https://calendly.com/alistair-webster/speaking-transformation-two-payments" className="text-primary underline">Choose two payments of £425</a>: first at booking, second before session five. The second payment is collected separately, not charged automatically.
+                </p>
+              )}
             </div>
           ))}
         </div>
