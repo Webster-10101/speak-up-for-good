@@ -39,7 +39,7 @@ const faqs = [
   },
   {
     question: "How much does coaching cost?",
-    answer: "Single sessions are £150. The 8-week programme is £850, payable in full or two payments of £425, including eight 60-minute sessions and a year of Speak Up. It includes a four-session fit guarantee: request a full refund within seven days of session four, before session five, if the approach is not right for you. There's a free 45-minute intro call if you want to try the method first."
+    answer: "Single sessions are £150. The 8-week programme is £850, payable in full or two payments of £425, including eight 60-minute sessions and a year of Speak Up. It includes a two-session fit guarantee: request a full refund within seven days of session two, before session three, if the approach is not right for you. There's a free 45-minute intro call if you want to try the method first."
   },
   {
     question: "Online or in-person?",

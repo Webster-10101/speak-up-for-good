@@ -1,5 +1,6 @@
 'use client'
 
+import FitGuarantee from './FitGuarantee'
 import { CheckCircle } from 'lucide-react'
 
 const Offers = () => {
@@ -30,12 +31,12 @@ const Offers = () => {
       title: "8-Week Speaking Transformation",
       price: "£850",
       duration: "8 sessions",
-      description: "Pay £850 in full or two payments of £425. Eight weekly sessions and a year of Speak Up. If the approach is not right after four sessions, request a full refund within seven days of session four, before session five.",
+      description: "Pay £850 in full or two payments of £425. Eight weekly sessions and a year of Speak Up.",
       features: [
         "8 × 60-minute sessions",
         "Progress self-assessments",
         "A year of Speak Up",
-        "Four-session fit guarantee",
+        "Two-session fit guarantee",
         "Online or in person in Edinburgh"
       ],
       buttonText: "Pay in full — £850",
@@ -129,6 +130,7 @@ const Offers = () => {
               >
                 {offer.buttonText}
               </button>
+              {offer.popular && <div className="mt-6"><FitGuarantee /></div>}
               {offer.popular && (
                 <p className="text-center text-sm text-slate-600 mt-4">
                   <a href="https://calendly.com/alistair-webster/speaking-transformation-two-payments" className="text-primary underline">Choose two payments of £425</a>: first at booking, second before session five. The second payment is collected separately, not charged automatically.

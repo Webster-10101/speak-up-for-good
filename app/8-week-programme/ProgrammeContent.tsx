@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import FitGuarantee from '@/components/FitGuarantee'
 import Link from 'next/link'
 import { useState } from 'react'
 import { CheckCircle, ChevronDown, ChevronUp, Sparkles, Target, MessageCircle, Heart, Zap } from 'lucide-react'
@@ -8,7 +9,7 @@ import { CheckCircle, ChevronDown, ChevronUp, Sparkles, Target, MessageCircle, H
 const faqs = [
   {
     question: "What if I'm not sure this is right for me?",
-    answer: "After attending the first four sessions, if the approach is not right for you, request a full refund within seven days of session four, before session five. There are no practice or self-assessment conditions."
+    answer: "After attending the first two sessions, if the approach is not right for you, request a full refund within seven days of session two, before session three. There are no practice or self-assessment conditions."
   },
   {
     question: "How is this different from other public speaking courses?",
@@ -161,7 +162,7 @@ export default function ProgrammeContent() {
               </span>
               <span className="flex items-center">
                 <CheckCircle className="w-4 h-4 mr-2 text-blue-400" />
-                Four-session fit guarantee
+                Two-session fit guarantee
               </span>
             </div>
 
@@ -243,15 +244,7 @@ export default function ProgrammeContent() {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 rounded-xl p-8 border border-amber-400/20">
-              <div className="w-12 h-12 bg-amber-500/20 rounded-lg flex items-center justify-center mb-6">
-                <Heart className="w-6 h-6 text-amber-400" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">Four-Session Fit Guarantee</h3>
-              <p className="text-slate-300 leading-relaxed">
-                After attending the first four sessions, if the approach is not right for you, request a full refund within seven days of session four, before session five. There are no practice or self-assessment conditions.
-              </p>
-            </div>
+            <FitGuarantee dark />
           </div>
         </div>
       </section>
@@ -461,7 +454,7 @@ export default function ProgrammeContent() {
                   <span className="text-3xl font-bold text-blue-300">£850</span>
                   <span className="text-slate-400 ml-2">/ 8 sessions</span>
                 </div>
-                <p className="text-slate-300 leading-relaxed">£850 in full or <a href="https://calendly.com/alistair-webster/speaking-transformation-two-payments" className="underline">two payments of £425</a>, with a four-session fit guarantee.</p>
+                <p className="text-slate-300 leading-relaxed">£850 in full or <a href="https://calendly.com/alistair-webster/speaking-transformation-two-payments" className="underline">two payments of £425</a>, with a two-session fit guarantee.</p>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center space-x-3">
@@ -478,7 +471,7 @@ export default function ProgrammeContent() {
                 </li>
                 <li className="flex items-center space-x-3">
                   <CheckCircle className="text-blue-400 w-5 h-5 flex-shrink-0" />
-                  <span className="text-slate-300">Four-session fit guarantee</span>
+                  <span className="text-slate-300">Two-session fit guarantee</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <CheckCircle className="text-blue-400 w-5 h-5 flex-shrink-0" />
@@ -586,7 +579,7 @@ export default function ProgrammeContent() {
               Ready to Transform How You Show Up?
             </h2>
             <p className="text-lg text-slate-300 mb-4 leading-relaxed">
-              8 weeks. Real progress. Four-session fit guarantee.
+              8 weeks. Real progress. Two-session fit guarantee.
             </p>
             <p className="text-slate-400 mb-8">
               Not sure yet? Book a free 45-minute intro call to see if it&apos;s right for you.
