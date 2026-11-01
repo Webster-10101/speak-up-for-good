@@ -213,7 +213,7 @@ export default function ProgrammeContent() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-xl p-8 border border-blue-400/20">
               <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-6">
                 <MessageCircle className="w-6 h-6 text-blue-400" />
@@ -244,7 +244,6 @@ export default function ProgrammeContent() {
               </p>
             </div>
 
-            <FitGuarantee dark />
           </div>
         </div>
       </section>
@@ -484,6 +483,7 @@ export default function ProgrammeContent() {
               >
                 Book Programme
               </button>
+              <div className="mt-6"><FitGuarantee dark /></div>
             </div>
 
           </div>
