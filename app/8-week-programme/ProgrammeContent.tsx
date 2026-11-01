@@ -169,7 +169,7 @@ export default function ProgrammeContent() {
             {/* Price & CTA */}
             <div className="mb-8">
               <div className="text-4xl font-bold text-white mb-2">£850</div>
-              <p className="text-slate-400 mb-6">Pay in full or <a href="https://calendly.com/alistair-webster/speaking-transformation-two-payments" className="underline">two payments of £425</a>: first at booking, second before session five. The second payment is collected separately, not charged automatically.</p>
+              <p className="text-slate-400 mb-6">Pay in full or <a href="https://alistairwebster.com/coaching/pay-in-two" className="underline">two payments of £425</a>: £425 now, then the final £425 automatically one calendar month later.</p>
               <button
                 onClick={handleBookProgramme}
                 className="bg-blue-500 hover:bg-blue-400 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-all duration-300 transform hover:scale-105"
@@ -453,7 +453,7 @@ export default function ProgrammeContent() {
                   <span className="text-3xl font-bold text-blue-300">£850</span>
                   <span className="text-slate-400 ml-2">/ 8 sessions</span>
                 </div>
-                <p className="text-slate-300 leading-relaxed">£850 in full or <a href="https://calendly.com/alistair-webster/speaking-transformation-two-payments" className="underline">two payments of £425</a>, with a two-session fit guarantee.</p>
+                <p className="text-slate-300 leading-relaxed">£850 in full or <a href="https://alistairwebster.com/coaching/pay-in-two" className="underline">two payments of £425</a>, with a two-session fit guarantee.</p>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center space-x-3">

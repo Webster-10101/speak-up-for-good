@@ -133,7 +133,7 @@ const Offers = () => {
               {offer.popular && <div className="mt-6"><FitGuarantee /></div>}
               {offer.popular && (
                 <p className="text-center text-sm text-slate-600 mt-4">
-                  <a href="https://calendly.com/alistair-webster/speaking-transformation-two-payments" className="text-primary underline">Choose two payments of £425</a>: first at booking, second before session five. The second payment is collected separately, not charged automatically.
+                  <a href="https://alistairwebster.com/coaching/pay-in-two" className="text-primary underline">Choose two payments of £425</a>: £425 now, then the final £425 automatically one calendar month later.
                 </p>
               )}
             </div>
